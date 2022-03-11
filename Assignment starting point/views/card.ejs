@@ -7,9 +7,13 @@
     <script src="/javascripts/comment.js"></script>
     <script src="/javascripts/canvas.js"></script>
     <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+    <link rel="stylesheet" href="/stylesheets/partials/navbar.css" />
     <link rel="stylesheet" href="/stylesheets/card.css" />
 </head>
 <body onload="init()">
+<header>
+    <%- include('./partials/nav.html'); %>
+</header>
 
 <% cardList.forEach( (card) => { %>
     <div class="container">
@@ -19,12 +23,16 @@
                 <div class="card" id=<%=card.roomNo%>>
                     <img class="card-img" src="/images/cathedral.jpg" alt="Card image cap">
                     <div class="card-body">
-                    <h5 class="card-title"><%= card.title %></h5>
+                        <h5 class="card-title"><%= card.title %></h5>
                         <p class="card-text" id="roomNo">Hello World!</p>
-                        <div class="comment-box">
-                            <input id='<%=card.roomNo+"comment_input"%>' type="text" placeholder="Enter Comment">
-                            <button  class="btn btn-primary" onclick=sendChatText('<%= card.roomNo%>',"Example")>Comment</button>
+                        <div class="row">
+                            <div class="comment-box">
+                                <input id='<%=card.roomNo+"comment_input"%>' type="text" placeholder="Enter Comment">
+                                <button  class="btn btn-primary" onclick=sendChatText('<%= card.roomNo%>',"Example")>Comment</button>
+                            </div>
                         </div>
+                    </div>
+                    <div class="card-footer">
                         <div style="height: 10vh" class="boxed scrolling" id=<%=card.roomNo+"history"%>></div>
                     </div>
                 </div>
