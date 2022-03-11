@@ -1,0 +1,8 @@
+.card {
+    margin-bottom: .4rem;
+}
+
+.card:hover{
+    box-shadow: 3px 3px 3px rgb(41, 41, 41);
+    transform:scale(1.07);
+}

@@ -1,6 +1,6 @@
-let name = null;
-let roomNo = null;
-let socket=null;
+let name = "Example";
+let roomNo = 10;
+let socket= io();
 
 
 /**
@@ -10,10 +10,15 @@ let socket=null;
  */
 function init() {
     // it sets up the interface so that userId and room are selected
-    document.getElementById('initial_form').style.display = 'block';
-    document.getElementById('chat_interface').style.display = 'none';
+    //document.getElementById('initial_form').style.display = 'block';
+    //document.getElementById('chat_interface').style.display = 'none';
 
-    //@todo here is where you should initialise the socket operations as described in teh lectures (room joining, chat message receipt etc.)
+    // called when a message is received
+    socket.on('chat', function (room, userId, chatText) {
+        let who = userId
+        if (userId === name) who = 'Me';
+        writeOnHistory('<b>' + who + ':</b> ' + chatText);
+    });
 }
 
 /**
@@ -22,7 +27,7 @@ function init() {
  * so to make sure that the room number is not accidentally repeated across uses
  */
 function generateRoom() {
-    roomNo = Math.round(Math.random() * 10000);
+    //roomNo = Math.round(Math.random() * 10000);
     document.getElementById('roomNo').value = 'R' + roomNo;
 }
 
@@ -30,24 +35,34 @@ function generateRoom() {
  * called when the Send button is pressed. It gets the text to send from the interface
  * and sends the message via  socket
  */
-function sendChatText() {
-    let chatText = document.getElementById('chat_input').value;
+function sendChatText(roomNo,name) {
+    let chatText = document.getElementById('comment_input').value;
     // @todo send the chat message
+    enterCardRoom(roomNo,name)
+    socket.emit('chat', roomNo, name, chatText);
 }
 
 /**
  * used to connect to a room. It gets the user name and room number from the
  * interface
  */
-function connectToRoom() {
-    roomNo = document.getElementById('roomNo').value;
-    name = document.getElementById('name').value;
-    let imageUrl= document.getElementById('image_url').value;
+function connectToRoom(roomNo, name) {
+    //roomNo = document.getElementById('roomNo').value;
+    //name = document.getElementById('name').value;
+    //let imageUrl= document.getElementById('image_url').value;
     if (!name) name = 'Unknown-' + Math.random();
     //@todo join the room
-    initCanvas(socket, imageUrl);
-    hideLoginInterface(roomNo, name);
+    socket.emit('create or join', roomNo, name);
+    //initCanvas(socket, imageUrl);
+    //hideLoginInterface(roomNo, name);
 }
+
+function enterCardRoom(roomNo, name){
+    socket.emit('create or join', roomNo, name,function (){
+        console.log('Entered Room: ' + roomNo);
+    })
+}
+
 
 /**
  * it appends the given html text to the history div
@@ -62,7 +77,7 @@ function writeOnHistory(text) {
     history.appendChild(paragraph);
     // scroll to the last element
     history.scrollTop = history.scrollHeight;
-    document.getElementById('chat_input').value = '';
+    document.getElementById('comment_input').value = '';
 }
 
 /**
