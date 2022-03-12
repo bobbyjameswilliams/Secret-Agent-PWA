@@ -1,8 +1,25 @@
 .card {
-    margin-bottom: 2.5%;
-    margin-top: 2.5%;
+    margin: 2.5% 5%;
+    min-height: 50vh;
 }
 
 body {
     background-color: rgb(242,242,242);
+}
+
+.comment_input{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.btn-primary{
+    float: right;
+}
+
+@media (min-width: 1000px){
+    .card {
+        margin: 5% 20%;
+    }
 }

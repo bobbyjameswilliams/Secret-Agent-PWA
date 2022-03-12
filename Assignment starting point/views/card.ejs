@@ -18,16 +18,15 @@
 <% cardList.forEach( (card) => { %>
     <div class="container">
         <div class="row">
-            <div class="col-sm"></div>
             <div class="col-sm">
                 <div class="card" id=<%=card.roomNo%>>
                     <img class="card-img" src="/images/cathedral.jpg" alt="Card image cap">
                     <div class="card-body">
-                        <h5 class="card-title"><%= card.title %></h5>
+                        <h3 class="card-title"><%= card.title %></h3>
                         <p class="card-text" id="roomNo">Hello World!</p>
                         <div class="row">
                             <div class="comment-box">
-                                <input id='<%=card.roomNo+"comment_input"%>' type="text" placeholder="Enter Comment">
+                                <input class="comment_input" id='<%=card.roomNo+"comment_input"%>' type="text" placeholder="Enter Comment">
                                 <button  class="btn btn-primary" onclick=sendChatText('<%= card.roomNo%>',"Example")>Comment</button>
                             </div>
                         </div>
@@ -37,7 +36,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm"></div>
         </div>
     </div>
 <% }); %>
