@@ -594,7 +594,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/MongoDB server/Assignment starting point" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -629,7 +629,7 @@
       <workItem from="1647207254941" duration="2498000" />
       <workItem from="1647275031587" duration="2339000" />
       <workItem from="1647277443586" duration="442000" />
-      <workItem from="1647519718960" duration="1751000" />
+      <workItem from="1647519718960" duration="1195000" />
     </task>
     <servers />
   </component>
