@@ -4,11 +4,7 @@ const Schema = mongoose.Schema;
 
 const Card = new Schema(
     {
-        Title: {type: String, required: true, max: 100},
-        file_path: {type: String, required: true, max: 100},
-        description: {type: String, required: true, max: 100},
-        author_name: {type: String, required: true, max: 100},
-        date_of_issue: {type: Date, required: true},
+        article_id: {type: String, required: true},
     }
 );
 

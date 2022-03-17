@@ -1,4 +1,4 @@
-let Card = require('../models/cards');
+let Article = require('../models/articles');
 
 exports.insert = function (req, res) {
     let userData = req.body;
@@ -6,15 +6,19 @@ exports.insert = function (req, res) {
         res.status(403).send('No data sent!')
     }
 
-    let card = new Card({
-        article_id: userData.article_id,
+    let article = new Article({
+        title: userData.title,
+        file_path: userData.file_path,
+        description: userData.description,
+        author_name: userData.author_name,
+        date_of_issue: userData.date_of_issue,
     });
-    console.log('received: ' + card);
+    console.log('received: ' + article);
 
-    card.save()
+    article.save()
         .then ((results) => {
             console.log(results._id);
-            res.json(card);
+            res.json(article);
         })
         .catch ((error) => {
             res.status(500).json('Could not insert - probably incorrect data! ' + JSON.stringify(error));

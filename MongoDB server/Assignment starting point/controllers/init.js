@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Card = require('../models/cards');
+const Article = require('../models/articles');
 
 
 exports.init= function() {
@@ -9,20 +10,25 @@ exports.init= function() {
     //   console.log('collection removed')
     //});
 
-    const title = "Test card";
-
     let card = new Card({
-        Title: title,
-        file_path: "../test.jpg",
-        description: "Test",
-        author_name: "Dan W",
-        date_of_issue: Date.now(),
+        article_id: "Test Card",
+    });
+
+    let article = new Article({
+        title: "Test article",
     });
     // console.log('dob: '+character.dob);
 
     card.save()
         .then ((results) => {
-            console.log("object created in init: "+ JSON.stringify(results));
+            console.log("card created in init: "+ JSON.stringify(results));
+        })
+        .catch ((error) => {
+            console.log(JSON.stringify(error));
+        });
+    article.save()
+        .then ((results) => {
+            console.log("article created in init: "+ JSON.stringify(results));
         })
         .catch ((error) => {
             console.log(JSON.stringify(error));
