@@ -1,5 +1,51 @@
 let Article = require('../models/articles');
 
+exports.getAllArticles = function (req, res) {
+    let userData = req.body;
+    if (userData == null)
+        res.status(403).json('No data sent!')
+
+    Article.find({})
+        .then(articles => {
+            if (articles.length > 0) {
+                res.json(articles);
+            } else {
+                res.json("not found");
+            }
+        })
+        .catch((err) => {
+            res.status(500).send('Invalid data or not found!' + JSON.stringify(err));
+        });
+}
+
+exports.getArticle = function (req, res) {
+    let userData = req.body;
+    if (userData == null)
+        res.status(403).json('No data sent!')
+
+    Article.find({title: userData.title},
+        'title')
+        .then(articles => {
+            let article = null;
+            if (articles.length > 0) {
+                let firstElem = articles[0];
+                article = {
+                    title: firstElem.title,
+                    file_path: firstElem.file_path,
+                    description: firstElem.description,
+                    author_name: firstElem.author_name,
+                    date_of_issue: firstElem.date_of_issue,
+                };
+                res.json(article);
+            } else {
+                res.json("not found");
+            }
+        })
+        .catch((err) => {
+            res.status(500).send('Invalid data or not found!' + JSON.stringify(err));
+        });
+}
+
 exports.insert = function (req, res) {
     let userData = req.body;
     if (userData == null) {
@@ -23,5 +69,4 @@ exports.insert = function (req, res) {
         .catch ((error) => {
             res.status(500).json('Could not insert - probably incorrect data! ' + JSON.stringify(error));
         })
-
 }

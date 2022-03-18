@@ -11,4 +11,10 @@ router.get('/', function(req, res, next) {
   res.send('MongoDB Server');
 });
 
+
+router
+    .post('/getArticle', article.getArticle);
+router
+    .post('/getArticles', article.getArticles);
+
 module.exports = router;

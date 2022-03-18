@@ -6,11 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f52a2fa1-aa30-4617-a953-1013dbd8b084" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MongoDB server/Assignment starting point/controllers/cards.js" beforeDir="false" afterPath="$PROJECT_DIR$/MongoDB server/Assignment starting point/controllers/cards.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MongoDB server/Assignment starting point/controllers/init.js" beforeDir="false" afterPath="$PROJECT_DIR$/MongoDB server/Assignment starting point/controllers/init.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MongoDB server/Assignment starting point/models/cards.js" beforeDir="false" afterPath="$PROJECT_DIR$/MongoDB server/Assignment starting point/models/cards.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MongoDB server/Assignment starting point/controllers/articles.js" beforeDir="false" afterPath="$PROJECT_DIR$/MongoDB server/Assignment starting point/controllers/articles.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MongoDB server/Assignment starting point/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/MongoDB server/Assignment starting point/routes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MongoDB server/Assignment starting point/views/index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/MongoDB server/Assignment starting point/views/index.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +82,8 @@
       <workItem from="1647277443586" duration="442000" />
       <workItem from="1647519718960" duration="1751000" />
       <workItem from="1647522112699" duration="6933000" />
-      <workItem from="1647534488121" duration="4059000" />
+      <workItem from="1647534488121" duration="4266000" />
+      <workItem from="1647602382066" duration="4545000" />
     </task>
     <servers />
   </component>
