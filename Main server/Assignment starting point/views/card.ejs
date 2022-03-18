@@ -4,7 +4,7 @@
     <title><%= title %></title>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="/javascripts/comment.js"></script>
+    <script src="/javascripts/news-feed.js"></script>
     <script src="/javascripts/canvas.js"></script>
     <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
     <link rel="stylesheet" href="/stylesheets/partials/navbar.css" />
@@ -25,14 +25,11 @@
                         <h3 class="card-title"><%= card.title %></h3>
                         <p class="card-text" id="roomNo">Hello World!</p>
                         <div class="row">
-                            <div class="comment-box">
-                                <input class="comment_input" id='<%=card.roomNo+"comment_input"%>' type="text" placeholder="Enter Comment">
-                                <button  class="btn btn-primary" onclick=sendChatText('<%= card.roomNo%>',"Example")>Comment</button>
+                            <div class="room-form">
+                                <input class="room_input" id='<%=card.roomNo+"room_input"%>' type="text" placeholder="Enter Room Number">
+                                <button class="btn btn-primary" id="connect" onclick="connectToRoomPage('<%= card.roomNo%>')">Connect</button>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        <div style="height: 10vh" class="boxed scrolling" id=<%=card.roomNo+"history"%>></div>
                     </div>
                 </div>
             </div>

@@ -22,4 +22,9 @@ router.get('/', function(req, res, next) {
   res.render('card', { title: 'Card View', cardList: getCards() });
 });
 
+router.get('/room/',function (req, res) {
+  let roomNo = req.query.roomNo;
+  res.render('room',{title: roomNo})
+})
+
 module.exports = router;
