@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/javascripts/comment.js"></script>
+    <script src="/javascripts/canvas.js"></script>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+    <link rel="stylesheet" href="/stylesheets/partials/navbar.css" />
+    <link rel="stylesheet" href="/stylesheets/room.css" />
+</head>
+<body onload="init()">
+<header>
+    <%- include('./partials/nav.html'); %>
+</header>
+<div class="split left">
+    <div class="centered">
+        <img class="card-img" src="/images/cathedral.jpg" alt="Card image cap">
+        <h2><%= title %></h2>
+    </div>
+</div>
+
+<div class="split right">
+    <div class="row">
+        <div class="boxed scrolling" id="history"></div>
+    </div>
+    <div class="row comment_row">
+        <div class="col-8">
+            <input class="comment_input" id="comment_input" type="text" placeholder="Enter Comment">
+        </div>
+        <div class="col-4">
+            <button  class="btn btn-primary" onclick=sendChatText("Example")>Comment</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
