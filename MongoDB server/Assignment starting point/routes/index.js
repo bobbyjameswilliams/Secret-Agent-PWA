@@ -13,8 +13,15 @@ router.get('/', function(req, res, next) {
 
 
 router
-    .post('/getArticle', article.getArticle);
+    .get('/getArticle', function (req, res, next) {
+      res.send('Get Article');
+    })
+    .post('/getArticle', function(req,res){article.getArticle});
+
 router
-    .post('/getArticles', article.getArticles);
+    .get('/getArticles', function (req, res, next) {
+      res.send('Get Articles');
+    })
+    .post('/getArticles', function(req,res){article.getArticles});
 
 module.exports = router;
