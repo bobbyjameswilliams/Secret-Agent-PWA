@@ -21,9 +21,36 @@ const CHAT_MESSAGES_STORE_NAME= 'store_chat_messages';
 
 
 /**
- * Sets up the IDB and object stores
+ * @todo Create other stores in this when needed.
  * @returns {Promise<void>}
  */
 async function initDatabase(){
-
+    if (!db) {
+        db = await idb.openDB(APP_DB_NAME, 2, {
+            upgrade(upgradeDb, oldVersion, newVersion) {
+                if (!upgradeDb.objectStoreNames.contains(ARTICLES_STORE_NAME)) {
+                    let forecastDB = upgradeDb.createObjectStore(ARTICLES_STORE_NAME, {
+                        keyPath: 'id',
+                        autoIncrement: true
+                    });
+                    forecastDB.createIndex('article', 'article', {unique: true, multiEntry: false});
+                }
+            }
+        });
+        console.log('db created');
+    }
 }
+window.initDatabase= initDatabase;
+
+async function cacheRetrievedArticle(){
+    //TODO: Cache articles retrieved from mondoDB
+}
+
+async function retrieveCachedArticles(){
+    //TODO: retrieve articles stored in cache
+}
+
+async function storeM
+
+
+
