@@ -2,19 +2,28 @@ let socket= io();
 let roomNo = null;
 let name = null;
 
-function init() {
+function init(roomNumber) {
+    roomNo = roomNumber
     socket.on('chat', function (room, userId, chatText) {
         let who = userId
         if (userId === name) who = 'Me';
         writeOnHistory('<b>' + who + ':</b> ' + chatText);
     });
+
+    // called when someone joins the room. If it is someone else it notifies the joining of the room
+    socket.on('joined', function (room, userId) {
+        if (userId !== name){
+            // notifies that someone has joined the room
+            writeOnHistory('<b>'+userId+'</b>' + ' joined room ' + room);
+        }
+    });
+
+
+    connectToRoom()
 }
 
-function sendChatText(roomNumber,userName) {
-    roomNo = roomNumber;
-    name = userName;
-    let chatText = document.getElementById(roomNo+'comment_input').value;
-    connectToRoom()
+function sendChatText() {
+    let chatText = document.getElementById('comment_input').value;
     socket.emit('chat', roomNo, name, chatText);
 }
 
@@ -31,12 +40,12 @@ function connectToRoom() {
 
 function writeOnHistory(text) {
     if (text==='') return;
-    let history = document.getElementById(roomNo+'history');
+    let history = document.getElementById('history');
     let paragraph = document.createElement('p');
     paragraph.innerHTML = text;
     history.appendChild(paragraph);
     // scroll to the last element
     history.scrollTop = history.scrollHeight;
-    document.getElementById(roomNo+'comment_input').value = '';
+    document.getElementById('comment_input').value = '';
 }
 
