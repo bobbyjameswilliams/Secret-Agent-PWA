@@ -22,6 +22,6 @@ router
     .get('/getArticles', function (req, res, next) {
       res.send('Get Articles');
     })
-    .post('/getArticles', function(req,res){article.getArticles});
+    .post('/getArticles', function(req,res){article.getAllArticles});
 
 module.exports = router;
