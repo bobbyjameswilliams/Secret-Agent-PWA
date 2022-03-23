@@ -21,20 +21,25 @@ function getCards(){
 /* GET users listing. */
 
 router.get('/', function(req, res, next) {
-  //#res.render('card', { title: 'Card View', cardList: getCards() });
-  console.log("deez nuts")
-  axios.post('http://localhost:3001/getArticles')
-      .then(json => res.json(json.data.result))
+  console.log("/ get called")
+  axios.get('http://localhost:3001/getArticles')
+      .then(json => {
+        console.log("Success");
+        res.json(json.data.result)
+      })
       .catch(err => {
+        console.log("Error")
         res.setHeader('Content-Type', 'application/json');
         res.status(403).json(err)
       })
+  //#res.render('card', { title: 'Card View', cardList: getCards() });
+
 });
 
 router.post('/', function(req, res) {
-  console.log("deez nuts")
-  axios.post('http://localhost:3001/getArticles').then(json => res.json(json.data.result)).catch(console.log("This is a certified bruh moment"));
-  res.render('card', { title: 'Card View', cardList: getCards() });
+  console.log("post request started")
+
+  //res.render('card', { title: 'Card View', cardList: getCards() });
 });
 
 

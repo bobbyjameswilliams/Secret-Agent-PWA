@@ -1,8 +1,10 @@
 let Article = require('../models/articles');
 
 exports.getAllArticles = function (req, res) {
+    console.log("getAllArticles started")
     let userData = req.body;
     if (userData == null)
+        console.log("No data sent.")
         res.status(403).json('No data sent!')
 
     Article.find({})

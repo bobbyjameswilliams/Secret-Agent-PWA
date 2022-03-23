@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f52a2fa1-aa30-4617-a953-1013dbd8b084" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main server/Assignment starting point/routes/card.js" beforeDir="false" afterPath="$PROJECT_DIR$/Main server/Assignment starting point/routes/card.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MongoDB server/Assignment starting point/controllers/articles.js" beforeDir="false" afterPath="$PROJECT_DIR$/MongoDB server/Assignment starting point/controllers/articles.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MongoDB server/Assignment starting point/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/MongoDB server/Assignment starting point/routes/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,7 +54,7 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="Node.js.www (2)">
+  <component name="RunManager" selected="Node.js.www (1)">
     <configuration name="www (1)" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/MongoDB server/Assignment starting point/bin/www" working-dir="$PROJECT_DIR$/MongoDB server/Assignment starting point/bin">
       <method v="2" />
     </configuration>
@@ -64,8 +66,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Node.js.www (2)" />
         <item itemvalue="Node.js.www (1)" />
+        <item itemvalue="Node.js.www (2)" />
         <item itemvalue="Node.js.www" />
       </list>
     </recent_temporary>
@@ -92,6 +94,7 @@
       <workItem from="1647602382066" duration="7494000" />
       <workItem from="1647706335482" duration="47000" />
       <workItem from="1647706636439" duration="3410000" />
+      <workItem from="1648038165311" duration="2120000" />
     </task>
     <servers />
   </component>
