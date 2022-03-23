@@ -27,9 +27,6 @@ router
         //res.send('Get Articles');
         article.getAllArticles;
     })
-    .post('/getArticles', function(req,res){
-        console.log("/getArticles post Called.")
-        res.send(article.getAllArticles);
-    })
+    .post('/getArticles', article.getAllArticles);
 
 module.exports = router;

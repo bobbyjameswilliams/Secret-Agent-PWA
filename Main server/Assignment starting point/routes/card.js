@@ -20,12 +20,15 @@ function getCards(){
 }
 /* GET users listing. */
 
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   console.log("/ get called")
-  axios.get('http://localhost:3001/getArticles')
+  axios.post('http://localhost:3001/getArticles',{})
       .then(json => {
         console.log("Success");
-        res.json(json.data.result)
+
+        console.log(JSON.stringify(json.data))
+
+        //res.json(json.data)
       })
       .catch(err => {
         console.log("Error")

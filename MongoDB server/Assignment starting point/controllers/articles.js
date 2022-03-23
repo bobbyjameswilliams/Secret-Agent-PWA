@@ -1,22 +1,28 @@
 let Article = require('../models/articles');
 
+
 exports.getAllArticles = function (req, res) {
     console.log("getAllArticles started")
     let userData = req.body;
-    if (userData == null)
+    if (userData == null) {
         console.log("No data sent.")
         res.status(403).json('No data sent!')
+    }
 
+    console.log("gets to search")
     Article.find({})
         .then(articles => {
+            console.log("Found some articles: "+articles.length)
             if (articles.length > 0) {
-                res.json(articles);
+                console.log("ready to return them")
+
+                res.json(articles)
             } else {
                 res.json("not found");
             }
         })
         .catch((err) => {
-            res.status(500).send('Invalid data or not found!' + JSON.stringify(err));
+            //res.status(500).send('Invalid data or not found!' + JSON.stringify(err));
         });
 }
 
