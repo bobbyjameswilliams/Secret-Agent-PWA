@@ -16,12 +16,17 @@ router
     .get('/getArticle', function (req, res, next) {
       res.send('Get Article');
     })
-    .post('/getArticle', function(req,res){article.getArticle});
+    .post('/getArticle', function(req,res){
+        console.log("/getArticle Called.");
+        article.getArticle;
+    });
 
 router
-    .get('/getArticles', function (req, res, next) {
-      res.send('Get Articles');
+    .get('/getArticles', function (req, res) {
+        console.log("/getArticles get Called.");
+        //res.send('Get Articles');
+        article.getAllArticles;
     })
-    .post('/getArticles', function(req,res){article.getAllArticles});
+    .post('/getArticles', article.getAllArticles);
 
 module.exports = router;
