@@ -6,9 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f52a2fa1-aa30-4617-a953-1013dbd8b084" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main server/Assignment starting point/routes/card.js" beforeDir="false" afterPath="$PROJECT_DIR$/Main server/Assignment starting point/routes/card.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MongoDB server/Assignment starting point/controllers/articles.js" beforeDir="false" afterPath="$PROJECT_DIR$/MongoDB server/Assignment starting point/controllers/articles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MongoDB server/Assignment starting point/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/MongoDB server/Assignment starting point/routes/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,6 +92,7 @@
       <workItem from="1647706335482" duration="47000" />
       <workItem from="1647706636439" duration="3410000" />
       <workItem from="1648038165311" duration="2120000" />
+      <workItem from="1648217531141" duration="921000" />
     </task>
     <servers />
   </component>
