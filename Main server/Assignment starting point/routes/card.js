@@ -24,10 +24,13 @@ router.get('/', function(req, res) {
   console.log("/ get called")
   axios.post('http://localhost:3001/getArticles',{})
       .then(json => {
+        // This could be a render? unsure if res.render is needed.
         console.log("Success");
+        //console.log(JSON.stringify(json.data))
 
-        console.log(JSON.stringify(json.data))
-
+        //For now this is gonna be res.render while I figure out axios.
+        //TODO: look into this at a later date 
+        res.render('card', { title: 'Card View', cardList: getCards() });
         //res.json(json.data)
       })
       .catch(err => {
