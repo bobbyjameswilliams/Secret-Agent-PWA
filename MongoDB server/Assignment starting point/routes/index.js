@@ -13,20 +13,24 @@ router.get('/', function(req, res, next) {
 
 
 router
-    .get('/getArticle', function (req, res, next) {
-      res.send('Get Article');
-    })
-    .post('/getArticle', function(req,res){
-        console.log("/getArticle Called.");
+    .get('/getArticle', function (req, res) {
+        console.log("/getArticle get Called.");
         article.getArticle;
-    });
+    })
+    .post('/getArticle', article.getArticle);
 
 router
     .get('/getArticles', function (req, res) {
         console.log("/getArticles get Called.");
-        //res.send('Get Articles');
         article.getAllArticles;
     })
     .post('/getArticles', article.getAllArticles);
+
+router
+    .get('/insertArticle', function (req, res) {
+        console.log("/insertArticle get Called.");
+        article.insertArticle;
+    })
+    .post('/insertArticle', article.insertArticle);
 
 module.exports = router;

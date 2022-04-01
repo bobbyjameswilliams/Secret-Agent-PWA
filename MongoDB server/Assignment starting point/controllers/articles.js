@@ -2,20 +2,14 @@ let Article = require('../models/articles');
 
 
 exports.getAllArticles = function (req, res) {
-    console.log("getAllArticles started")
     let userData = req.body;
     if (userData == null) {
-        console.log("No data sent.")
         res.status(403).json('No data sent!')
     }
 
-    console.log("gets to search")
     Article.find({})
         .then(articles => {
-            console.log("Found some articles: "+articles.length)
             if (articles.length > 0) {
-                console.log("ready to return them")
-
                 res.json(articles)
             } else {
                 res.json("not found");
@@ -28,29 +22,20 @@ exports.getAllArticles = function (req, res) {
 
 exports.getArticle = function (req, res) {
     let userData = req.body;
-    if (userData == null)
+    if (userData == null) {
         res.status(403).json('No data sent!')
+    }
 
-    Article.find({title: userData.title},
-        'title')
-        .then(articles => {
-            let article = null;
-            if (articles.length > 0) {
-                let firstElem = articles[0];
-                article = {
-                    title: firstElem.title,
-                    file_path: firstElem.file_path,
-                    description: firstElem.description,
-                    author_name: firstElem.author_name,
-                    date_of_issue: firstElem.date_of_issue,
-                };
-                res.json(article);
+    Article.find({"_id" : userData.articleId})
+        .then(article => {
+            if (article !== null) {
+                res.json(article)
             } else {
                 res.json("not found");
             }
         })
         .catch((err) => {
-            res.status(500).send('Invalid data or not found!' + JSON.stringify(err));
+            //res.status(500).send('Invalid data or not found!' + JSON.stringify(err));
         });
 }
 
@@ -71,7 +56,6 @@ exports.insert = function (req, res) {
 
     article.save()
         .then ((results) => {
-            console.log(results._id);
             res.json(article);
         })
         .catch ((error) => {
