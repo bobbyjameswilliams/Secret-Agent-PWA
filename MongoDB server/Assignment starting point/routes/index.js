@@ -31,6 +31,6 @@ router
         console.log("/insertArticle get Called.");
         article.insertArticle;
     })
-    .post('/insertArticle', article.insertArticle);
+    .post('/insertArticle', article.insert);
 
 module.exports = router;

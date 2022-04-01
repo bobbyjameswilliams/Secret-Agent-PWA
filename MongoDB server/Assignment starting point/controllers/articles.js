@@ -56,6 +56,7 @@ exports.insert = function (req, res) {
 
     article.save()
         .then ((results) => {
+            console.log("Successfully inserted");
             res.json(article);
         })
         .catch ((error) => {

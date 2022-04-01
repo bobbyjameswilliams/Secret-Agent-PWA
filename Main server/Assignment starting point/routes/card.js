@@ -40,6 +40,29 @@ router.get('/', function(req, res) {
       })
   //#res.render('card', { title: 'Card View', cardList: getCards() });
 
+  axios.post('http://localhost:3001/insertArticle',{
+    title: "Insert route test",
+    file_path: "/test",
+    description: "Insert route test",
+    author_name: "Dan",
+    date_of_issue: Date.now()
+  })
+      .then(json => {
+        // This could be a render? unsure if res.render is needed.
+        console.log("Success");
+        console.log(JSON.stringify(json.data))
+
+        //For now this is gonna be res.render while I figure out axios.
+        //TODO: look into this at a later date
+        //res.render('card', { title: 'Card View', cardList: getCards() });
+        //res.json(json.data)
+      })
+      .catch(err => {
+        console.log("Error")
+        res.setHeader('Content-Type', 'application/json');
+        res.status(403).json(err)
+      })
+
 });
 
 router.post('/', function(req, res) {
