@@ -40,7 +40,7 @@ router.get('/', function(req, res) {
       })
   //#res.render('card', { title: 'Card View', cardList: getCards() });
 
-  axios.post('http://localhost:3001/insertArticle',{
+  /*axios.post('http://localhost:3001/insertArticle',{
     title: "Insert route test",
     file_path: "/test",
     description: "Insert route test",
@@ -61,7 +61,7 @@ router.get('/', function(req, res) {
         console.log("Error")
         res.setHeader('Content-Type', 'application/json');
         res.status(403).json(err)
-      })
+      })*/
 
 });
 
