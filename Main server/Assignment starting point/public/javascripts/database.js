@@ -50,7 +50,13 @@ async function retrieveCachedArticles(){
     //TODO: retrieve articles stored in cache
 }
 
-async function storeM
+async function storeComment(){
+    //TODO: store comment in the comment store
+}
+
+async function retrieveAllComments(){
+    //TODO: retrieve all comments given a room ID
+}
 
 
 
