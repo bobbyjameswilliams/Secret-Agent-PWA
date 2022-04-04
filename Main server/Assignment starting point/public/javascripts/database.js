@@ -28,12 +28,21 @@ async function initDatabase(){
     if (!db) {
         db = await idb.openDB(APP_DB_NAME, 2, {
             upgrade(upgradeDb, oldVersion, newVersion) {
+                //Creating articles store
                 if (!upgradeDb.objectStoreNames.contains(ARTICLES_STORE_NAME)) {
-                    let forecastDB = upgradeDb.createObjectStore(ARTICLES_STORE_NAME, {
+                    let appIDB1 = upgradeDb.createObjectStore(ARTICLES_STORE_NAME, {
                         keyPath: 'id',
                         autoIncrement: true
                     });
-                    forecastDB.createIndex('article', 'article', {unique: true, multiEntry: false});
+                    appIDB1.createIndex('article', 'article', {unique: true, multiEntry: false});
+                }
+                //Creating Comments Store
+                if (!upgradeDb.objectStoreNames.contains(CHAT_MESSAGES_STORE_NAME)) {
+                    let articleDB = upgradeDb.createObjectStore(CHAT_MESSAGES_STORE_NAME, {
+                        keyPath: 'id',
+                        autoIncrement: true
+                    });
+                    articleDB.createIndex('chats', 'chats', {unique: true, multiEntry: false});
                 }
             }
         });
