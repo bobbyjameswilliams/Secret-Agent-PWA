@@ -1,6 +1,8 @@
 ////////////////// DATABASE //////////////////
 // the database receives from the server the following structure
 import * as idb from './idb/index.js';
+//var idb = require('../idb/index.js');
+
 
 // const Article = new Schema(
 //     {
@@ -11,6 +13,8 @@ import * as idb from './idb/index.js';
 //         date_of_issue: {type: Date},
 //     }
 // );
+
+//let db;
 
 // Databases
 const APP_DB_NAME = 'db_app_1';
@@ -26,6 +30,7 @@ const CHAT_MESSAGES_STORE_NAME= 'store_chat_messages';
  */
 async function initDatabase(){
     if (!db) {
+        let db;
         db = await idb.openDB(APP_DB_NAME, 2, {
             upgrade(upgradeDb, oldVersion, newVersion) {
                 //Creating articles store
