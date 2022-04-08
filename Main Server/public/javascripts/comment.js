@@ -2,6 +2,21 @@ let socket= io();
 let roomNo = null;
 let name = null;
 
+class Comment{
+    id;
+    roomNo;
+    userID;
+    date_of_issue;
+
+    constructor(id, roomNo,userID,date_of_issue) {
+        this.id = id;
+        this.roomNo = roomNo;
+        this.userID = userID;
+        this.date_of_issue = date_of_issue;
+    }
+}
+
+
 function init(roomNumber) {
     roomNo = roomNumber
     socket.on('chat', function (room, userId, chatText) {
