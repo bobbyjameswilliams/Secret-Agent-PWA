@@ -3,16 +3,16 @@ let roomNo = null;
 let name = null;
 
 class Comment{
-    id;
     roomNo;
     userID;
     date_of_issue;
+    chatText;
 
-    constructor(id, roomNo,userID,date_of_issue) {
-        this.id = id;
+    constructor(id, roomNo,userID,date_of_issue,chatText) {
         this.roomNo = roomNo;
         this.userID = userID;
         this.date_of_issue = date_of_issue;
+        this.chatText = chatText;
     }
 }
 
@@ -38,9 +38,18 @@ function init(roomNumber) {
 }
 
 function sendChatText() {
-    //This function needs to have code to call db method
+    //get time and create a string out of it
+    var today = new Date();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
     let chatText = document.getElementById('comment_input').value;
-    let comment = new Comment()
+
+    //Store comment in browser
+    let comment = new Comment(roomNo,userId,time,chatText);
+    storeComment(comment)
+        .then(r => console.log("Comment stored successfully."))
+        .catch(r => console.log("Error storing comment"));
+    
     socket.emit('chat', roomNo, name, chatText);
 }
 
