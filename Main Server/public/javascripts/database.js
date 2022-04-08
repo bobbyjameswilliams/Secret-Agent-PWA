@@ -64,9 +64,21 @@ async function retrieveCachedArticles(){
     //TODO: retrieve articles stored in cache
 }
 
-async function storeComment(comment){
-
-    //TODO: store comment in the comment store
+async function storeComment(commentObject){
+    console.log('inserting: '+JSON.stringify(commentObject));
+    if (!db)
+        await initDatabase();
+    if (db) {
+        try{
+            let tx = await db.transaction(ARTICLES_STORE_NAME, 'readwrite');
+            let store = await tx.objectStore(ARTICLES_STORE_NAME);
+            await store.put(commentObject);
+            await  tx.complete;
+            console.log('added item to the store! '+ JSON.stringify(commentObject));
+        } catch(error) {
+            console.log("Error in storeComment()")
+        }
+    }
 }
 window.storeComment = storeComment
 

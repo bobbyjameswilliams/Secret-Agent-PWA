@@ -49,7 +49,7 @@ function sendChatText() {
     storeComment(comment)
         .then(r => console.log("Comment stored successfully."))
         .catch(r => console.log("Error storing comment"));
-    
+
     socket.emit('chat', roomNo, name, chatText);
 }
 
