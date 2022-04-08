@@ -51,7 +51,7 @@ async function initDatabase(){
                 }
             }
         });
-        console.log('db created test');
+        console.log('db created');
     }
 }
 window.initDatabase= initDatabase;
