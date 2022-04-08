@@ -14,7 +14,7 @@ import * as idb from './idb/index.js';
 //     }
 // );
 
-//let db;
+let db;
 
 // Databases
 const APP_DB_NAME = 'db_app_1';
@@ -51,7 +51,7 @@ async function initDatabase(){
                 }
             }
         });
-        console.log('db created');
+        console.log('db created test');
     }
 }
 window.initDatabase= initDatabase;
