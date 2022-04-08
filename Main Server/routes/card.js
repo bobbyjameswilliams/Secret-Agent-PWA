@@ -3,12 +3,22 @@ var router = express.Router();
 var axios = require('axios');
 
 class Card{
+  id;
   title;
   roomNo;
+  image_path;
+  description;
+  author;
+  date_of_issue;
 
-  constructor(title, roomNo) {
+  constructor(id, title, roomNo,image_path,description,author,date_of_issue) {
+    this.id = id;
     this.title = title;
-    this.roomNo = roomNo
+    this.roomNo = roomNo;
+    this.image_path = image_path;
+    this.description = description;
+    this.author = author;
+    this.date_of_issue = date_of_issue;
   }
 
 }
@@ -25,13 +35,18 @@ router.get('/', function(req, res) {
   axios.post('http://localhost:3001/getArticles',{})
       .then(json => {
         // This could be a render? unsure if res.render is needed.
-        console.log("Success");
-        //console.log(JSON.stringify(json.data))
+
+        var cards = [];
+        json.data.forEach(function(article) {
+            let card = new Card(article._id, article.title, article.file_path,
+                                article.description, article.author_name, article.date_of_issue);
+            cards.push(card);
+        });
 
         //For now this is gonna be res.render while I figure out axios.
         //TODO: look into this at a later date 
-        res.render('card', { title: 'Card View', cardList: getCards() });
-        //res.json(json.data)
+        res.render('card', { title: 'Card View', cardList: cards });
+
       })
       .catch(err => {
         console.log("Error")
