@@ -40,6 +40,7 @@ function init(roomNumber) {
 function sendChatText() {
     //This function needs to have code to call db method
     let chatText = document.getElementById('comment_input').value;
+    let comment = new Comment()
     socket.emit('chat', roomNo, name, chatText);
 }
 
