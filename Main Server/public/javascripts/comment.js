@@ -44,7 +44,6 @@ function initRoom(roomNumber) {
         }
     });
 
-
     connectToRoom()
 }
 window.initRoom = initRoom
@@ -62,8 +61,8 @@ function connectToRoom() {
     if (!name) name = 'Unknown-' + Math.random();
     //@todo join the room
     socket.emit('create or join', roomNo, name);
-    //initCanvas(socket, imageUrl);
-    //hideLoginInterface(roomNo, name);
+    // TODO: change imageURL
+    initCanvas(socket,"/images/cathedral.jpg");
 }
 
 function writeOnHistory(text) {
