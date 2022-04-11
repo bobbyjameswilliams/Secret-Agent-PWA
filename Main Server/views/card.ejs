@@ -19,15 +19,15 @@
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <div class="card" id=<%=card.roomNo%>>
+                <div class="card" id=<%=card.id%>>
                     <img class="card-img" src="/images/cathedral.jpg" alt="Card image cap">
                     <div class="card-body">
                         <h3 class="card-title"><%= card.title %></h3>
-                        <p class="card-text" id="roomNo">Hello World!</p>
+                        <p class="card-text" id="id">Hello World!</p>
                         <div class="row">
                             <div class="room-form">
-                                <input class="room_input" id='<%=card.roomNo+"room_input"%>' type="text" placeholder="Enter Room Number">
-                                <button class="btn btn-primary" id="connect" onclick="connectToRoomPage('<%= card.roomNo%>')">Connect</button>
+                                <input class="room_input" id='<%=card.id+"room_input"%>' type="text" placeholder="Enter Room Number">
+                                <button class="btn btn-primary" id="connect" onclick="connectToRoomPage('<%= card.id %>')">Connect</button>
                             </div>
                         </div>
                     </div>
