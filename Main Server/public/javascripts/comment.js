@@ -21,6 +21,10 @@ class Comment{
 
 function initRoom(roomNumber) {
     roomNo = roomNumber
+    //Load in and display previous chat history
+
+
+    //Prepare chat socket.
     socket.on('chat', function (room, userId, chatText) {
         //get time and create a string out of it
         var today = new Date();
@@ -31,16 +35,16 @@ function initRoom(roomNumber) {
             .then(r => console.log("storeComment ran."))
             .catch(r => console.log("Error storing comment"));
 
-        let who = userId
-        if (userId === name) who = 'Me';
-        writeOnHistory('<b>' + who + ':</b> ' + chatText);
+        let preparedChatMessage = prepareChatMessage(userId, chatText)
+        writeOnHistory(preparedChatMessage);
     });
 
     // called when someone joins the room. If it is someone else it notifies the joining of the room
     socket.on('joined', function (room, userId) {
         if (userId !== name){
             // notifies that someone has joined the room
-            writeOnHistory('<b>'+userId+'</b>' + ' joined room ' + room);
+            let preparedJoinedRoomNotification = prepareJoinedRoomNotification(room, userId)
+            writeOnHistory(preparedJoinedRoomNotification);
         }
     });
 
@@ -66,8 +70,30 @@ function connectToRoom() {
     //hideLoginInterface(roomNo, name);
 }
 
-function writeOnHistory(text) {
+/*
+Prepares chat messages for writeOnHistory
+ */
+function prepareChatMessage(userId, chatText){
+    let who = userId
+    if (userId === name) {who = 'Me'}
+    return('<b>' + who + ':</b> ' + chatText)
+}
 
+/*
+Prepares joined room notifications for writeOnHistory
+ */
+function prepareJoinedRoomNotification(room, userID){
+    if (userId !== name){
+        // notifies that someone has joined the room
+        return ('<b>'+userId+'</b>' + ' joined room ' + room);
+    }
+}
+
+async function loadAndDisplayCachedHistory(roomNo){
+
+}
+
+function writeOnHistory(text) {
     if (text==='') return;
     let history = document.getElementById('history');
     let paragraph = document.createElement('p');
