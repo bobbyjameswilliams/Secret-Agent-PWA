@@ -22,6 +22,15 @@ class Comment{
 function initRoom(roomNumber) {
     roomNo = roomNumber
     socket.on('chat', function (room, userId, chatText) {
+        //get time and create a string out of it
+        var today = new Date();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        let comment = new Comment(roomNo,userId,time,chatText);
+        //Cache comment in IDB
+        database.storeComment(comment)
+            .then(r => console.log("storeComment ran."))
+            .catch(r => console.log("Error storing comment"));
+
         let who = userId
         if (userId === name) who = 'Me';
         writeOnHistory('<b>' + who + ':</b> ' + chatText);
@@ -41,17 +50,8 @@ function initRoom(roomNumber) {
 window.initRoom = initRoom
 
 function sendChatText() {
-    //get time and create a string out of it
-    var today = new Date();
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-
     let chatText = document.getElementById('comment_input').value;
     socket.emit('chat', roomNo, name, chatText);
-    //Store comment in browser
-    let comment = new Comment(roomNo,userId,time,chatText);
-    database.storeComment(comment)
-        .then(r => console.log("storeComment ran."))
-        .catch(r => console.log("Error storing comment"));
 }
 window.sendChatText = sendChatText
 
@@ -67,6 +67,7 @@ function connectToRoom() {
 }
 
 function writeOnHistory(text) {
+
     if (text==='') return;
     let history = document.getElementById('history');
     let paragraph = document.createElement('p');
