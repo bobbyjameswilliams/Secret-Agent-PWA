@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Main server.iml" filepath="$PROJECT_DIR$/.idea/Main server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../MongoDB Server/.idea/Week 3.c Socket.io chat.iml" filepath="$PROJECT_DIR$/../MongoDB Server/.idea/Week 3.c Socket.io chat.iml" />
     </modules>
   </component>
 </project>
