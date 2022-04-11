@@ -39,8 +39,13 @@ function initCanvas(sckt, imageUrl) {
                 drawOnCanvas(ctx, canvas.width, canvas.height, prevX, prevY, currX, currY, color, thickness);
                 // @todo if you draw on the canvas, you may want to let everyone know via socket.io (socket.emit...)  by sending them
                 // room, userId, canvas.width, canvas.height, prevX, prevY, currX, currY, color, thickness
+                socket.emit('draw',roomNo, userId, canvas.width, canvas.height, prevX, prevY,currX, currY,color, thickness)
             }
         }
+    });
+
+    socket.on('draw', function (room,userId,canvasWidth,canvasHeight,prevX,prevY,currX,currY,color, thickness) {
+        drawOnCanvas(ctx, canvasWidth,canvasHeight,prevX,prevY,currX,currY,color,thickness)
     });
 
     // this is code left in case you need to  provide a button clearing the canvas (it is suggested that you implement it)
@@ -102,10 +107,7 @@ function drawImageScaled(img, canvas, ctx) {
     let x = (canvas.width / 2) - (img.width / 2) * scale;
     let y = (canvas.height / 2) - (img.height / 2) * scale;
     ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
-
-
 }
-
 
 /**
  * this is called when we want to display what we (or any other connected via socket.io) draws on the canvas
