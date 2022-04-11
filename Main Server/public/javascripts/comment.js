@@ -19,7 +19,7 @@ class Comment{
 }
 
 
-export function initRoom(roomNumber) {
+function initRoom(roomNumber) {
     roomNo = roomNumber
     socket.on('chat', function (room, userId, chatText) {
         let who = userId
@@ -38,6 +38,7 @@ export function initRoom(roomNumber) {
 
     connectToRoom()
 }
+window.initRoom = initRoom
 
 function sendChatText() {
     //get time and create a string out of it
@@ -52,6 +53,7 @@ function sendChatText() {
         .then(r => console.log("Comment stored successfully."))
         .catch(r => console.log("Error storing comment"));
 }
+window.sendChatText = sendChatText
 
 function connectToRoom() {
     //roomNo = document.getElementById('roomNo').value;
