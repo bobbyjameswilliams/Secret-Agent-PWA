@@ -24,8 +24,13 @@
     position: absolute;
     top: 50%;
     left: 25%;
-    transform: translate(-15%, -50%);
+    /*transform: translate(-15%, -50%);*/
     text-align: center;
+}
+
+#image_canvas_wrapper{
+    padding-left: 10% ;
+    padding-right: 10%;
 }
 
 /* Style the image inside the centered container, if needed */
