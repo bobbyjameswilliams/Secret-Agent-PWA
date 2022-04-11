@@ -5,7 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7fbb9b45-1fc5-4e82-b98d-a2908ed8fb21" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/public/javascripts/card-feed.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/javascripts/canvas.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/canvas.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/javascripts/comment.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/comment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/javascripts/news-feed.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/card.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/card.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/card.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/card.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/room.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/room.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MongoDB Server/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MongoDB Server/.idea/vcs.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +36,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/My Drive/Synology Sync/Documents/A-UniversityGD/Year 3 2021-2022/Sem 2/COM3504 IW/Week 4/Solutions/Week 4.b - IndexedDB - Solution" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -47,6 +55,8 @@
       <updated>1649173099821</updated>
       <workItem from="1649173101577" duration="1091000" />
       <workItem from="1649175101995" duration="1637000" />
+      <workItem from="1649505169619" duration="6647000" />
+      <workItem from="1649675353022" duration="7443000" />
     </task>
     <servers />
   </component>
