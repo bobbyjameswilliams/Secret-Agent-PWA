@@ -23,13 +23,7 @@ class Card{
 
 }
 
-function getCards(){
-  let card1 = new Card("Hello World",10)
-  let card2 = new Card("Numero Dos",11)
-  return [card1,card2];
-}
 /* GET users listing. */
-
 router.get('/', function(req, res) {
   console.log("/ get called")
   axios.post('http://localhost:3001/getArticles',{})
