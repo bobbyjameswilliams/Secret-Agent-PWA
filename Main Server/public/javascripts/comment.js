@@ -10,7 +10,7 @@ class Comment{
     date_of_issue;
     chatText;
 
-    constructor(id, roomNo,userID,date_of_issue,chatText) {
+    constructor(roomNo,userID,date_of_issue,chatText) {
         this.roomNo = roomNo;
         this.userID = userID;
         this.date_of_issue = date_of_issue;
@@ -50,7 +50,7 @@ function sendChatText() {
     //Store comment in browser
     let comment = new Comment(roomNo,userId,time,chatText);
     database.storeComment(comment)
-        .then(r => console.log("Comment stored successfully."))
+        .then(r => console.log("storeComment ran."))
         .catch(r => console.log("Error storing comment"));
 }
 window.sendChatText = sendChatText
