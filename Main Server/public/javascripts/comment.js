@@ -1,3 +1,5 @@
+import * as database from './database.js';
+
 let socket= io();
 let roomNo = null;
 let name = null;
@@ -17,7 +19,7 @@ class Comment{
 }
 
 
-function init(roomNumber) {
+export function initRoom(roomNumber) {
     roomNo = roomNumber
     socket.on('chat', function (room, userId, chatText) {
         let who = userId
@@ -43,14 +45,12 @@ function sendChatText() {
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
     let chatText = document.getElementById('comment_input').value;
-
+    socket.emit('chat', roomNo, name, chatText);
     //Store comment in browser
     let comment = new Comment(roomNo,userId,time,chatText);
-    storeComment(comment)
+    database.storeComment(comment)
         .then(r => console.log("Comment stored successfully."))
         .catch(r => console.log("Error storing comment"));
-
-    socket.emit('chat', roomNo, name, chatText);
 }
 
 function connectToRoom() {

@@ -1,6 +1,7 @@
 ////////////////// DATABASE //////////////////
 // the database receives from the server the following structure
 import * as idb from './idb/index.js';
+
 //var idb = require('../idb/index.js');
 
 
@@ -64,18 +65,18 @@ async function retrieveCachedArticles(){
     //TODO: retrieve articles stored in cache
 }
 
-async function storeComment(commentObject){
-    console.log('inserting: '+JSON.stringify(commentObject));
+export async function storeComment(commentObject) {
+    console.log('inserting: ' + JSON.stringify(commentObject));
     if (!db)
         await initDatabase();
     if (db) {
-        try{
+        try {
             let tx = await db.transaction(ARTICLES_STORE_NAME, 'readwrite');
             let store = await tx.objectStore(ARTICLES_STORE_NAME);
             await store.put(commentObject);
-            await  tx.complete;
-            console.log('added item to the store! '+ JSON.stringify(commentObject));
-        } catch(error) {
+            await tx.complete;
+            console.log('added item to the store! ' + JSON.stringify(commentObject));
+        } catch (error) {
             console.log("Error in storeComment()")
         }
     }
