@@ -81,7 +81,7 @@ function connectToRoom() {
     //@todo join the room
     socket.emit('create or join', roomNo, name);
     // TODO: change imageURL
-    initCanvas(socket,"/images/cathedral.jpg");
+    initCanvas(socket,"/images/cathedral.jpg", roomNo, name);
 }
 
 /*

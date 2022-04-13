@@ -34,8 +34,12 @@ class Canvas{
  * it is also the place where the data should be sent  via socket.io
  * @param sckt the open socket to register events on
  * @param imageUrl teh image url to download
+ * @param roomNo
+ * @param name
  */
-function initCanvas(sckt, imageUrl) {
+function initCanvas(sckt, imageUrl, roomNo, name) {
+    this.roomNo = roomNo;
+    this.name = name;
     socket = sckt;
     let flag = false,
         prevX, prevY, currX, currY = 0;
