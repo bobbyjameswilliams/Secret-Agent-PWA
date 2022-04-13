@@ -88,10 +88,50 @@ export async function storeComment(commentObject) {
 }
 window.storeComment = storeComment
 
-async function retrieveAllComments(){
+export async function retrieveAllCachedRoomComments(roomNo){
     //TODO: retrieve all comments given a room ID
+    if (!db)
+        await initDatabase();
+    if (db) {
+        try {
+            console.log('fetching: ' + roomNo);
+            let tx = await db.transaction(CHAT_MESSAGES_STORE_NAME, 'readonly');
+            let store = await tx.objectStore(CHAT_MESSAGES_STORE_NAME);
+            let index = await store.index('chats');
+            let readingsList = await index.getAll(IDBKeyRange.only(roomNo));
+            await tx.complete;
+            let finalResults=[];
+            if (readingsList && readingsList.length > 0) {
+                //TODO:I think this is the issue tbh
+
+                // let max;
+                // for (let elem of readingsList)
+                //     if (!max || elem.date > max.date)
+                //         max = elem;
+                // if (max)
+                //     finalResults.push(elem);
+                return readingsList;
+            } else {
+                // const value = localStorage.getItem(city);
+                // if (value == null)
+                //     return finalResults;
+                // else finalResults.push(value);
+                // return finalResults;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    } else {
+        console.log("Else in retrieve")
+        // const value = localStorage.getItem(city);
+        // let finalResults=[];
+        // if (value == null)
+        //     return finalResults;
+        // else finalResults.push(value);
+        // return finalResults;
+    }
 }
-window.retrieveAllComments = retrieveAllComments
+window.retrieveAllCachedRoomComments = retrieveAllCachedRoomComments
 
 
 
