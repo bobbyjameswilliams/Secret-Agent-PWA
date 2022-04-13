@@ -13,6 +13,7 @@ class Comment{
     constructor(roomNo,userID,date_of_issue,chatText) {
         this.roomNo = roomNo;
         this.userID = userID;
+        //epoch date
         this.date_of_issue = date_of_issue;
         this.chatText = chatText;
     }
@@ -27,8 +28,7 @@ function initRoom(roomNumber) {
     //Prepare chat socket.
     socket.on('chat', function (room, userId, chatText) {
         //get time and create a string out of it
-        var today = new Date();
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var time = Date.now();
         let comment = new Comment(roomNo,userId,time,chatText);
         //Cache comment in IDB
         database.storeComment(comment)
