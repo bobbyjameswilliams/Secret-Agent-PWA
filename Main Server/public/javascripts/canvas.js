@@ -5,6 +5,30 @@ let room;
 let userId;
 let color = 'red', thickness = 4;
 
+
+class Canvas{
+    roomNo;
+    width;
+    height;
+    prevX;
+    prevY;
+    currX;
+    currY;
+    color;
+    thickness;
+
+    constructor(roomNo, width, height, prevX, prevY, currX, currY, color, thickness) {
+        this.roomNo = roomNo;
+        this.width = width;
+        this.height = height;
+        this.prevX = prevX;
+        this.prevY = prevY;
+        this.currX = currX;
+        this.currY = currY;
+        this.color = color;
+        this.thickness = thickness;
+    }
+}
 /**
  * it inits the image canvas to draw on. It sets up the events to respond to (click, mouse on, etc.)
  * it is also the place where the data should be sent  via socket.io
