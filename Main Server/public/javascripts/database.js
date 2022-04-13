@@ -46,13 +46,21 @@ async function initDatabase(){
                     });
                     appIDB1.createIndex('article', 'article', {unique: false, multiEntry: true});
                 }
-                //Creating Comments Store
-                if (!upgradeDb.objectStoreNames.contains(CHAT_MESSAGES_STORE_NAME)) {
-                    let articleDB = upgradeDb.createObjectStore(CHAT_MESSAGES_STORE_NAME, {
+                //Creating image annotations store
+                if (!upgradeDb.objectStoreNames.contains(IMAGE_ANNOTATIONS_STORE_NAME)) {
+                    let articleDB = upgradeDb.createObjectStore(IMAGE_ANNOTATIONS_STORE_NAME, {
                         keyPath: 'id',
                         autoIncrement: true
                     });
-                    articleDB.createIndex('chats', 'roomNo', {unique: false, multiEntry: true});
+                    articleDB.createIndex('canvas', 'roomNo', {unique: false, multiEntry: true});
+                }
+                //Creating Comments Store
+                if (!upgradeDb.objectStoreNames.contains(CHAT_MESSAGES_STORE_NAME)) {
+                        let articleDB = upgradeDb.createObjectStore(CHAT_MESSAGES_STORE_NAME, {
+                            keyPath: 'id',
+                            autoIncrement: true
+                        });
+                        articleDB.createIndex('chats', 'roomNo', {unique: false, multiEntry: true});
                 }
             }
         });
