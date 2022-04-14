@@ -2,10 +2,13 @@
 <html>
 <head>
     <title><%= title %></title>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/knowledge/kgsearch/widget/1.0/widget.min.css">
+    <script type="text/javascript" src="https://www.gstatic.com/knowledge/kgsearch/widget/1.0/widget.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/javascripts/comment.js"></script>
     <script src="/javascripts/canvas.js"></script>
+    <script src="/javascripts/knowledge-graph.js"></script>
     <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
     <link rel="stylesheet" href="/stylesheets/partials/navbar.css" />
     <link rel="stylesheet" href="/stylesheets/room.css" />
@@ -14,23 +17,36 @@
 <header>
     <%- include('./partials/nav.html'); %>
 </header>
-<div class="split left">
-    <div class="row h-100 justify-content-center align-items-center" id="image_canvas_wrapper">
-        <canvas id="canvas"></canvas>
-        <img id="image" class="card-img" alt="Card image cap">
-    </div>
-</div>
-
-<div class="split right">
-    <div class="row">
-        <div class="boxed scrolling" id="history"></div>
-    </div>
-    <div class="row comment_row">
-        <div class="col-8">
-            <input class="comment_input" id="comment_input" type="text" placeholder="Enter Comment">
+<div class="row">
+    <div class="col">
+        <div class="row h-100 justify-content-center align-items-center" id="image_canvas_wrapper">
+            <canvas id="canvas"></canvas>
+            <img id="image" class="card-img" alt="Card image cap">
         </div>
-        <div class="col-4">
-            <button  class="btn btn-primary" onclick=sendChatText("Example")>Comment</button>
+    </div>
+
+    <div class="col">
+        <div class="row" id="knowledge_graph">
+            <div class="col-4">
+                <input  id="kg_search" type="text" placeholder="KG Search">
+            </div>
+            <div class="col-4">
+                <input  id="kg_type" type="text" placeholder="KG Type">
+            </div>
+            <div class="col-4">
+                <button  class="btn btn-primary" onclick=widgetInit()>Update Widget</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="boxed scrolling" id="history"></div>
+        </div>
+        <div class="row comment_row">
+            <div class="col-8">
+                <input class="comment_input" id="comment_input" type="text" placeholder="Enter Comment">
+            </div>
+            <div class="col-4">
+                <button  class="btn btn-primary" onclick=sendChatText("Example")>Comment</button>
+            </div>
         </div>
     </div>
 </div>
