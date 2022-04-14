@@ -6,12 +6,14 @@
     <link rel='stylesheet' href='/stylesheets/style.css'/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/javascripts/canvas.js"></script>
-    <script src="/javascripts/database.js" type="module"></script>
     <script src="/javascripts/idb/index.js" type="module"></script>
+    <script src="/javascripts/app.js"></script>
+    <script src="/javascripts/database.js" type="module"></script>
     <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
     <link rel="stylesheet" href="/stylesheets/partials/navbar.css" />
 </head>
-<body onload="initDatabase()">
+<body onload="initServiceWorker(); initDatabase();">
+
 <header>
     <%- include('./partials/nav.html'); %>
 </header>

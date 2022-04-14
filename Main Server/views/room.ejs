@@ -6,14 +6,15 @@
     <script type="text/javascript" src="https://www.gstatic.com/knowledge/kgsearch/widget/1.0/widget.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="/javascripts/comment.js"></script>
+    <script src="/javascripts/comment.js" type="module"></script>
     <script src="/javascripts/canvas.js"></script>
+    <script src="/javascripts/database.js" type="module"></script>
     <script src="/javascripts/knowledge-graph.js"></script>
     <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
     <link rel="stylesheet" href="/stylesheets/partials/navbar.css" />
     <link rel="stylesheet" href="/stylesheets/room.css" />
 </head>
-<body onload="init('<%=title %>')">
+<body onload="initRoom('<%=title %>')">
 <header>
     <%- include('./partials/nav.html'); %>
 </header>

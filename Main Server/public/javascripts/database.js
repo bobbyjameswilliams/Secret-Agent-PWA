@@ -1,20 +1,26 @@
 ////////////////// DATABASE //////////////////
 // the database receives from the server the following structure
 import * as idb from './idb/index.js';
+
 //var idb = require('../idb/index.js');
 
+/**
+*class Comment{
+*    roomNo;
+*    userID;
+*    date_of_issue;
+*    chatText;
+*
+*    constructor(id, roomNo,userID,date_of_issue,chatText) {
+*        this.roomNo = roomNo;
+*        this.userID = userID;
+*        this.date_of_issue = date_of_issue;
+*        this.chatText = chatText;
+*    }
+*}
+*/
 
-// const Article = new Schema(
-//     {
-//         title: {type: String, required: true, max: 100},
-//         file_path: {type: String, max: 100},
-//         description: {type: String, max: 100},
-//         author_name: {type: String, max: 100},
-//         date_of_issue: {type: Date},
-//     }
-// );
-
-let db;
+let db
 
 // Databases
 const APP_DB_NAME = 'db_app_1';
@@ -30,7 +36,6 @@ const CHAT_MESSAGES_STORE_NAME= 'store_chat_messages';
  */
 async function initDatabase(){
     if (!db) {
-        let db;
         db = await idb.openDB(APP_DB_NAME, 2, {
             upgrade(upgradeDb, oldVersion, newVersion) {
                 //Creating articles store
@@ -39,7 +44,7 @@ async function initDatabase(){
                         keyPath: 'id',
                         autoIncrement: true
                     });
-                    appIDB1.createIndex('article', 'article', {unique: true, multiEntry: false});
+                    appIDB1.createIndex('article', 'article', {unique: false, multiEntry: true});
                 }
                 //Creating Comments Store
                 if (!upgradeDb.objectStoreNames.contains(CHAT_MESSAGES_STORE_NAME)) {
@@ -47,11 +52,11 @@ async function initDatabase(){
                         keyPath: 'id',
                         autoIncrement: true
                     });
-                    articleDB.createIndex('chats', 'chats', {unique: true, multiEntry: false});
+                    articleDB.createIndex('chats', 'roomNo', {unique: false, multiEntry: true});
                 }
             }
         });
-        console.log('db created test');
+        console.log('db created');
     }
 }
 window.initDatabase= initDatabase;
@@ -64,13 +69,69 @@ async function retrieveCachedArticles(){
     //TODO: retrieve articles stored in cache
 }
 
-async function storeComment(){
-    //TODO: store comment in the comment store
+export async function storeComment(commentObject) {
+    console.log('inserting: ' + JSON.stringify(commentObject));
+    if (!db)
+        await initDatabase();
+        console.log(db)
+    if (db) {
+        try {
+            let tx = await db.transaction(CHAT_MESSAGES_STORE_NAME, 'readwrite');
+            let store = await tx.objectStore(CHAT_MESSAGES_STORE_NAME);
+            await store.put(commentObject);
+            await tx.complete;
+            console.log('added item to the store! ' + JSON.stringify(commentObject));
+        } catch (error) {
+            console.log("Error in storeComment()")
+        }
+    }
 }
+window.storeComment = storeComment
 
-async function retrieveAllComments(){
+export async function retrieveAllCachedRoomComments(roomNo){
     //TODO: retrieve all comments given a room ID
+    if (!db)
+        await initDatabase();
+    if (db) {
+        try {
+            console.log('fetching: ' + roomNo);
+            let tx = await db.transaction(CHAT_MESSAGES_STORE_NAME, 'readonly');
+            let store = await tx.objectStore(CHAT_MESSAGES_STORE_NAME);
+            let index = await store.index('chats');
+            let readingsList = await index.getAll(IDBKeyRange.only(roomNo));
+            await tx.complete;
+            let finalResults=[];
+            if (readingsList && readingsList.length > 0) {
+                //TODO:I think this is the issue tbh
+
+                // let max;
+                // for (let elem of readingsList)
+                //     if (!max || elem.date > max.date)
+                //         max = elem;
+                // if (max)
+                //     finalResults.push(elem);
+                return readingsList;
+            } else {
+                // const value = localStorage.getItem(city);
+                // if (value == null)
+                //     return finalResults;
+                // else finalResults.push(value);
+                // return finalResults;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    } else {
+        console.log("Else in retrieve")
+        // const value = localStorage.getItem(city);
+        // let finalResults=[];
+        // if (value == null)
+        //     return finalResults;
+        // else finalResults.push(value);
+        // return finalResults;
+    }
 }
+window.retrieveAllCachedRoomComments = retrieveAllCachedRoomComments
 
 
 
