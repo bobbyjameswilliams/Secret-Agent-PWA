@@ -112,10 +112,9 @@ export async function storeAnnotation(canvasObject) {
         }
     }
 }
-window.storeComment = storeComment
 
 export async function retrieveAllCachedRoomComments(roomNo){
-    //TODO: retrieve all comments given a room ID
+    //TODO: handle when 0 items
     if (!db)
         await initDatabase();
     if (db) {
@@ -126,16 +125,7 @@ export async function retrieveAllCachedRoomComments(roomNo){
             let index = await store.index('chats');
             let readingsList = await index.getAll(IDBKeyRange.only(roomNo));
             await tx.complete;
-            let finalResults=[];
             if (readingsList && readingsList.length > 0) {
-                //TODO:I think this is the issue tbh
-
-                // let max;
-                // for (let elem of readingsList)
-                //     if (!max || elem.date > max.date)
-                //         max = elem;
-                // if (max)
-                //     finalResults.push(elem);
                 return readingsList;
             } else {
                 // const value = localStorage.getItem(city);
@@ -158,3 +148,37 @@ export async function retrieveAllCachedRoomComments(roomNo){
     }
 }
 window.retrieveAllCachedRoomComments = retrieveAllCachedRoomComments
+
+export async function retrieveRoomImageAnnotations(roomNo){
+    if (!db)
+        await initDatabase();
+    if (db) {
+        try {
+            console.log('fetching: ' + roomNo);
+            let tx = await db.transaction(IMAGE_ANNOTATIONS_STORE_NAME, 'readonly');
+            let store = await tx.objectStore(IMAGE_ANNOTATIONS_STORE_NAME);
+            let index = await store.index('canvas');
+            let readingsList = await index.getAll(IDBKeyRange.only(roomNo));
+            await tx.complete;
+            if (readingsList && readingsList.length > 0) {
+                return readingsList;
+            } else {
+                // const value = localStorage.getItem(city);
+                // if (value == null)
+                //     return finalResults;
+                // else finalResults.push(value);
+                // return finalResults;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    } else {
+        console.log("Else in retrieve")
+        // const value = localStorage.getItem(city);
+        // let finalResults=[];
+        // if (value == null)
+        //     return finalResults;
+        // else finalResults.push(value);
+        // return finalResults;
+    }
+}

@@ -80,7 +80,6 @@ export function initCanvas(sckt, imageUrl, roomNo, name) {
             }
         }
     });
-    window.initCanvas = initCanvas;
 
     socket.on('draw', function (room,userId,canvasWidth,canvasHeight,prevX,prevY,currX,currY,color, thickness) {
         drawOnCanvas(ctx, canvasWidth,canvasHeight,prevX,prevY,currX,currY,color,thickness)
@@ -128,7 +127,10 @@ export function initCanvas(sckt, imageUrl, roomNo, name) {
             }
         }, 10);
     });
+    retrieveCanvas(roomNo);
 }
+window.initCanvas = initCanvas;
+
 
 /**
  * called when it is required to draw the image on the canvas. We have resized the canvas to the same image size
@@ -177,4 +179,30 @@ function drawOnCanvas(ctx, canvasWidth, canvasHeight, prevX, prevY, currX, currY
     ctx.lineWidth = thickness;
     ctx.stroke();
     ctx.closePath();
+}
+
+/**
+ * Restores the canvas image from previous session
+ */
+
+function retrieveCanvas(roomNo){
+    database.retrieveRoomImageAnnotations(roomNo)
+        .then(r => r.forEach(restoreCanvas))
+        .catch(r => console.log(r))
+}
+
+function restoreCanvas(canvasData){
+    //Defining all the parameters
+    let cvx = document.getElementById('canvas');
+    let ctx = cvx.getContext('2d');
+    let width = canvasData.width;
+    let height = canvasData.height;
+    let prevX = canvasData.prevX;
+    let prevY = canvasData.prevY;
+    let currX = canvasData.currX;
+    let currY = canvasData.currY;
+    let color = canvasData.color;
+    let thickness = canvasData.thickness;
+
+        drawOnCanvas(ctx, width, height, prevX, prevY, currX, currY, color, thickness);
 }
