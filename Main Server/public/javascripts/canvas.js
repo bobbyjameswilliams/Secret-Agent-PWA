@@ -1,9 +1,12 @@
+import * as database from './database.js';
 /**
  * this file contains the functions to control the drawing on the canvas
  */
+
 let room;
 let userId;
 let color = 'red', thickness = 4;
+
 
 
 class Canvas{
@@ -37,9 +40,10 @@ class Canvas{
  * @param roomNo
  * @param name
  */
-function initCanvas(sckt, imageUrl, roomNo, name) {
-    this.roomNo = roomNo;
-    this.name = name;
+export function initCanvas(sckt, imageUrl, roomNo, name) {
+    room = roomNo;
+    userId = name;
+    let socket;
     socket = sckt;
     let flag = false,
         prevX, prevY, currX, currY = 0;
@@ -68,9 +72,15 @@ function initCanvas(sckt, imageUrl, roomNo, name) {
                 // @todo if you draw on the canvas, you may want to let everyone know via socket.io (socket.emit...)  by sending them
                 // room, userId, canvas.width, canvas.height, prevX, prevY, currX, currY, color, thickness
                 socket.emit('draw',roomNo, userId, canvas.width, canvas.height, prevX, prevY,currX, currY,color, thickness)
+                //Store IDB
+                let canvasObject = new Canvas(roomNo, canvas.width, canvas.height, prevX, prevY,currX, currY,color, thickness)
+                database.storeAnnotation(canvasObject)
+                    .then(r => console.log("Annotation Stored Successfully"))
+                    .catch(r => console.log(() => console.log("error storing annotation")));
             }
         }
     });
+    window.initCanvas = initCanvas;
 
     socket.on('draw', function (room,userId,canvasWidth,canvasHeight,prevX,prevY,currX,currY,color, thickness) {
         drawOnCanvas(ctx, canvasWidth,canvasHeight,prevX,prevY,currX,currY,color,thickness)

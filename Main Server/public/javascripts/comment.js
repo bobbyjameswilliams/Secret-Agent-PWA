@@ -1,4 +1,5 @@
 import * as database from './database.js';
+import * as canvas from './canvas.js';
 
 let socket= io();
 let roomNo = null;
@@ -81,7 +82,7 @@ function connectToRoom() {
     //@todo join the room
     socket.emit('create or join', roomNo, name);
     // TODO: change imageURL
-    initCanvas(socket,"/images/cathedral.jpg", roomNo, name);
+    canvas.initCanvas(socket,"/images/cathedral.jpg", roomNo, name);
 }
 
 /*

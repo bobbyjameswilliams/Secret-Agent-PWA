@@ -94,6 +94,24 @@ export async function storeComment(commentObject) {
         }
     }
 }
+
+export async function storeAnnotation(canvasObject) {
+    console.log('inserting: ' + JSON.stringify(canvasObject));
+    if (!db)
+        await initDatabase();
+    console.log(db)
+    if (db) {
+        try {
+            let tx = await db.transaction(IMAGE_ANNOTATIONS_STORE_NAME, 'readwrite');
+            let store = await tx.objectStore(IMAGE_ANNOTATIONS_STORE_NAME);
+            await store.put(canvasObject);
+            await tx.complete;
+            console.log('added item to the store! ' + JSON.stringify(canvasObject));
+        } catch (error) {
+            console.log("Error in storeAnnotation()")
+        }
+    }
+}
 window.storeComment = storeComment
 
 export async function retrieveAllCachedRoomComments(roomNo){
@@ -140,6 +158,3 @@ export async function retrieveAllCachedRoomComments(roomNo){
     }
 }
 window.retrieveAllCachedRoomComments = retrieveAllCachedRoomComments
-
-
-
