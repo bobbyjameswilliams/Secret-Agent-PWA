@@ -1,50 +1,16 @@
-/* Split the screen in half */
-.split {
-    height: 100%;
-    width: 50%;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    overflow-x: hidden;
-    padding-top: 20px;
-}
-
-/* Control the left side */
-.left {
-    left: 0;
-}
-
-/* Control the right side */
-.right {
-    right: 0;
-}
-
-/* If you want the content centered horizontally and vertically */
-.centered {
-    position: absolute;
-    top: 50%;
-    left: 25%;
-    /*transform: translate(-15%, -50%);*/
-    text-align: center;
-}
-
 #image_canvas_wrapper{
-    padding-left: 10% ;
-    padding-right: 10%;
+    margin-left: 10% ;
+    margin-right: 10%;
 }
 
-/* Style the image inside the centered container, if needed */
-.centered img {
-    width: 100%;
+#knowledge_graph {
+    margin-top: 5%;
 }
 
 #history {
-    margin-top: 10%;
-    height: 75vh;
+    margin-top: 5%;
+    height: 70vh;
     overflow-y: scroll;
-}
-
-.comment_row {
 }
 
 .comment_input{
