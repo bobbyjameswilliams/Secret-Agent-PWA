@@ -1,17 +1,49 @@
+import * as database from './database.js';
 /**
  * this file contains the functions to control the drawing on the canvas
  */
+
 let room;
 let userId;
 let color = 'red', thickness = 4;
 
+
+
+class Canvas{
+    roomNo;
+    width;
+    height;
+    prevX;
+    prevY;
+    currX;
+    currY;
+    color;
+    thickness;
+
+    constructor(roomNo, width, height, prevX, prevY, currX, currY, color, thickness) {
+        this.roomNo = roomNo;
+        this.width = width;
+        this.height = height;
+        this.prevX = prevX;
+        this.prevY = prevY;
+        this.currX = currX;
+        this.currY = currY;
+        this.color = color;
+        this.thickness = thickness;
+    }
+}
 /**
  * it inits the image canvas to draw on. It sets up the events to respond to (click, mouse on, etc.)
  * it is also the place where the data should be sent  via socket.io
  * @param sckt the open socket to register events on
  * @param imageUrl teh image url to download
+ * @param roomNo
+ * @param name
  */
-function initCanvas(sckt, imageUrl) {
+export function initCanvas(sckt, imageUrl, roomNo, name) {
+    room = roomNo;
+    userId = name;
+    let socket;
     socket = sckt;
     let flag = false,
         prevX, prevY, currX, currY = 0;
@@ -40,6 +72,11 @@ function initCanvas(sckt, imageUrl) {
                 // @todo if you draw on the canvas, you may want to let everyone know via socket.io (socket.emit...)  by sending them
                 // room, userId, canvas.width, canvas.height, prevX, prevY, currX, currY, color, thickness
                 socket.emit('draw',roomNo, userId, canvas.width, canvas.height, prevX, prevY,currX, currY,color, thickness)
+                //Store IDB
+                let canvasObject = new Canvas(roomNo, canvas.width, canvas.height, prevX, prevY,currX, currY,color, thickness)
+                database.storeAnnotation(canvasObject)
+                    .then(r => console.log("Annotation Stored Successfully"))
+                    .catch(r => console.log(() => console.log("error storing annotation")));
             }
         }
     });
@@ -90,7 +127,10 @@ function initCanvas(sckt, imageUrl) {
             }
         }, 10);
     });
+    retrieveCanvas(roomNo);
 }
+window.initCanvas = initCanvas;
+
 
 /**
  * called when it is required to draw the image on the canvas. We have resized the canvas to the same image size
@@ -139,4 +179,30 @@ function drawOnCanvas(ctx, canvasWidth, canvasHeight, prevX, prevY, currX, currY
     ctx.lineWidth = thickness;
     ctx.stroke();
     ctx.closePath();
+}
+
+/**
+ * Restores the canvas image from previous session
+ */
+
+function retrieveCanvas(roomNo){
+    database.retrieveRoomImageAnnotations(roomNo)
+        .then(r => r.forEach(restoreCanvas))
+        .catch(r => console.log(r))
+}
+
+function restoreCanvas(canvasData){
+    //Defining all the parameters
+    let cvx = document.getElementById('canvas');
+    let ctx = cvx.getContext('2d');
+    let width = canvasData.width;
+    let height = canvasData.height;
+    let prevX = canvasData.prevX;
+    let prevY = canvasData.prevY;
+    let currX = canvasData.currX;
+    let currY = canvasData.currY;
+    let color = canvasData.color;
+    let thickness = canvasData.thickness;
+
+        drawOnCanvas(ctx, width, height, prevX, prevY, currX, currY, color, thickness);
 }

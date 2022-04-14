@@ -69,7 +69,8 @@
       <workItem from="1649505169619" duration="6647000" />
       <workItem from="1649675353022" duration="7912000" />
       <workItem from="1649853099170" duration="8969000" />
-      <workItem from="1649930898475" duration="301000" />
+      <workItem from="1649884931066" duration="2559000" />
+
     </task>
     <servers />
   </component>
@@ -86,5 +87,17 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/public/javascripts/canvas.js</url>
+          <line>188</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
