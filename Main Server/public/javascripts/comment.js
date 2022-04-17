@@ -102,7 +102,7 @@ function prepareChatMessage(userId, chatText){
 /*
 Prepares joined room notifications for writeOnHistory
  */
-function prepareJoinedRoomNotification(room, userID){
+function prepareJoinedRoomNotification(room, userId){
     if (userId !== name){
         // notifies that someone has joined the room
         return ('<b>'+userId+'</b>' + ' joined room ' + room);
