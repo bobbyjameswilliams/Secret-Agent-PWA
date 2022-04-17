@@ -13,9 +13,13 @@ exports.init = function(io) {
         io.sockets.to(room).emit('chat', room, userId, chatText);
       });
 
+      socket.on('knowledge snippet', function (room, userId, header, body){
+        io.sockets.to(room).emit('knowledge snippet',room, userId, header, body)
+      });
+
       socket.on('draw', function (room,userId,canvasWidth,canvasHeight,prevX,prevY,currX,currY,color, thickness) {
         io.sockets.to(room).emit('draw',room, userId, canvasWidth, canvasHeight, prevX, prevY,currX, currY,color, thickness)
-      })
+      });
 
       socket.on('disconnect', function(){
         console.log('someone disconnected');

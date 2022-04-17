@@ -1,6 +1,12 @@
 #image_canvas_wrapper{
     margin-left: 10% ;
     margin-right: 10%;
+    height: 70vh;
+}
+
+#canvas_buttons{
+    margin-left: 10% ;
+    margin-right: 10%;
 }
 
 #knowledge_graph {

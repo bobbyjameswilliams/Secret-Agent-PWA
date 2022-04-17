@@ -50,18 +50,10 @@ function initCanvas(sckt, imageUrl) {
 
     // this is code left in case you need to  provide a button clearing the canvas (it is suggested that you implement it)
     $('.canvas-clear').on('click', function (e) {
-        let c_width = canvas.width();
-        let c_height = canvas.height();
-        ctx.clearRect(0, 0, c_width, c_height);
+        // Store the current transformation matrix
+        img.dispatchEvent(new Event('load'));
         // @todo if you clear the canvas, you want to let everyone know via socket.io (socket.emit...)
-
     });
-
-    // @todo here you want to capture the event on the socket when someone else is drawing on their canvas (socket.on...)
-    // I suggest that you receive userId, canvasWidth, canvasHeight, x1, y21, x2, y2, color, thickness
-    // and then you call
-    //     let ctx = canvas[0].getContext('2d');
-    //     drawOnCanvas(ctx, canvasWidth, canvasHeight, x1, y21, x2, y2, color, thickness)
 
     // this is called when the src of the image is loaded
     // this is an async operation as it may take time

@@ -1,5 +1,6 @@
 const service_url = 'https://kgsearch.googleapis.com/v1/entities:search';
 const apiKey= 'AIzaSyAG7w627q-djB4gTTahssufwNOImRqdYKM';
+let socket = io();
 
 function widgetInit(){
     let type= document.getElementById("kg_type").value;
@@ -19,11 +20,9 @@ function widgetInit(){
  * @param event the Google Graph widget event {@link https://developers.google.com/knowledge-graph/how-tos/search-widget}
  */
 function selectItem(event){
-    let row= event.row;
-    let history = document.getElementById('history');
-    history.appendChild(createCard(row));
-    // scroll to the last element
-    history.scrollTop = history.scrollHeight;
+    let row = event.row;
+    sendKnowledgeSnippet(row.name, row.rc);
+
     document.getElementById("kg_search").value = '';
     /**
     document.getElementById('resultId').innerText= 'id: '+row.id;
@@ -34,7 +33,13 @@ function selectItem(event){
      */
 }
 
-function createCard(row) {
+function writeKnowledgeCard(card){
+    let history = document.getElementById('history');
+    history.appendChild(card);
+    history.scrollTop = history.scrollHeight;
+}
+
+function createCard(header, body) {
     let card = document.createElement('div');
     card.className = 'card';
 
@@ -44,14 +49,14 @@ function createCard(row) {
 
     let cardHeader = document.createElement('h3');
     cardHeader.className = 'card-header';
-    cardHeader.innerHTML = row.name;
+    cardHeader.innerHTML = header;
 
     let cardBody = document.createElement('div');
     cardBody.className = 'card-body';
 
     let cardText = document.createElement('p');
     cardText.className = 'card-text';
-    cardText.innerHTML = row.rc;
+    cardText.innerHTML = body;
 
     card.appendChild(cardHeader)
     cardBody.appendChild(cardText);

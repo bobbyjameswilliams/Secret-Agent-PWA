@@ -4,16 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7fbb9b45-1fc5-4e82-b98d-a2908ed8fb21" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/public/javascripts/app.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/service-worker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Main server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Main server.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+    <list default="true" id="7fbb9b45-1fc5-4e82-b98d-a2908ed8fb21" name="Changes" comment="Resolve Merge Conflicts">
+      <change beforePath="$PROJECT_DIR$/public/javascripts/canvas.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/canvas.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/javascripts/comment.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/comment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/javascripts/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/database.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/card.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/card.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/javascripts/knowledge-graph.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/knowledge-graph.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/stylesheets/room.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/stylesheets/room.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socket.io/socket-io.js" beforeDir="false" afterPath="$PROJECT_DIR$/socket.io/socket-io.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/room.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/room.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
@@ -45,6 +41,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.DirectoryMappings" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="Node.js.bin/www">
@@ -69,8 +66,17 @@
       <workItem from="1649505169619" duration="6647000" />
       <workItem from="1649675353022" duration="7912000" />
       <workItem from="1649853099170" duration="8969000" />
-      <workItem from="1649930898475" duration="301000" />
+      <workItem from="1649930898475" duration="5294000" />
+      <workItem from="1650191233854" duration="391000" />
     </task>
+    <task id="LOCAL-00001" summary="Resolve Merge Conflicts">
+      <created>1649931264020</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1649931264020</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -86,5 +92,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Resolve Merge Conflicts" />
+    <option name="LAST_COMMIT_MESSAGE" value="Resolve Merge Conflicts" />
   </component>
 </project>
