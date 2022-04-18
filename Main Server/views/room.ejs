@@ -24,32 +24,41 @@
             <canvas id="canvas"></canvas>
             <img id="image" class="card-img" alt="Card image cap">
         </div>
-        <div class="row", id="canvas_buttons">
-            <button class="btn btn-danger w-25 canvas-clear">Clear Canvas</button>
-        </div>
     </div>
 
     <div class="col">
         <div class="row" id="knowledge_graph">
-            <div class="col-4">
+            <div class="col-3">
                 <input  id="kg_search" type="text" placeholder="KG Search">
             </div>
-            <div class="col-4">
+            <div class="col-3">
                 <input  id="kg_type" type="text" placeholder="KG Type">
             </div>
-            <div class="col-4">
+            <div class="col-3">
                 <button  class="btn btn-primary" onclick=widgetInit()>Update Widget</button>
+            </div>
+            <div class="col-1">
+                <div class="colourbox" style="background-color:red" onclick=changeColor('red')></div>
+            </div>
+            <div class="col-1">
+                <div class="colourbox" style="background-color:green" onclick=changeColor('green')></div>
+            </div>
+            <div class="col-1">
+                <div class="colourbox" style="background-color:blue" onclick=changeColor('blue')></div>
             </div>
         </div>
         <div class="row">
             <div class="boxed scrolling" id="history"></div>
         </div>
         <div class="row comment_row">
-            <div class="col-8">
+            <div class="col-7">
                 <input class="comment_input" id="comment_input" type="text" placeholder="Enter Comment">
             </div>
-            <div class="col-4">
+            <div class="col-2">
                 <button  class="btn btn-primary" onclick=sendChatText("Example")>Comment</button>
+            </div>
+            <div class="col-3">
+                <button class="btn btn-danger canvas-clear">Clear Canvas</button>
             </div>
         </div>
     </div>

@@ -21,7 +21,8 @@ function widgetInit(){
  */
 function selectItem(event){
     let row = event.row;
-    sendKnowledgeSnippet(row.name, row.rc);
+    let c = canvasColour;
+    sendKnowledgeSnippet(row.name, row.rc, c);
 
     document.getElementById("kg_search").value = '';
     /**
@@ -39,7 +40,7 @@ function writeKnowledgeCard(card){
     history.scrollTop = history.scrollHeight;
 }
 
-function createCard(header, body) {
+function createCard(header, body, colour) {
     let card = document.createElement('div');
     card.className = 'card';
 
@@ -50,6 +51,7 @@ function createCard(header, body) {
     let cardHeader = document.createElement('h3');
     cardHeader.className = 'card-header';
     cardHeader.innerHTML = header;
+    cardHeader.style.backgroundColor = colour;
 
     let cardBody = document.createElement('div');
     cardBody.className = 'card-body';

@@ -6,8 +6,7 @@ import * as database from './database.js';
 let room;
 let userId;
 let color = 'red', thickness = 4;
-
-
+window.canvasColour = color;
 
 class Canvas{
     roomNo;
@@ -198,3 +197,9 @@ function restoreCanvas(canvasData){
 
         drawOnCanvas(ctx, width, height, prevX, prevY, currX, currY, color, thickness);
 }
+
+function changeColor(colour){
+    color = colour;
+    window.canvasColour = color;
+}
+window.changeColor = changeColor

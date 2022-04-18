@@ -13,8 +13,8 @@ exports.init = function(io) {
         io.sockets.to(room).emit('chat', room, userId, chatText);
       });
 
-      socket.on('knowledge snippet', function (room, userId, header, body){
-        io.sockets.to(room).emit('knowledge snippet',room, userId, header, body)
+      socket.on('knowledge snippet', function (room, userId, header, body, colour){
+        io.sockets.to(room).emit('knowledge snippet',room, userId, header, body, colour)
       });
 
       socket.on('draw', function (room,userId,canvasWidth,canvasHeight,prevX,prevY,currX,currY,color, thickness) {

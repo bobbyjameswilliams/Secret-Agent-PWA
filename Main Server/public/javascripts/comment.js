@@ -64,8 +64,8 @@ function initRoom(roomNumber) {
         }
     });
 
-    socket.on('knowledge snippet', function (room, userId, header, body){
-        let card = createCard(header, body);
+    socket.on('knowledge snippet', function (room, userId, header, body, colour){
+        let card = createCard(header, body, colour);
         writeKnowledgeCard(card);
     });
 
@@ -144,7 +144,7 @@ function writeOnHistory(text) {
     document.getElementById('comment_input').value = '';
 }
 
-function sendKnowledgeSnippet(header, body){
-    socket.emit('knowledge snippet',roomNo,name,header,body)
+function sendKnowledgeSnippet(header, body, colour){
+    socket.emit('knowledge snippet',roomNo,name,header,body,colour)
 }
 window.sendKnowledgeSnippet = sendKnowledgeSnippet
