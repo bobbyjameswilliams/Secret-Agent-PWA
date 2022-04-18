@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Insert</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/javascripts/card-feed.js"></script>
+    <script src="/javascripts/canvas.js"></script>
+    <script src="/javascripts/database.js" type="module"></script>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+    <link rel="stylesheet" href="/stylesheets/partials/navbar.css" />
+    <link rel="stylesheet" href="/stylesheets/card.css" />
+</head>
+<body>
+<header>
+    <%- include('./partials/nav.html'); %>
+</header>
+<div class="container">
+    <div class="col-sm">
+        <div class="card">
+            <img class="card-img" src="/images/placeholder.png" alt="Card image cap">
+            <div class="card-body">
+                <h3 class="card-title" id="title_input" contenteditable="true">Enter Title..</h3>
+                <p class="card-text" id="description_input" placeholder="Description">Description here..</p>
+                <div class="row">
+                    <div class="col-5">
+                        <input class="text_input" id='filepath_input' type="text" placeholder="Enter Filepath">
+                    </div>
+                    <div class="col-4">
+                        <input class="text_input" id='author_name_input' type="text" placeholder="Enter Author Name">
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-primary" id="connect">Insert</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
