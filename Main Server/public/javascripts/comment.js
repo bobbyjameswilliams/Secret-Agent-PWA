@@ -136,6 +136,10 @@ function displayCachedHistory(cachedData){
         }
 }
 
+/**
+ * Writes text passed in on the chat history
+ * @param text Text to be displayed on chat history
+ */
 function writeOnHistory(text) {
     if (text==='') return;
     let history = document.getElementById('history');
@@ -147,6 +151,12 @@ function writeOnHistory(text) {
     document.getElementById('comment_input').value = '';
 }
 
+/**
+ * Emits knowledge snippet out the knowledge snippet socket.
+ * @param header
+ * @param body
+ * @param colour
+ */
 function sendKnowledgeSnippet(header, body, colour){
     socket.emit('knowledge snippet',roomNo,name,header,body,colour)
 }
