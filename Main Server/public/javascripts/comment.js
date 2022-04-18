@@ -23,8 +23,9 @@ class Comment{
 }
 
 
-function initRoom(roomNumber) {
-    roomNo = roomNumber
+function initRoom(roomNumber, username) {
+    name = username;
+    roomNo = roomNumber;
     //Load in and display previous chat history
     //let cachedData = loadAndDisplayCachedHistory(roomNo)
     loadAndDisplayCachedHistory(roomNo)
@@ -105,7 +106,7 @@ Prepares joined room notifications for writeOnHistory
 function prepareJoinedRoomNotification(room, userId){
     if (userId !== name){
         // notifies that someone has joined the room
-        return ('<b>'+userId+'</b>' + ' joined room ' + room);
+        return ('<b>'+userId+'</b>' + ' joined the room.');
     }
 }
 

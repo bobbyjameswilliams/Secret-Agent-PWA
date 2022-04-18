@@ -5,13 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7fbb9b45-1fc5-4e82-b98d-a2908ed8fb21" name="Changes" comment="Resolve Merge Conflicts">
-      <change beforePath="$PROJECT_DIR$/public/javascripts/canvas.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/canvas.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/javascripts/card-feed.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/card-feed.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/javascripts/comment.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/comment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/javascripts/knowledge-graph.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/knowledge-graph.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/stylesheets/card.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/stylesheets/card.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/stylesheets/room.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/stylesheets/room.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket.io/socket-io.js" beforeDir="false" afterPath="$PROJECT_DIR$/socket.io/socket-io.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/card.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/card.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/card.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/card.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/room.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/room.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +76,7 @@
       <workItem from="1649853099170" duration="8969000" />
       <workItem from="1649930898475" duration="5294000" />
       <workItem from="1650191233854" duration="1853000" />
-      <workItem from="1650289746122" duration="4773000" />
+      <workItem from="1650289746122" duration="7478000" />
     </task>
     <task id="LOCAL-00001" summary="Resolve Merge Conflicts">
       <created>1649931264020</created>

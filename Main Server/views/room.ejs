@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/stylesheets/partials/navbar.css" />
     <link rel="stylesheet" href="/stylesheets/room.css" />
 </head>
-<body onload="initRoom('<%=title %>')">
+<body onload="initRoom('<%=title %>','<%= username%>')">
 <header>
     <%- include('./partials/nav.html'); %>
 </header>
@@ -29,10 +29,10 @@
     <div class="col">
         <div class="row" id="knowledge_graph">
             <div class="col-3">
-                <input  id="kg_search" type="text" placeholder="KG Search">
+                <input class="text_input" id="kg_search" type="text" placeholder="KG Search">
             </div>
             <div class="col-3">
-                <input  id="kg_type" type="text" placeholder="KG Type">
+                <input  class="text_input" id="kg_type" type="text" placeholder="KG Type">
             </div>
             <div class="col-3">
                 <button  class="btn btn-primary" onclick=widgetInit()>Update Widget</button>
@@ -52,7 +52,7 @@
         </div>
         <div class="row comment_row">
             <div class="col-7">
-                <input class="comment_input" id="comment_input" type="text" placeholder="Enter Comment">
+                <input class="text_input" id="comment_input" type="text" placeholder="Enter Comment">
             </div>
             <div class="col-2">
                 <button  class="btn btn-primary" onclick=sendChatText("Example")>Comment</button>
