@@ -11,11 +11,11 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res) {
     console.log("wibble");
     axios.post('http://localhost:3001/insertArticle',{
-   title: req.body.title_input ,
-   file_path: "public/images/cathedral.jpg" ,
-   description: req.body.description_input,
-   author_name: req.body.author_name_input,
-   date_of_issue: Date.now()
+    title: "Bobby Williams",
+    file_path: "public/images/cathedral.jpg" ,
+    description: "jamie hall is a g",
+    author_name: "Fabio",
+    date_of_issue: Date.now()
  })
      .then(json => {
        // This could be a render? unsure if res.render is needed.

@@ -7,7 +7,6 @@
     <list default="true" id="7fbb9b45-1fc5-4e82-b98d-a2908ed8fb21" name="Changes" comment="Resolve Merge Conflicts">
       <change beforePath="$PROJECT_DIR$/routes/insert.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/insert.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/insert.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/insert.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MongoDB Server/models/articles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../MongoDB Server/models/articles.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +55,7 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="Node.js.mongoDB">
+  <component name="RunManager" selected="Node.js.bin/www">
     <configuration name="mongoDB" type="NodeJSConfigurationType" path-to-js-file="$PROJECT_DIR$/../MongoDB Server/bin/www" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
@@ -81,7 +80,7 @@
       <workItem from="1649930898475" duration="5294000" />
       <workItem from="1650191233854" duration="1853000" />
       <workItem from="1650289746122" duration="10053000" />
-      <workItem from="1650367445340" duration="3854000" />
+      <workItem from="1650367445340" duration="6114000" />
     </task>
     <task id="LOCAL-00001" summary="Resolve Merge Conflicts">
       <created>1649931264020</created>
