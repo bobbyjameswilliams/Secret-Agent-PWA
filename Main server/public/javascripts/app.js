@@ -1,8 +1,13 @@
 
 /**
  * called by the HTML onload
- * showing any cached forecast data and declaring the service worker
+ * declaring the service worker
  */
+
+function initBrowser(){
+    initServiceWorker();
+}
+
 function initServiceWorker() {
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker
