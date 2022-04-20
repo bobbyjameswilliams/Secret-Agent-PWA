@@ -1,0 +1,14 @@
+#title_input{
+    border: 0;
+    font-size: 36px;
+    line-height: 48px;
+    height: 48px;
+}
+
+#description_input {
+    border: 0;
+}
+
+.submit_row{
+    margin-top: 1em;
+}

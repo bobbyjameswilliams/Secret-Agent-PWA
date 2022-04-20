@@ -8,7 +8,7 @@ const Article = new Schema(
         file_path: {type: String, max: 100},
         description: {type: String, max: 100},
         author_name: {type: String, max: 100},
-        date_of_issue: {type: Date},
+        date_of_issue: {type: Number},
     }
 );
 
