@@ -4,7 +4,11 @@
 }
 
 body {
-    background-color: rgb(242,242,242);
+    background-color: rgb(255, 255, 255);
+}
+
+#cards-container{
+    background-color: rgb(245, 244, 244);
 }
 
 .text_input{

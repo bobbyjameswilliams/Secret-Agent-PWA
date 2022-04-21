@@ -1,25 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Insert</title>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/javascripts/card-feed.js"></script>
     <script src="/javascripts/database.js" type="module"></script>
     <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
-    <link rel="stylesheet" href="/stylesheets/partials/navbar.css" />
     <link rel="stylesheet" href="/stylesheets/card.css" />
     <link rel="stylesheet" href="/stylesheets/insert.css" />
 </head>
 <body>
-<header>
-    <%- include('./partials/nav.html'); %>
-</header>
 <div class="container">
     <div class="col-sm">
         <div class="card">
             <img class="card-img" src="/images/placeholder.png" alt="Card image cap">
-            <form action="/insert/" method="post">
+            <form action="/" method="post">
             <div class="card-body">
                 <div class="row">
                     <input class="card-title" id="title_input" name="title" placeholder="Title">
