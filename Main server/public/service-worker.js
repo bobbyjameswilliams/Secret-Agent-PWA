@@ -17,33 +17,37 @@ let dataCacheName = 'ArticleData-v1';
 let cacheName = 'ArticlePWA-step-8-1';
 let filesToCache = [
     '/',
-    '/javascripts/app.js',
-
     '/stylesheets/partials/navbar.css',
     '/stylesheets/bootstrap.css',
     '/stylesheets/card.css',
     '/stylesheets/room.css',
     '/stylesheets/style.css',
 
+    '/javascripts/app.js',
     '/javascripts/canvas.js',
+    '/javascripts/card-feed.js',
     '/javascripts/comment.js',
     '/javascripts/database.js',
-    '/javascripts/news-feed.js',
+    '/javascripts/knowledge-graph.js',
+
+    '/views/card.ejs',
+    '/views/index.ejs',
+    '/views/insert.ejs',
+    '/views/room.ejs',
+    '/views/partials/nav.html',
 ];
 
+async function preCache(){
+    const cache = await caches.open(cacheName);
+    return cache.addAll(filesToCache);
+}
 
 /**
  * installation event: it adds all the files to be cached
  */
 self.addEventListener('install', function (e) {
     console.log('[ServiceWorker] Install');
-    e.waitUntil(
-        caches.open(cacheName).then(function (cacheX) {
-            console.log('[ServiceWorker] Caching app shell');
-            cache= cacheX;
-            return cache.addAll(filesToCache);
-        })
-    );
+    e.waitUntil(preCache());
 });
 
 
@@ -75,62 +79,19 @@ self.addEventListener('activate', function (e) {
     return self.clients.claim();
 });
 
+async function fetchAssets(event){
+    try{
+        const response = await fetch(event.request);
+        const cache = await caches.open(cacheName);
+        cache.add(event.request.url);
+        return response;
+    }catch(err){
+        const cache = await caches.open(cacheName);
+        return cache.match(event.request);
+    }
+}
 
-/**
- * this is called every time a file is fetched. This is a middleware, i.e. this method is
- * called every time a page is fetched by the browser
- * there are two main branches:
- * /weather_data posts cities names to get data about the weather from the server. if offline, the fetch will fail and the
- *      control will be sent back to Ajax with an error - you will have to recover the situation
- *      from there (e.g. showing the cached data)
- * all the other pages are searched for in the cache. If not found, they are returned
- */
 self.addEventListener('fetch', function (e) {
     console.log('[Service Worker] Fetch', e.request.url);
-    let dataUrl = '/';
-    //if the request is '/weather_data', post to the server - do nit try to cache it
-    if (e.request.url.indexOf(dataUrl) > -1) {
-        /*
-         * When the request URL contains dataUrl, the app is asking for fresh
-         * weather data. In this case, the service worker always goes to the
-         * network and then caches the response. This is called the "Cache then
-         * network" strategy:
-         * https://jakearchibald.com/2014/offline-cookbook/#cache-then-network
-         */
-        return fetch(e.request)
-            .then( (response) => {
-                // note: it the network is down, response will contain the error
-                // that will be passed to Ajax
-                return response;
-            })
-            .catch((error) => {
-                return error;
-            })
-    } else {
-        /*
-         * The app is asking for app shell files. In this scenario the app uses the
-         * "Cache, falling back to the network" offline strategy:
-         * https://jakearchibald.com/2014/offline-cookbook/#cache-falling-back-to-network
-         */
-        e.respondWith(
-            caches.match(e.request).then(function (response) {
-                return response
-                    || fetch(e.request)
-                        .then(function (response) {
-                            // note if network error happens, fetch does not return
-                            // an error. it just returns response not ok
-                            // https://www.tjvantoll.com/2015/09/13/fetch-and-errors/
-                            if (!response.ok ||  response.statusCode>299) {
-                                console.log("error: " + response.error());
-                            } else {
-                                cache.add(e.request.url);
-                                return response;
-                            }
-                        })
-                        .catch(function (err) {
-                            console.log("error: " + err);
-                        })
-            })
-        );
-    }
+    e.respondWith(fetchAssets(e));
 });
