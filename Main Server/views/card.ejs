@@ -24,10 +24,15 @@
                     <img class="card-img" src="/images/cathedral.jpg" alt="Card image cap">
                     <div class="card-body">
                         <h3 class="card-title"><%= card.title %></h3>
-                        <p class="card-text" id="id">Hello World!</p>
+                        <p class="card-text" id="id"><%= card.description %></p>
                         <div class="row">
-                            <div class="room-form">
-                                <input class="room_input" id='<%=card.id+"room_input"%>' type="text" placeholder="Enter Room Number">
+                            <div class="col-5">
+                                <input class="text_input" id='<%=card.id+"username_input"%>' type="text" placeholder="Enter Username">
+                            </div>
+                            <div class="col-4">
+                                <input class="text_input" id='<%=card.id+"room_input"%>' type="text" placeholder="Enter Room Number">
+                            </div>
+                            <div class="col-3">
                                 <button class="btn btn-primary" id="connect" onclick="connectToRoomPage('<%= card.id %>')">Connect</button>
                             </div>
                         </div>

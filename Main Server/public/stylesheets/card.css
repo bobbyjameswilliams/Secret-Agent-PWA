@@ -7,15 +7,14 @@ body {
     background-color: rgb(242,242,242);
 }
 
-.comment_input{
+.text_input{
+    height: 100%;
     width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
     box-sizing: border-box;
 }
 
 .btn-primary{
-    float: right;
+    width: 100%;
 }
 
 @media (min-width: 1000px){

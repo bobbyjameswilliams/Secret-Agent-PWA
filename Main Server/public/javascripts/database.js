@@ -69,12 +69,31 @@ async function initDatabase(){
 }
 window.initDatabase= initDatabase;
 
-async function cacheRetrievedArticle(){
-    //TODO: Cache articles retrieved from mondoDB
+async function cacheRetrievedArticles(article){
+    //if articleID doesnt already exist in DB, then add it in
+    console.log('inserting: ' + JSON.stringify(commentObject));
+    if (!db)
+        await initDatabase();
+    console.log(db)
+    if (db) {
+        try {
+            let tx = await db.transaction(ARTICLES_STORE_NAME, 'readwrite');
+            let store = await tx.objectStore(ARTICLES_STORE_NAME);
+            await store.put(commentObject);
+            await tx.complete;
+            console.log('added item to the store! ' + JSON.stringify(commentObject));
+        } catch (error) {
+            console.log("Error in storeComment()")
+        }
+    }
 }
 
 async function retrieveCachedArticles(){
-    //TODO: retrieve articles stored in cache
+
+}
+
+async function syncArticles(){
+
 }
 
 export async function storeComment(commentObject) {

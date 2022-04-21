@@ -59,7 +59,8 @@ router.post('/', function(req, res) {
 
 router.get('/room/',function (req, res) {
   let roomNo = req.query.roomNo;
-  res.render('room',{title: roomNo})
+  let reqUsername = req.query.username;
+  res.render('room',{title: roomNo,username: reqUsername})
 })
 
 router.post('/insertarticle', function(req,res){
