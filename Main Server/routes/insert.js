@@ -9,26 +9,22 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res) {
-    console.log("wibble");
     axios.post('http://localhost:3001/insertArticle',{
-    title: "Bobby Williams",
-    file_path: "public/images/cathedral.jpg" ,
-    description: "jamie hall is a g",
-    author_name: "Fabio",
-    date_of_issue: Date.now()
- })
-     .then(json => {
-       // This could be a render? unsure if res.render is needed.
-       console.log("Success");
-       console.log(JSON.stringify(json.data))
-     res.render('insert');
-
-     })
-     .catch(err => {
-       console.log("Error")
-       res.setHeader('Content-Type', 'application/json');
-       res.status(403).json(err)
-     })
+        title: req.body.title,
+        file_path: req.body.file_path,
+        description: req.body.description,
+        author_name: req.body.author_name,
+        date_of_issue: Date.now()
+    }).then(json => {
+        // This could be a render? unsure if res.render is needed.
+        console.log("Success");
+        console.log(JSON.stringify(json.data))
+        res.render('insert');
+    }).catch(err => {
+        console.log("Error")
+        res.setHeader('Content-Type', 'application/json');
+        res.status(403).json(err)
+    })
 })
 
 module.exports = router;
