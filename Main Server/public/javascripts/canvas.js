@@ -67,20 +67,18 @@ export function initCanvas(sckt, imageUrl, roomNo, name) {
         // if the flag is up, the movement of the mouse draws on the canvas
         if (e.type === 'mousemove') {
             if (flag) {
+                saveToIDB(room, canvas.width, canvas.height, prevX, prevY, currX, currY, color, thickness)
                 drawOnCanvas(ctx, canvas.width, canvas.height, prevX, prevY, currX, currY, color, thickness);
                 // @todo if you draw on the canvas, you may want to let everyone know via socket.io (socket.emit...)  by sending them
                 // room, userId, canvas.width, canvas.height, prevX, prevY, currX, currY, color, thickness
                 socket.emit('draw',roomNo, userId, canvas.width, canvas.height, prevX, prevY,currX, currY,color, thickness)
                 //Store IDB
-                let canvasObject = new Canvas(roomNo, canvas.width, canvas.height, prevX, prevY,currX, currY,color, thickness)
-                database.storeAnnotation(canvasObject)
-                    .then(r => console.log("Annotation Stored Successfully"))
-                    .catch(r => console.log(() => console.log("error storing annotation")));
             }
         }
     });
 
     socket.on('draw', function (room,userId,canvasWidth,canvasHeight,prevX,prevY,currX,currY,color, thickness) {
+        saveToIDB(room, canvasWidth, canvasHeight, prevX, prevY, currX, currY, color, thickness)
         drawOnCanvas(ctx, canvasWidth,canvasHeight,prevX,prevY,currX,currY,color,thickness)
     });
 
@@ -138,6 +136,13 @@ function drawImageScaled(img, canvas, ctx) {
     let x = (canvas.width / 2) - (img.width / 2) * scale;
     let y = (canvas.height / 2) - (img.height / 2) * scale;
     ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+}
+
+function saveToIDB(roomNo, canvasWidth, canvasHeight, prevX, prevY,currX, currY, color, thickness) {
+    let canvasObject = new Canvas(roomNo, canvasWidth, canvasHeight, prevX, prevY, currX, currY,color, thickness)
+    database.storeAnnotation(canvasObject)
+        .then(r => console.log("Annotation Stored Successfully"))
+        .catch(r => console.log(() => console.log("error storing annotation")));
 }
 
 /**
