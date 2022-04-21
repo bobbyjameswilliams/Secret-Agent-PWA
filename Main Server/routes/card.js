@@ -20,7 +20,6 @@ class Card{
     this.author = author;
     this.date_of_issue = date_of_issue;
   }
-
 }
 
 /* GET users listing. */
@@ -48,31 +47,8 @@ router.get('/', function(req, res) {
         res.status(403).json(err)
       })
   //#res.render('card', { title: 'Card View', cardList: getCards() });
-
-  /*axios.post('http://localhost:3001/insertArticle',{
-    title: "Insert route test",
-    file_path: "/test",
-    description: "Insert route test",
-    author_name: "Dan",
-    date_of_issue: Date.now()
-  })
-      .then(json => {
-        // This could be a render? unsure if res.render is needed.
-        console.log("Success");
-        console.log(JSON.stringify(json.data))
-
-        //For now this is gonna be res.render while I figure out axios.
-        //TODO: look into this at a later date
-        //res.render('card', { title: 'Card View', cardList: getCards() });
-        //res.json(json.data)
-      })
-      .catch(err => {
-        console.log("Error")
-        res.setHeader('Content-Type', 'application/json');
-        res.status(403).json(err)
-      })*/
-
 });
+
 
 router.post('/', function(req, res) {
   console.log("post request started")
@@ -85,6 +61,27 @@ router.get('/room/',function (req, res) {
   let roomNo = req.query.roomNo;
   let reqUsername = req.query.username;
   res.render('room',{title: roomNo,username: reqUsername})
+})
+
+router.post('/insertarticle', function(req,res){
+    axios.post('http://localhost:3001/insertArticle',{
+        title: req.body.title,
+        file_path: req.body.path,
+        description: req.body.description,
+        author_name: req.body.author_name,
+        date_of_issue: Date.now()
+    })
+        .then(json => {
+            console.log("Success");
+            console.log(JSON.stringify(json.data))
+            //res.render('card', { title: 'Card View', cardList: getCards() });
+            //res.json(json.data)
+        })
+        .catch(err => {
+            console.log("Error")
+            res.setHeader('Content-Type', 'application/json');
+            res.status(403).json(err)
+        })
 })
 
 module.exports = router;
