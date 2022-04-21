@@ -116,7 +116,7 @@ function prepareJoinedRoomNotification(room, userId){
 async function loadAndDisplayCachedHistory(roomNo){
     database.retrieveAllCachedRoomComments(roomNo)
         .then(r => displayCachedHistory(r))
-        .catch(() => console.log("No chat messags loaded"))
+        .catch(() => console.log("No chat messages loaded"))
 
 }
 
