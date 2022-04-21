@@ -5,10 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7fbb9b45-1fc5-4e82-b98d-a2908ed8fb21" name="Changes" comment="Resolve Merge Conflicts">
-      <change afterPath="$PROJECT_DIR$/public/stylesheets/insert.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/insert.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/insert.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/insert.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/insert.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,8 +47,8 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../MongoDB Server" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -69,7 +65,7 @@
     </key>
   </component>
   <component name="RunManager" selected="Node.js.bin/www">
-    <configuration name="mongoDB" type="NodeJSConfigurationType" path-to-js-file="$PROJECT_DIR$/../MongoDB Server/bin/www" working-dir="$PROJECT_DIR$">
+    <configuration name="mongoDB" type="NodeJSConfigurationType" path-to-node="$APPLICATION_CONFIG_DIR$/node/node-v14.15.0-win-x64/node" path-to-js-file="$PROJECT_DIR$/../MongoDB Server/bin/www" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
     <list>
@@ -93,9 +89,6 @@
       <workItem from="1649930898475" duration="5294000" />
       <workItem from="1650191233854" duration="1853000" />
       <workItem from="1650289746122" duration="10053000" />
-      <workItem from="1650316125401" duration="634000" />
-      <workItem from="1650369753006" duration="91000" />
-      <workItem from="1650449790959" duration="1959000" />
     </task>
     <task id="LOCAL-00001" summary="Resolve Merge Conflicts">
       <created>1649931264020</created>
