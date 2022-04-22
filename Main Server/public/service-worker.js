@@ -30,11 +30,10 @@ let filesToCache = [
     '/javascripts/database.js',
     '/javascripts/knowledge-graph.js',
 
-    '/views/card.ejs',
-    '/views/index.ejs',
-    '/views/insert.ejs',
-    '/views/room.ejs',
-    '/views/partials/nav.html',
+    '/images/cathedral.jpg',
+    '/images/placeholder.png',
+
+
 ];
 
 async function preCache(){
@@ -79,19 +78,32 @@ self.addEventListener('activate', function (e) {
     return self.clients.claim();
 });
 
-async function fetchAssets(event){
-    try{
-        const response = await fetch(event.request);
-        const cache = await caches.open(cacheName);
-        cache.add(event.request.url);
-        return response;
-    }catch(err){
-        const cache = await caches.open(cacheName);
-        return cache.match(event.request);
-    }
-}
+// async function fetchAssets(event){
+//     try{
+//         const response = await fetch(event.request);
+//         const cache = await caches.open(cacheName);
+//         //cache.add(event.request.url);
+//         return response;
+//     }catch(err){
+//         const cache = await caches.open(cacheName);
+//         return cache.match(event.request);
+//     }
+// }
 
 self.addEventListener('fetch', function (e) {
     console.log('[Service Worker] Fetch', e.request.url);
-    e.respondWith(fetchAssets(e));
+    //e.respondWith(fetchAssets(e));
+    e.respondWith(
+        fetch(e.request)
+            .then(res => {
+                const resClone = res.clone();
+                caches
+                    .open(cacheName)
+                    .then(cache => {
+                        cache.put(e.request, resClone);
+                    });
+                return res;
+            })
+            .catch(err => caches.match(e.request).then(res => res))
+    );
 });
