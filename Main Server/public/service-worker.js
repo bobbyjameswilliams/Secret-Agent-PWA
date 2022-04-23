@@ -30,11 +30,10 @@ let filesToCache = [
     '/javascripts/database.js',
     '/javascripts/knowledge-graph.js',
 
-    '/views/card.ejs',
-    '/views/index.ejs',
-    '/views/insert.ejs',
-    '/views/room.ejs',
-    '/views/partials/nav.html',
+    '/images/cathedral.jpg',
+    '/images/placeholder.png',
+
+
 ];
 
 async function preCache(){
@@ -66,32 +65,24 @@ self.addEventListener('activate', function (e) {
             }));
         })
     );
-    /*
-     * Fixes a corner case in which the app wasn't returning the latest data.
-     * You can reproduce the corner case by commenting out the line below and
-     * then doing the following steps: 1) load app for first time so that the
-     * initial New York City data is shown 2) press the refresh button on the
-     * app 3) go offline 4) reload the app. You expect to see the newer NYC
-     * data, but you actually see the initial data. This happens because the
-     * service worker is not yet activated. The code below essentially lets
-     * you activate the service worker faster.
-     */
     return self.clients.claim();
 });
 
-async function fetchAssets(event){
-    try{
-        const response = await fetch(event.request);
-        const cache = await caches.open(cacheName);
-        cache.add(event.request.url);
-        return response;
-    }catch(err){
-        const cache = await caches.open(cacheName);
-        return cache.match(event.request);
-    }
-}
 
 self.addEventListener('fetch', function (e) {
     console.log('[Service Worker] Fetch', e.request.url);
-    e.respondWith(fetchAssets(e));
+    //e.respondWith(fetchAssets(e));
+    e.respondWith(
+        fetch(e.request)
+            .then(res => {
+                const resClone = res.clone();
+                caches
+                    .open(cacheName)
+                    .then(cache => {
+                        cache.put(e.request, resClone);
+                    });
+                return res;
+            })
+            .catch(err => caches.match(e.request).then(res => res))
+    );
 });
