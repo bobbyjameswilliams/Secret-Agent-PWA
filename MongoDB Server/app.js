@@ -18,6 +18,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//API Docs
+const swaggerUi = require('swagger-ui-express');
+const openApiDocumentation = require('./swagger/swaggerDocumentation.json');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocumentation));
+
 app.use('/', indexRouter);
 //app.use('/users', usersRouter);
 
