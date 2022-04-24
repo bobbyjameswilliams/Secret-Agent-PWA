@@ -8,6 +8,9 @@ let userId;
 let color = 'red', thickness = 4;
 window.canvasColour = color;
 
+/**
+ * Canvas class used when storing canvas data in IDB.
+ */
 class Canvas{
     roomNo;
     width;
@@ -203,6 +206,10 @@ function restoreCanvas(canvasData){
         drawOnCanvas(ctx, width, height, prevX, prevY, currX, currY, color, thickness);
 }
 
+/**
+ * Changes color of annotation.
+ * @param colour Color to be used for annotation.
+ */
 function changeColor(colour){
     color = colour;
     window.canvasColour = color;
