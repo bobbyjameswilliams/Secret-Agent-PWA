@@ -31,6 +31,7 @@ const CHAT_MESSAGES_STORE_NAME= 'store_chat_messages';
 
 
 /**
+ * Initialises all database stores.
  * @todo Create other stores in this when needed.
  * @returns {Promise<void>}
  */
@@ -69,6 +70,11 @@ async function initDatabase(){
 }
 window.initDatabase= initDatabase;
 
+/**
+ * Caches retrieved articles in IDB store.
+ * @param article
+ * @returns {Promise<void>}
+ */
 async function cacheRetrievedArticles(article){
     //if articleID doesnt already exist in DB, then add it in
     console.log('inserting: ' + JSON.stringify(commentObject));
@@ -96,6 +102,11 @@ async function syncArticles(){
 
 }
 
+/**
+ * Stores comment object in IDB.
+ * @param commentObject Comment object.
+ * @returns {Promise<void>}
+ */
 export async function storeComment(commentObject) {
     console.log('inserting: ' + JSON.stringify(commentObject));
     if (!db)
@@ -114,6 +125,11 @@ export async function storeComment(commentObject) {
     }
 }
 
+/**
+ * Stores annotation object in IDB.
+ * @param canvasObject Canvas object constaining annotation data.
+ * @returns {Promise<void>}
+ */
 export async function storeAnnotation(canvasObject) {
     console.log('inserting: ' + JSON.stringify(canvasObject));
     if (!db)
@@ -132,6 +148,11 @@ export async function storeAnnotation(canvasObject) {
     }
 }
 
+/**
+ * Given roomNo, retrieves all comments for given roomNo
+ * @param roomNo Room Number.
+ * @returns {Promise<*>}
+ */
 export async function retrieveAllCachedRoomComments(roomNo){
     //TODO: handle when 0 items
     if (!db)
@@ -168,6 +189,11 @@ export async function retrieveAllCachedRoomComments(roomNo){
 }
 window.retrieveAllCachedRoomComments = retrieveAllCachedRoomComments
 
+/**
+ * Retrieves all image annotations for given roomNo.
+ * @param roomNo  Room Number.
+ * @returns {Promise<*>}
+ */
 export async function retrieveRoomImageAnnotations(roomNo){
     if (!db)
         await initDatabase();

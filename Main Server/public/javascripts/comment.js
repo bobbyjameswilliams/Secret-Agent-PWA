@@ -5,6 +5,9 @@ let socket= io();
 let roomNo = null;
 let name = null;
 
+/**
+ * Comment class used when storing a comment in IDB
+ */
 class Comment{
     roomNo;
     userID;
@@ -22,7 +25,11 @@ class Comment{
     }
 }
 
-
+/**
+ * Initialises room
+ * @param roomNumber
+ * @param username
+ */
 function initRoom(roomNumber, username) {
     name = username;
     roomNo = roomNumber;
@@ -74,12 +81,19 @@ function initRoom(roomNumber, username) {
 }
 window.initRoom = initRoom
 
+/**
+ * Sends chat text via socket.
+ */
 function sendChatText() {
     let chatText = document.getElementById('comment_input').value;
     socket.emit('chat', roomNo, name, chatText);
 }
 window.sendChatText = sendChatText
 
+
+/**
+ * Connects to room
+ */
 function connectToRoom() {
     //roomNo = document.getElementById('roomNo').value;
     //name = document.getElementById('name').value;
@@ -91,7 +105,7 @@ function connectToRoom() {
     canvas.initCanvas(socket,"/images/cathedral.jpg", roomNo, name);
 }
 
-/*
+/**
 Prepares chat messages for writeOnHistory
  */
 function prepareChatMessage(userId, chatText){
@@ -100,7 +114,7 @@ function prepareChatMessage(userId, chatText){
     return('<b>' + who + ':</b> ' + chatText)
 }
 
-/*
+/**
 Prepares joined room notifications for writeOnHistory
  */
 function prepareJoinedRoomNotification(room, userId){
@@ -110,7 +124,7 @@ function prepareJoinedRoomNotification(room, userId){
     }
 }
 
-/*
+/**
     Loads cached chat history and calls display method
  */
 async function loadAndDisplayCachedHistory(roomNo){
@@ -120,7 +134,7 @@ async function loadAndDisplayCachedHistory(roomNo){
 
 }
 
-/*
+/**
     Takes a list of message objects and writes them to history.
  */
 function displayCachedHistory(cachedData){
@@ -134,6 +148,10 @@ function displayCachedHistory(cachedData){
         }
 }
 
+/**
+ * Writes text on history. Used for displaying something in the chat history.
+ * @param text Text to be added to chat history.
+ */
 function writeOnHistory(text) {
     if (text==='') return;
     let history = document.getElementById('history');
