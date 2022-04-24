@@ -20,6 +20,7 @@ let filesToCache = [
     '/stylesheets/partials/navbar.css',
     '/stylesheets/bootstrap.css',
     '/stylesheets/card.css',
+    '/stylesheets/insert.css',
     '/stylesheets/room.css',
     '/stylesheets/style.css',
 
@@ -29,6 +30,7 @@ let filesToCache = [
     '/javascripts/comment.js',
     '/javascripts/database.js',
     '/javascripts/knowledge-graph.js',
+    '/javascripts/viewHandler.js',
 
     '/images/cathedral.jpg',
     '/images/placeholder.png',

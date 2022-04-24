@@ -56,11 +56,11 @@ async function initDatabase(){
                 }
                 //Creating Comments Store
                 if (!upgradeDb.objectStoreNames.contains(CHAT_MESSAGES_STORE_NAME)) {
-                        let articleDB = upgradeDb.createObjectStore(CHAT_MESSAGES_STORE_NAME, {
-                            keyPath: 'id',
-                            autoIncrement: true
-                        });
-                        articleDB.createIndex('chats', 'roomNo', {unique: false, multiEntry: true});
+                    let articleDB = upgradeDb.createObjectStore(CHAT_MESSAGES_STORE_NAME, {
+                        keyPath: 'id',
+                        autoIncrement: true
+                    });
+                    articleDB.createIndex('chats', 'roomNo', {unique: false, multiEntry: true});
                 }
             }
         });

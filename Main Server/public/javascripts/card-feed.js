@@ -1,5 +1,6 @@
 function connectToRoomPage(cardID){
     let roomNo = document.getElementById(cardID+'room_input').value;
     let username = document.getElementById(cardID+'username_input').value;
-    window.location.href = "/card/room/?roomNo="+cardID+roomNo+"&username="+username;
+    changeRoomView();
+    initRoom(roomNo, username);
 }

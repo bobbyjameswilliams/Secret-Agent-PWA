@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><%= title %></title>
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/knowledge/kgsearch/widget/1.0/widget.min.css">
     <script type="text/javascript" src="https://www.gstatic.com/knowledge/kgsearch/widget/1.0/widget.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
@@ -14,10 +13,7 @@
     <link rel="stylesheet" href="/stylesheets/partials/navbar.css" />
     <link rel="stylesheet" href="/stylesheets/room.css" />
 </head>
-<body onload="initRoom('<%=title %>','<%= username%>')">
-<header>
-    <%- include('./partials/nav.html'); %>
-</header>
+<body>
 <div class="row">
     <div class="col">
         <div class="row align-items-center" id="image_canvas_wrapper">
