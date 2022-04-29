@@ -1,0 +1,65 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "version": "1.0.0",
+    "title": "Secret Agent Mongo Server",
+    "description": "",
+    "termsOfService": "http://api_url/terms/",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001/",
+      "description": "Supporting MongoDB server"
+    }
+  ],
+  "paths": {
+    "/getArticle": {
+      "post": {
+        "tags": [
+          "Getting article"
+        ],
+        "description": "getting article of given ID",
+        "operationId": "weather data",
+        "requestBody": {
+          "content": {
+            "application/json": {
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Correct input of Child structure",
+            "content": {
+              "application/json": {
+                "schema": {
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                },
+                "example": {
+                  "message": "no location provided",
+                  "internal_code": "missing_parameters"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+      "schemas": {
+      }
+    }
+}
