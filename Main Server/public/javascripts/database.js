@@ -159,7 +159,7 @@ export async function retrieveAllCachedRoomComments(roomNo){
         await initDatabase();
     if (db) {
         try {
-            console.log('fetching: ' + roomNo);
+            console.log('fetching all cached room comments for : ' + roomNo);
             let tx = await db.transaction(CHAT_MESSAGES_STORE_NAME, 'readonly');
             let store = await tx.objectStore(CHAT_MESSAGES_STORE_NAME);
             let index = await store.index('chats');
@@ -199,7 +199,7 @@ export async function retrieveRoomImageAnnotations(roomNo){
         await initDatabase();
     if (db) {
         try {
-            console.log('fetching: ' + roomNo);
+            console.log('Fetch image annotations for: ' + roomNo);
             let tx = await db.transaction(IMAGE_ANNOTATIONS_STORE_NAME, 'readonly');
             let store = await tx.objectStore(IMAGE_ANNOTATIONS_STORE_NAME);
             let index = await store.index('canvas');

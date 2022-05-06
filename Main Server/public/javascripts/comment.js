@@ -31,6 +31,8 @@ class Comment{
  * @param username
  */
 function initRoom(roomNumber, username) {
+    //TODO: Remove
+    console.log("Initialising Room")
     name = username;
     roomNo = roomNumber;
     //Load in and display previous chat history
