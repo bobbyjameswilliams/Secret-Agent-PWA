@@ -3,6 +3,7 @@
 <head>
     <script src="/javascripts/card-feed.js"></script>
     <script src="/javascripts/database.js" type="module"></script>
+    <script src="/javascripts/app.js"></script>
     <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
     <link rel="stylesheet" href="/stylesheets/card.css" />
     <link rel="stylesheet" href="/stylesheets/insert.css" />
@@ -12,7 +13,7 @@
     <div class="col-sm">
         <div class="card article-card">
             <img class="card-img" src="/images/placeholder.png" alt="Card image cap">
-            <form action="/" method="post">
+            <form action="/" method="post" enctype="multipart/form-data">
             <div class="card-body">
                 <div class="row">
                     <input class="card-title" id="title_input" name="title" placeholder="Title">
@@ -22,7 +23,7 @@
                 </div>
                 <div class="row submit_row">
                     <div class="col-5">
-                        <input class="text_input" type="text" name="file_path" placeholder="Enter Filepath">
+                        <input class="custom-file-input" type="file" name="image" id="fileUpload" placeholder="Choose image"/>
                     </div>
                     <div class="col-4">
                         <input class="text_input" type="text" name="author_name" placeholder="Enter Author Name">
@@ -36,5 +37,24 @@
         </div>
     </div>
 </div>
+<p id="b64"></p>
+<img id="img" height="150">
+<script>
+    $('#fileUpload').change(function (e) {
+        if (this.files && this.files[0]) {
+
+            var FR= new FileReader();
+
+            FR.addEventListener("load", function(e) {
+                document.getElementById("img").src       = e.target.result;
+                document.getElementById("b64").innerHTML = e.target.result;
+                //console.log(e.target.result);
+            });
+
+            FR.readAsDataURL( this.files[0] );
+        }
+
+    })
+</script>
 </body>
 </html>

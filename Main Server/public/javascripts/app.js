@@ -1,8 +1,13 @@
-
 /**
  * called by the HTML onload
  * declaring the service worker
  */
+
+
+
+
+
+
 
 function initBrowser(){
     initServiceWorker();

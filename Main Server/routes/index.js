@@ -1,6 +1,7 @@
 var express = require('express');
 const axios = require("axios");
 var router = express.Router();
+var fs = require('fs');
 
 class Card{
     id;
@@ -45,14 +46,18 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res) {
+    var bitmap = fs.readFileSync(req.body.description);
+    // convert binary data to base64 encoded string
+    console.log(Buffer(bitmap).toString('base64'));
+
     axios.post('http://localhost:3001/insertArticle',{
         title: req.body.title,
-        file_path: req.body.file_path,
+        file_path: req.body.image,
         description: req.body.description,
         author_name: req.body.author_name,
         date_of_issue: Date.now()
     }).then(json => {
-        console.log(JSON.stringify(json.data));
+        //console.log(JSON.stringify(json.data));
         req.method='get';
         res.redirect('/')
     }).catch(err => {
