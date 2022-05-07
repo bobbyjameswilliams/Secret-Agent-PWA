@@ -130,6 +130,8 @@ export function initCanvas(sckt, imageUrl, roomNo, name) {
 
     // this is called when the src of the image is loaded
     // this is an async operation as it may take time
+    //TODO: Remove
+    console.log("Event listener being triggered")
     img.addEventListener('load', imageLoader);
 }
 window.initCanvas = initCanvas;

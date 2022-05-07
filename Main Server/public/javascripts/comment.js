@@ -35,14 +35,19 @@ function initRoom(roomNumber, username) {
     console.log("Initialising Room")
     name = username;
     roomNo = roomNumber;
+
+    //Remove history from chat
+    let history = document.getElementById('history');
+    history.innerHTML = '';
     //Load in and display previous chat history
-    //let cachedData = loadAndDisplayCachedHistory(roomNo)
-    /*loadAndDisplayCachedHistory(roomNo)
+    
+    console.log("Begin loading cached history...")
+    loadAndDisplayCachedHistory(roomNo)
         .then(() => console.log("Successfully displayed chat history"))
         .catch(() =>
-            writeOnHistory("Error displaying chat history")
+            console.log("Error displaying chat history")
             )
-    */
+
     //Prepare chat socket.
     socket.on('chat', function (room, userId, chatText) {
         //get time and create a string out of it
@@ -130,6 +135,7 @@ function prepareJoinedRoomNotification(room, userId){
     Loads cached chat history and calls display method
  */
 async function loadAndDisplayCachedHistory(roomNo){
+    console.log("For some reason this is being called twice lol")
     database.retrieveAllCachedRoomComments(roomNo)
         .then(r => displayCachedHistory(r))
         .catch(() => console.log("No chat messages loaded"))
