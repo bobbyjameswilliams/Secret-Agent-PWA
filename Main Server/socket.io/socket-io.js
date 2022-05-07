@@ -26,6 +26,7 @@ exports.init = function(io) {
       })
 
       socket.on('disconnect', function(){
+        socket.disconnect(0);
         console.log('someone disconnected');
       });
     } catch (e) {

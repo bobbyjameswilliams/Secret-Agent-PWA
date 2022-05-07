@@ -95,18 +95,17 @@ export function initCanvas(sckt, imageUrl, roomNo, name) {
     });
 
     socket.on('clear canvas', () => {
+        console.log('clear canvas');
         ctx.clearRect(0,0, canvas.width, canvas.height);
         drawImageScaled(img, canvas, ctx);
-
     })
 
-    // this is called when the src of the image is loaded
-    // this is an async operation as it may take time
-    img.addEventListener('load', () => {
+    let imageLoader = function(){
         // it takes time before the image size is computed and made available
         // here we wait until the height is set, then we resize the canvas based on the size of the image
         let poll = setInterval(async function () {
             if (img.naturalHeight) {
+                console.log("image listener");
                 clearInterval(poll);
                 // resize the canvas
                 let ratioX = 1;
@@ -122,14 +121,20 @@ export function initCanvas(sckt, imageUrl, roomNo, name) {
                 cvx.height = canvas.height = img.clientHeight * ratio;
                 // draw the image onto the canvas
                 await drawImageScaled(img, cvx, ctx);
-                retrieveCanvas(roomNo);
+                retrieveCanvas(room);
                 // hide the image element as it is not needed
                 img.style.display = 'none';
             }
         }, 10);
-    });
+    }
+
+    // this is called when the src of the image is loaded
+    // this is an async operation as it may take time
+    img.addEventListener('load', imageLoader);
 }
 window.initCanvas = initCanvas;
+
+
 
 
 /**
@@ -193,6 +198,7 @@ function drawOnCanvas(ctx, canvasWidth, canvasHeight, prevX, prevY, currX, currY
  */
 
 function retrieveCanvas(roomNo){
+    console.log('retrieve canvas');
     database.retrieveRoomImageAnnotations(roomNo)
         .then(r => r.forEach(restoreCanvas))
         .catch(r => console.log(r))
@@ -210,8 +216,7 @@ function restoreCanvas(canvasData){
     let currY = canvasData.currY;
     let color = canvasData.color;
     let thickness = canvasData.thickness;
-
-        drawOnCanvas(ctx, width, height, prevX, prevY, currX, currY, color, thickness);
+    drawOnCanvas(ctx, width, height, prevX, prevY, currX, currY, color, thickness);
 }
 
 /**
@@ -223,3 +228,8 @@ function changeColor(colour){
     window.canvasColour = color;
 }
 window.changeColor = changeColor
+
+function removeCanvasSocketListeners(){
+    socket.removeAllListeners();
+}
+window.removeCanvasSocketListeners = removeCanvasSocketListeners

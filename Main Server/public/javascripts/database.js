@@ -108,7 +108,6 @@ async function syncArticles(){
  * @returns {Promise<void>}
  */
 export async function storeComment(commentObject) {
-    console.log('inserting: ' + JSON.stringify(commentObject));
     if (!db)
         await initDatabase();
         console.log(db)
@@ -131,7 +130,6 @@ export async function storeComment(commentObject) {
  * @returns {Promise<void>}
  */
 export async function storeAnnotation(canvasObject) {
-    console.log('inserting: ' + JSON.stringify(canvasObject));
     if (!db)
         await initDatabase();
     console.log(db)
@@ -199,7 +197,6 @@ export async function retrieveRoomImageAnnotations(roomNo){
         await initDatabase();
     if (db) {
         try {
-            console.log('Fetch image annotations for: ' + roomNo);
             let tx = await db.transaction(IMAGE_ANNOTATIONS_STORE_NAME, 'readonly');
             let store = await tx.objectStore(IMAGE_ANNOTATIONS_STORE_NAME);
             let index = await store.index('canvas');

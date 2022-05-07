@@ -37,12 +37,12 @@ function initRoom(roomNumber, username) {
     roomNo = roomNumber;
     //Load in and display previous chat history
     //let cachedData = loadAndDisplayCachedHistory(roomNo)
-    loadAndDisplayCachedHistory(roomNo)
+    /*loadAndDisplayCachedHistory(roomNo)
         .then(() => console.log("Successfully displayed chat history"))
         .catch(() =>
             writeOnHistory("Error displaying chat history")
             )
-
+    */
     //Prepare chat socket.
     socket.on('chat', function (room, userId, chatText) {
         //get time and create a string out of it
@@ -133,7 +133,6 @@ async function loadAndDisplayCachedHistory(roomNo){
     database.retrieveAllCachedRoomComments(roomNo)
         .then(r => displayCachedHistory(r))
         .catch(() => console.log("No chat messages loaded"))
-
 }
 
 /**
@@ -144,7 +143,7 @@ function displayCachedHistory(cachedData){
         if (res.joinedRoomNotification) {
             let preparedJoinedRoomNotification = prepareJoinedRoomNotification(res.roomNo, res.userID)
             writeOnHistory(preparedJoinedRoomNotification)
-        } else if (!res.joinedRoomNotification) {
+        } else {
             let preparedChatMessage = prepareChatMessage(res.userID, res.chatText)
             writeOnHistory(preparedChatMessage);
         }
@@ -169,3 +168,8 @@ function sendKnowledgeSnippet(header, body, colour){
     socket.emit('knowledge snippet',roomNo,name,header,body,colour)
 }
 window.sendKnowledgeSnippet = sendKnowledgeSnippet
+
+function removeChatSocketListeners(){
+    socket.removeAllListeners();
+}
+window.removeChatSocketListeners =removeChatSocketListeners

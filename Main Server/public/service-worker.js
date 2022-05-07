@@ -72,7 +72,7 @@ self.addEventListener('activate', function (e) {
 
 
 self.addEventListener('fetch', function (e) {
-    console.log('[Service Worker] Fetch', e.request.url);
+    //console.log('[Service Worker] Fetch', e.request.url); // too much noise
     //e.respondWith(fetchAssets(e));
     e.respondWith(
         fetch(e.request)
