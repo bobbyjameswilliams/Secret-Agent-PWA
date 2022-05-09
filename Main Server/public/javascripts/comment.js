@@ -40,7 +40,7 @@ function initRoom(roomNumber, username) {
     let history = document.getElementById('history');
     history.innerHTML = '';
     //Load in and display previous chat history
-    
+
     console.log("Begin loading cached history...")
     loadAndDisplayCachedHistory(roomNo)
         .then(() => console.log("Successfully displayed chat history"))
@@ -135,7 +135,6 @@ function prepareJoinedRoomNotification(room, userId){
     Loads cached chat history and calls display method
  */
 async function loadAndDisplayCachedHistory(roomNo){
-    console.log("For some reason this is being called twice lol")
     database.retrieveAllCachedRoomComments(roomNo)
         .then(r => displayCachedHistory(r))
         .catch(() => console.log("No chat messages loaded"))

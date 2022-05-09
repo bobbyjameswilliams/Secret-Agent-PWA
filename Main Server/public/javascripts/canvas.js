@@ -50,8 +50,16 @@ export function initCanvas(sckt, imageUrl, roomNo, name) {
     let flag = false,
         prevX, prevY, currX, currY = 0;
     let canvas = $('#canvas');
-    let cvx = document.getElementById('canvas');
-    let img = document.getElementById('image');
+    //Cloning to ensure no event listeners remain
+    let old_cvx = document.getElementById('canvas');
+    let cvx = old_cvx.cloneNode(true);
+    old_cvx.parentNode.replaceChild(cvx, old_cvx);
+
+    //Cloning to ensure no event listeners remain
+    let old_img = document.getElementById('image');
+    let img = old_img.cloneNode(true);
+    old_img.parentNode.replaceChild(img, old_img);
+
     let ctx = cvx.getContext('2d');
     img.src = imageUrl;
 
@@ -130,8 +138,7 @@ export function initCanvas(sckt, imageUrl, roomNo, name) {
 
     // this is called when the src of the image is loaded
     // this is an async operation as it may take time
-    //TODO: Remove
-    console.log("Event listener being triggered")
+
     img.addEventListener('load', imageLoader);
 }
 window.initCanvas = initCanvas;
@@ -147,9 +154,12 @@ window.initCanvas = initCanvas;
  * @param ctx
  */
 function drawImageScaled(img, canvas, ctx) {
+    //TODO: Remove
+    console.log("Drawing scaled image...")
     // get the scale
     let scale = Math.min(canvas.width / img.width, canvas.height / img.height);
     // get the top left position of the image
+    //ctx.clearCache()
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     let x = (canvas.width / 2) - (img.width / 2) * scale;
     let y = (canvas.height / 2) - (img.height / 2) * scale;
