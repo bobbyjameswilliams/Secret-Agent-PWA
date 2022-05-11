@@ -26,7 +26,7 @@
                         <input class="custom-file-input" type="file" name="image" id="fileUpload" placeholder="Choose image"/>
                     </div>
                     <div class="col-4">
-                        <input class="text_input" type="text" name="image_b64" id="image_b64">
+                        <input class="text_input" type="text" name="image_b64" id="image_b64" hidden="hidden">
                     </div>
                     <div class="col-4">
                         <input class="text_input" type="text" name="author_name" placeholder="Enter Author Name">
@@ -48,10 +48,7 @@
             var FR= new FileReader();
 
             FR.addEventListener("load", function(e) {
-                //document.getElementById("img").src       = e.target.result;
-                //document.getElementById("b64").innerHTML = e.target.result;
                 document.getElementById("image_b64").value = e.target.result;
-                //console.log(e.target.result);
             });
 
             FR.readAsDataURL( this.files[0] );

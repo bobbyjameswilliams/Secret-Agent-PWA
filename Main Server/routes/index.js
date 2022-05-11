@@ -39,7 +39,6 @@ router.get('/', function(req, res, next) {
 
         //For now this is gonna be res.render while I figure out axios.
         //TODO: look into this at a later date
-        console.log("Rendering Index")
         res.render('index', { title: 'Card View', cardList: cards });
     }).catch(err => {
         res.render('index', { title: 'Card View', cardList: [] });
