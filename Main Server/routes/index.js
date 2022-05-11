@@ -62,4 +62,25 @@ router.post('/', function(req, res) {
     })
 })
 
+router.post('/getArticles', function(req, res, next) {
+    console.log("/getAllArticles get called")
+    axios.post('http://localhost:3001/getArticles',{}).then(json => {
+        var cards = [];
+        json.data.forEach(function(article) {
+            let card = new Card(article._id, article.title, article.file_path,
+                article.description, article.author_name, article.date_of_issue);
+            cards.push(card);
+        });
+
+        //For now this is gonna be res.render while I figure out axios.
+        //TODO: look into this at a later date
+        res.append(json.data)
+    }).catch(err => {
+        console.log("Error Rendering Index")
+        res.setHeader('Content-Type', 'application/json');
+        res.status(403).json(err)
+    })
+});
+
+
 module.exports = router;
