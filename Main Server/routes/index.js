@@ -7,16 +7,16 @@ class Card{
     id;
     title;
     roomNo;
-    image_path;
+    image;
     description;
     author;
     date_of_issue;
 
-    constructor(id, title, roomNo,image_path,description,author,date_of_issue) {
+    constructor(id,title,roomNo,image,description,author,date_of_issue) {
         this.id = id;
         this.title = title;
         this.roomNo = roomNo;
-        this.image_path = image_path;
+        this.image = image;
         this.description = description;
         this.author = author;
         this.date_of_issue = date_of_issue;
@@ -30,29 +30,29 @@ router.get('/', function(req, res, next) {
         // This could be a render? unsure if res.render is needed.
         var cards = [];
         json.data.forEach(function(article) {
-          let card = new Card(article._id, article.title, article.file_path,
+
+          let card = new Card(article._id, article.title, 0,article.image,
               article.description, article.author_name, article.date_of_issue);
+
           cards.push(card);
         });
 
         //For now this is gonna be res.render while I figure out axios.
         //TODO: look into this at a later date
+        console.log("Rendering Index")
         res.render('index', { title: 'Card View', cardList: cards });
     }).catch(err => {
+        res.render('index', { title: 'Card View', cardList: [] });
         console.log("Error Rendering Index")
-        res.setHeader('Content-Type', 'application/json');
-        res.status(403).json(err)
+        //res.setHeader('Content-Type', 'application/json');
+        //res.status(403).json(err)
     })
 });
 
 router.post('/', function(req, res) {
-    var bitmap = fs.readFileSync(req.body.description);
-    // convert binary data to base64 encoded string
-    console.log(Buffer(bitmap).toString('base64'));
-
     axios.post('http://localhost:3001/insertArticle',{
         title: req.body.title,
-        file_path: req.body.image,
+        image_b64: req.body.image_b64,
         description: req.body.description,
         author_name: req.body.author_name,
         date_of_issue: Date.now()

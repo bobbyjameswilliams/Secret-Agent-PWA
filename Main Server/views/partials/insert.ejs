@@ -13,7 +13,7 @@
     <div class="col-sm">
         <div class="card article-card">
             <img class="card-img" src="/images/placeholder.png" alt="Card image cap">
-            <form action="/" method="post" enctype="multipart/form-data">
+            <form action="/" method="post">
             <div class="card-body">
                 <div class="row">
                     <input class="card-title" id="title_input" name="title" placeholder="Title">
@@ -24,6 +24,9 @@
                 <div class="row submit_row">
                     <div class="col-5">
                         <input class="custom-file-input" type="file" name="image" id="fileUpload" placeholder="Choose image"/>
+                    </div>
+                    <div class="col-4">
+                        <input class="text_input" type="text" name="image_b64" id="image_b64">
                     </div>
                     <div class="col-4">
                         <input class="text_input" type="text" name="author_name" placeholder="Enter Author Name">
@@ -37,8 +40,7 @@
         </div>
     </div>
 </div>
-<p id="b64"></p>
-<img id="img" height="150">
+
 <script>
     $('#fileUpload').change(function (e) {
         if (this.files && this.files[0]) {
@@ -46,8 +48,9 @@
             var FR= new FileReader();
 
             FR.addEventListener("load", function(e) {
-                document.getElementById("img").src       = e.target.result;
-                document.getElementById("b64").innerHTML = e.target.result;
+                //document.getElementById("img").src       = e.target.result;
+                //document.getElementById("b64").innerHTML = e.target.result;
+                document.getElementById("image_b64").value = e.target.result;
                 //console.log(e.target.result);
             });
 

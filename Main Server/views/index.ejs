@@ -18,12 +18,13 @@
     <%- include('./partials/nav.html'); %>
 </header>
 
+
 <div class="container" id="cards-container">
     <% cardList.forEach( (card) => { %>
         <div class="row">
             <div class="col-sm">
                 <div class="card article-card" id=<%=card.id%>>
-                    <img class="card-img" src="/images/cathedral.jpg" alt="Card image cap">
+                    <img id=<%=card.id + "img"%> class="card-img" alt="Card image cap" src=<%= card.image %>>
                     <div class="card-body">
                         <h3 class="card-title"><%= card.title %></h3>
                         <p class="card-text" id="id"><%= card.description %></p>
@@ -50,5 +51,12 @@
 <div id="insert-container" style="display: none">
     <%- include('./partials/insert.ejs'); %>
 </div>
+<script>
+    function SetImageSrc(Id, image_b64)
+    {
+        console.log("Setting image src!!!!!!!");
+        document.getElementById(Id).src = image_b64;
+    }
+</script>
 </body>
 </html>
