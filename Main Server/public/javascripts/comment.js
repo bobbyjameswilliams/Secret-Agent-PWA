@@ -31,6 +31,7 @@ class Comment{
  * @param username
  */
 function initRoom(roomNumber, username) {
+    database.getArticles().then(r => console.log(r)).catch(r => console.log(r));
     //TODO: Remove
     console.log("Initialising Room")
     name = username;
