@@ -9,12 +9,12 @@
     <script src="/javascripts/canvas.js" type="module"></script>
     <script src="/javascripts/database.js" type="module"></script>
     <script src="/javascripts/viewHandler.js"></script>
+    <script src="/javascripts/app.js"> type="module"</script>
     <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
     <link rel="stylesheet" href="/stylesheets/partials/navbar.css" />
     <link rel="stylesheet" href="/stylesheets/card.css" />
 </head>
-<!-- TODO: Add back initBrowser(); -->
-<body onload="initDatabase();">
+<body onload="initDatabase(); initServiceWorker()">
 <header>
     <%- include('./partials/nav.html'); %>
 </header>
