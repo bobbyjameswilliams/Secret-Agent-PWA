@@ -3,6 +3,7 @@
 <head>
     <script src="/javascripts/card-feed.js"></script>
     <script src="/javascripts/database.js" type="module"></script>
+    <script src="/javascripts/app.js"></script>
     <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
     <link rel="stylesheet" href="/stylesheets/card.css" />
     <link rel="stylesheet" href="/stylesheets/insert.css" />
@@ -22,7 +23,10 @@
                 </div>
                 <div class="row submit_row">
                     <div class="col-5">
-                        <input class="text_input" type="text" name="file_path" placeholder="Enter Filepath">
+                        <input class="custom-file-input" type="file" name="image" id="fileUpload" placeholder="Choose image"/>
+                    </div>
+                    <div class="col-4">
+                        <input class="text_input" type="text" name="image_b64" id="image_b64" hidden="hidden">
                     </div>
                     <div class="col-4">
                         <input class="text_input" type="text" name="author_name" placeholder="Enter Author Name">
@@ -36,5 +40,21 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('#fileUpload').change(function (e) {
+        if (this.files && this.files[0]) {
+
+            var FR= new FileReader();
+
+            FR.addEventListener("load", function(e) {
+                document.getElementById("image_b64").value = e.target.result;
+            });
+
+            FR.readAsDataURL( this.files[0] );
+        }
+
+    })
+</script>
 </body>
 </html>

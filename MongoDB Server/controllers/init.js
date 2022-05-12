@@ -5,7 +5,7 @@ const Article = require('../models/articles');
 exports.init= function() {
     // uncomment if you need to drop the database
 
-    //Character.remove({}, function(err) {
+    //Article.remove({}, function(err) {
     //   console.log('collection removed')
     //});
 
