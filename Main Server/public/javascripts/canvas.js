@@ -42,7 +42,7 @@ class Canvas{
  * @param roomNo
  * @param name
  */
-export function initCanvas(sckt, imageUrl, roomNo, name) {
+export function initCanvas(sckt, image, roomNo, name) {
     room = roomNo;
     userId = name;
     let socket;
@@ -61,7 +61,7 @@ export function initCanvas(sckt, imageUrl, roomNo, name) {
     old_img.parentNode.replaceChild(img, old_img);
 
     let ctx = cvx.getContext('2d');
-    img.src = imageUrl;
+    img.src = image;
 
     // event on the canvas when the mouse is on it
     canvas.on('mousemove mousedown mouseup mouseout', function (e) {

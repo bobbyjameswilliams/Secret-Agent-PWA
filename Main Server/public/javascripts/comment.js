@@ -30,7 +30,7 @@ class Comment{
  * @param roomNumber
  * @param username
  */
-function initRoom(roomNumber, username) {
+function initRoom(roomNumber, username, image) {
     //TODO: Remove
     console.log("Initialising Room")
     name = username;
@@ -84,7 +84,7 @@ function initRoom(roomNumber, username) {
         writeKnowledgeCard(card);
     });
 
-    connectToRoom()
+    connectToRoom(image)
 }
 window.initRoom = initRoom
 
@@ -101,7 +101,7 @@ window.sendChatText = sendChatText
 /**
  * Connects to room
  */
-function connectToRoom() {
+function connectToRoom(image) {
     //roomNo = document.getElementById('roomNo').value;
     //name = document.getElementById('name').value;
     //let imageUrl= document.getElementById('image_url').value;
@@ -109,7 +109,7 @@ function connectToRoom() {
     //@todo join the room
     socket.emit('create or join', roomNo, name);
     // TODO: change imageURL
-    canvas.initCanvas(socket,"/images/cathedral.jpg", roomNo, name);
+    canvas.initCanvas(socket,image, roomNo, name);
 }
 
 /**
