@@ -33,6 +33,10 @@
     margin: 2%;
 }
 
+.card-img{
+    max-height: 80vh;
+}
+
 .colourbox{
     width: 2em;
     height: 2em;

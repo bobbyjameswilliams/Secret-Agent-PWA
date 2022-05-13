@@ -4,10 +4,10 @@ function connectToRoomPage(cardID, image){
     if (roomNo !== '' && username !== ''){
         changeRoomView();
         initRoom(roomNo, username, image);
-    } else if (roomNo === ''){
-        alertInputValidation(cardID, 'room_input');
-    } else {
+    } else if (username === ''){
         alertInputValidation(cardID, 'username_input');
+    } else {
+        alertInputValidation(cardID, 'room_input');
     }
 
 }
