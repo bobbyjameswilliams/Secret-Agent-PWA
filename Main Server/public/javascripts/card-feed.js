@@ -11,10 +11,10 @@ function createArticleCard(article){
     let col = document.createElement('col-sm');
     let card = document.createElement('div');
     card.className = 'card article-card';
-    card.id = article.id
+    card.id = article.title
 
     let cardImg = document.createElement('img');
-    cardImg.id = article.id + 'img'
+    cardImg.id = article.title + 'img'
     cardImg.class = 'card-img'
     cardImg.alt = 'Card image cap'
     cardImg.src = article.image
@@ -40,13 +40,13 @@ function createArticleCard(article){
     col3.className = 'col-3'
     let usernameInput =  document.createElement('input');
     usernameInput.className = 'text_input';
-    usernameInput.id = article.id + "username_input";
+    usernameInput.id = article.title + "username_input";
     usernameInput.placeholder = "Enter Username"
     usernameInput.type = 'text';
 
     let roomInput =  document.createElement('input');
     roomInput.className = 'text_input';
-    roomInput.id = article.id + "username_input";
+    roomInput.id = article.title + "username_input";
     roomInput.placeholder = "Enter Username"
     roomInput.type = 'text';
 
@@ -56,8 +56,8 @@ function createArticleCard(article){
     submit.placeholder = "Enter Username"
     submit.innerHTML = 'Connect'
     submit.addEventListener('click',function (){
-        let roomNo = document.getElementById(article.id+'room_input').value;
-        let username = document.getElementById(article.id+'username_input').value;
+        let roomNo = document.getElementById(article.title+'room_input').value;
+        let username = document.getElementById(article.title+'username_input').value;
         changeRoomView();
         initRoom(roomNo, username, article.image);
     })
