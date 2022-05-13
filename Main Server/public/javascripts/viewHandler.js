@@ -39,19 +39,19 @@ async function initArticleFeed() {
     // articles = await database.getArticles();
     //console.log(articles)
     //database.getArticles();
-    axios.post('http://localhost:3000/getArticles',{}).then(json => {
-        let articles = json.data
-        database.storeArticles(articles)
-            .then(r => console.log(r))
-            .catch(r => console.log(r));
-    }).catch(err => {
-        console.log("Error getting articles")
-        // res.setHeader('Content-Type', 'application/json');
-        // res.status(403).json(err)
-    })
+    // axios.post('http://localhost:3000/getArticles',{}).then(json => {
+    //     let articles = json.data
+    //     database.storeArticles(articles)
+    //         .then(r => console.log(r))
+    //         .catch(r => console.log(r));
+    // }).catch(err => {
+    //     console.log("Error getting articles")
+    //     // res.setHeader('Content-Type', 'application/json');
+    //     // res.status(403).json(err)
+    // })
 
-    let x;
-    x = await database.retrieveArticles()
+    await database.syncArticles();
+
     //console.log(x)
 }
 window.initArticleFeed = initArticleFeed

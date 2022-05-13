@@ -77,8 +77,33 @@ window.initDatabase= initDatabase;
  */
 
 
-async function syncArticles(){
+export async function syncArticles(){
+    let mongoArticles = await getArticlesMongo();
+    await storeArticles(mongoArticles)
+    //Retrieve all IDB articles, these could include new ones submitted offline
+    let idbArticles = await retrieveArticles();
+    console.log("Begin comparison of the lists")
+    //var difference = idbArticles.filter(x => mongoArticles.indexOf(x._id) === -1);
+    const isSameArticle = (mongoArticles, idbArticles) => mongoArticles._id === idbArticles._id;
 
+// Get items that only occur in the left array,
+// using the compareFunction to determine equality.
+    const onlyInLeft = (left, right, compareFunction) =>
+        left.filter(leftValue =>
+            !right.some(rightValue =>
+                compareFunction(leftValue, rightValue)));
+
+    const onlyInA = onlyInLeft(mongoArticles, idbArticles, isSameArticle);
+    const onlyInB = onlyInLeft(idbArticles, mongoArticles, isSameArticle);
+
+    const result = [...onlyInA, ...onlyInB];
+
+    console.log(result);
+
+
+    //console.log(difference);
+    console.log(mongoArticles);
+    console.log(idbArticles);
 }
 
 async function storeArticle(article){
@@ -243,11 +268,9 @@ export async function retrieveArticles(){
             let store = await tx.objectStore(ARTICLES_STORE_NAME);
             let index = await store.index('article');
             let readingsList = await index.getAll();
-            console.log(readingsList.length);
             await tx.complete;
             if (readingsList && readingsList.length > 0) {
                 console.log("Inside retrieveArticles()")
-                console.log(readingsList)
                 return readingsList;
             } else {
                 // const value = localStorage.getItem(city);
@@ -270,17 +293,13 @@ export async function retrieveArticles(){
     }
 }
 
+
 export async function getArticlesMongo(){
-    axios.post('http://localhost:3000/getArticles',{}).then(json => {
-        //res.send(json.data)
-        let dataReturned = json.data
-        console.log(dataReturned)
-        return dataReturned
-    }).catch(err => {
-        console.log("Error getting articles")
-        // res.setHeader('Content-Type', 'application/json');
-        // res.status(403).json(err)
-    })
+    let json = await axios.post('http://localhost:3000/getArticles',{})
+    let dataReturned = json.data;
+    await storeArticles(dataReturned);
+
+    return dataReturned
 }
 
 export async function sendAjaxQuery(url, data) {
