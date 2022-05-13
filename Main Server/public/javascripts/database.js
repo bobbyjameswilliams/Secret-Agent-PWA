@@ -224,3 +224,25 @@ export async function retrieveRoomImageAnnotations(roomNo){
         // return finalResults;
     }
 }
+export async function sendAjaxQuery(url, data) {
+    console.log("beginning ajax query")
+    axios.post(url , data)
+        .then (function (dataR) {
+            console.log("successful ajax query")
+            console.log(dataR.data)
+        })
+        .catch( function (response) {
+            console.log("unsuccessful ajax query")
+        })
+}
+
+export async function getArticles(){
+    axios.post('http://localhost:3000/getArticles',{}).then(json => {
+        //res.send(json.data)
+        console.log(json.data)
+    }).catch(err => {
+        console.log("Error getting articles")
+        // res.setHeader('Content-Type', 'application/json');
+        // res.status(403).json(err)
+    })
+}
