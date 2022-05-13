@@ -71,13 +71,13 @@ async function initDatabase(){
 window.initDatabase= initDatabase;
 
 /**
- * Caches retrieved articles in IDB store.
+ * Caches retrieved article in IDB store.
  * @param article
  * @returns {Promise<void>}
  */
-async function cacheRetrievedArticles(article){
-    //if articleID doesnt already exist in DB, then add it in
-    console.log('inserting: ' + JSON.stringify(commentObject));
+async function cacheRetrievedArticle(article){
+    console.log("Inside CacheRetrievedArticle")
+    console.log('inserting: ' + JSON.stringify(article));
     if (!db)
         await initDatabase();
     console.log(db)
@@ -85,13 +85,19 @@ async function cacheRetrievedArticles(article){
         try {
             let tx = await db.transaction(ARTICLES_STORE_NAME, 'readwrite');
             let store = await tx.objectStore(ARTICLES_STORE_NAME);
-            await store.put(commentObject);
+            await store.put(article);
             await tx.complete;
-            console.log('added item to the store! ' + JSON.stringify(commentObject));
+            console.log('added item to the store! ' + JSON.stringify(article));
         } catch (error) {
-            console.log("Error in storeComment()")
+            console.log("Error in cacheRetrievedArticle()")
         }
     }
+}
+
+export async function cacheRetrievedArticles(articles){
+    console.log("Inside cacheRetrievedArticles")
+    console.log(articles)
+    articles.forEach(element => cacheRetrievedArticle(element))
 }
 
 async function retrieveCachedArticles(){
@@ -239,7 +245,9 @@ export async function sendAjaxQuery(url, data) {
 export async function getArticles(){
     axios.post('http://localhost:3000/getArticles',{}).then(json => {
         //res.send(json.data)
-        console.log(json.data)
+        let dataReturned = json.data
+        console.log(dataReturned)
+        return dataReturned
     }).catch(err => {
         console.log("Error getting articles")
         // res.setHeader('Content-Type', 'application/json');

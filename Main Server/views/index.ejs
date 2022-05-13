@@ -8,13 +8,13 @@
     <script src="/javascripts/card-feed.js"></script>
     <script src="/javascripts/canvas.js" type="module"></script>
     <script src="/javascripts/database.js" type="module"></script>
-    <script src="/javascripts/viewHandler.js"></script>
+    <script src="/javascripts/viewHandler.js" type="module"></script>
     <script src="/javascripts/app.js"> type="module"</script>
     <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
     <link rel="stylesheet" href="/stylesheets/partials/navbar.css" />
     <link rel="stylesheet" href="/stylesheets/card.css" />
 </head>
-<body onload="initDatabase(); initServiceWorker(); adder()">
+<body onload="initDatabase(); initServiceWorker(); initArticleFeed()">
 <header>
     <%- include('./partials/nav.html'); %>
 </header>
