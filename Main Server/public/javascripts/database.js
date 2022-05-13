@@ -81,8 +81,8 @@ async function syncArticles(){
 
 }
 
-async function cacheRetrievedArticle(article){
-    console.log("Inside CacheRetrievedArticle")
+async function storeArticle(article){
+    console.log("Inside storeArticle")
     console.log('inserting: ' + JSON.stringify(article));
     if (!db)
         await initDatabase();
@@ -94,14 +94,14 @@ async function cacheRetrievedArticle(article){
             await tx.complete;
             console.log('added item to the store! ' + JSON.stringify(article));
         } catch (error) {
-            console.log("Error in cacheRetrievedArticle()")
+            console.log("Error in storeArticle()")
         }
     }
 }
 
-export async function cacheRetrievedArticles(articles){
-    console.log("Inside CacheRetrievedArticles")
-    articles.forEach(element => cacheRetrievedArticle(element))
+export async function storeArticles(articles){
+    console.log("Inside storeArticles")
+    articles.forEach(element => storeArticle(element))
 }
 
 /**

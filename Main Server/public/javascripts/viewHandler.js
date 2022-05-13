@@ -41,7 +41,7 @@ async function initArticleFeed() {
     //database.getArticles();
     axios.post('http://localhost:3000/getArticles',{}).then(json => {
         let articles = json.data
-        database.cacheRetrievedArticles(articles)
+        database.storeArticles(articles)
             .then(r => console.log(r))
             .catch(r => console.log(r));
     }).catch(err => {
