@@ -4,15 +4,6 @@
  */
 
 
-
-
-
-
-
-function initBrowser(){
-    initServiceWorker();
-}
-
 function initServiceWorker() {
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker
@@ -22,3 +13,5 @@ function initServiceWorker() {
             });
     }
 }
+
+window.initServiceWorker = initServiceWorker;

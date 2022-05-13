@@ -27,7 +27,6 @@ class Card{
 router.get('/', function(req, res, next) {
     console.log("/ get called")
     axios.post('http://localhost:3001/getArticles',{}).then(json => {
-        // This could be a render? unsure if res.render is needed.
         var cards = [];
         json.data.forEach(function(article) {
 
@@ -36,9 +35,7 @@ router.get('/', function(req, res, next) {
 
           cards.push(card);
         });
-
-        //For now this is gonna be res.render while I figure out axios.
-        //TODO: look into this at a later date
+        //Renders homepage
         res.render('index', { title: 'Card View', cardList: cards });
     }).catch(err => {
         res.render('index', { title: 'Card View', cardList: [] });
@@ -59,6 +56,37 @@ router.post('/', function(req, res) {
         //console.log(JSON.stringify(json.data));
         req.method='get';
         res.redirect('/')
+    }).catch(err => {
+        console.log("Error")
+        res.setHeader('Content-Type', 'application/json');
+        res.status(403).json(err)
+    })
+})
+
+//Passes data through to get articles from mongo.
+router.post('/getArticles', function(req, res, next) {
+    console.log("/getAllArticles get called")
+    axios.post('http://localhost:3001/getArticles',{}).then(json => {
+        res.send(json.data)
+    }).catch(err => {
+        console.log("Error getting articles")
+        res.setHeader('Content-Type', 'application/json');
+        res.status(403).json(err)
+    })
+});
+
+//Passes data through to insert article into mongo.
+router.post('/insertArticle', function(req, res) {
+    console.log("/insertArticle called")
+    axios.post('http://localhost:3001/insertArticle',{
+        title: req.body.title,
+        file_path: req.body.file_path,
+        description: req.body.description,
+        author_name: req.body.author_name,
+        date_of_issue: Date.now()
+    }).then(json => {
+        console.log(JSON.stringify(json.data));
+        res.send(json.data)
     }).catch(err => {
         console.log("Error")
         res.setHeader('Content-Type', 'application/json');
