@@ -1,8 +1,20 @@
 function connectToRoomPage(cardID, image){
     let roomNo = document.getElementById(cardID+'room_input').value;
     let username = document.getElementById(cardID+'username_input').value;
-    changeRoomView();
-    initRoom(roomNo, username, image);
+    if (roomNo !== '' && username !== ''){
+        changeRoomView();
+        initRoom(roomNo, username, image);
+    } else if (roomNo === ''){
+        alertInputValidation(cardID, 'room_input');
+    } else {
+        alertInputValidation(cardID, 'username_input');
+    }
+
+}
+
+function alertInputValidation(cardID, inputDomID){
+    document.getElementById(cardID+inputDomID).style.backgroundColor = 'red';
+    document.getElementById(cardID+inputDomID).style.opacity= '0.6';
 }
 
 function createArticleCard(article){
