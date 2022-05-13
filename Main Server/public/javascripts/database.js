@@ -42,10 +42,10 @@ async function initDatabase(){
                 //Creating articles store
                 if (!upgradeDb.objectStoreNames.contains(ARTICLES_STORE_NAME)) {
                     let appIDB1 = upgradeDb.createObjectStore(ARTICLES_STORE_NAME, {
-                        keyPath: 'id',
+                        keyPath: '_id',
                         autoIncrement: true
                     });
-                    appIDB1.createIndex('article', 'article', {unique: false, multiEntry: true});
+                    appIDB1.createIndex('article', '_id', {unique: false, multiEntry: true});
                 }
                 //Creating image annotations store
                 if (!upgradeDb.objectStoreNames.contains(IMAGE_ANNOTATIONS_STORE_NAME)) {
@@ -75,12 +75,21 @@ window.initDatabase= initDatabase;
  * @param article
  * @returns {Promise<void>}
  */
+
+
+async function retrieveCachedArticles(){
+
+}
+
+async function syncArticles(){
+
+}
+
 async function cacheRetrievedArticle(article){
     console.log("Inside CacheRetrievedArticle")
     console.log('inserting: ' + JSON.stringify(article));
     if (!db)
         await initDatabase();
-    console.log(db)
     if (db) {
         try {
             let tx = await db.transaction(ARTICLES_STORE_NAME, 'readwrite');
@@ -95,17 +104,8 @@ async function cacheRetrievedArticle(article){
 }
 
 export async function cacheRetrievedArticles(articles){
-    console.log("Inside cacheRetrievedArticles")
-    console.log(articles)
+    console.log("Inside CacheRetrievedArticles")
     articles.forEach(element => cacheRetrievedArticle(element))
-}
-
-async function retrieveCachedArticles(){
-
-}
-
-async function syncArticles(){
-
 }
 
 /**
@@ -116,7 +116,6 @@ async function syncArticles(){
 export async function storeComment(commentObject) {
     if (!db)
         await initDatabase();
-        console.log(db)
     if (db) {
         try {
             let tx = await db.transaction(CHAT_MESSAGES_STORE_NAME, 'readwrite');
@@ -138,7 +137,6 @@ export async function storeComment(commentObject) {
 export async function storeAnnotation(canvasObject) {
     if (!db)
         await initDatabase();
-    console.log(db)
     if (db) {
         try {
             let tx = await db.transaction(IMAGE_ANNOTATIONS_STORE_NAME, 'readwrite');
@@ -172,6 +170,8 @@ export async function retrieveAllCachedRoomComments(roomNo){
             if (readingsList && readingsList.length > 0) {
                 return readingsList;
             } else {
+                //TODO: Implement localstorage
+
                 // const value = localStorage.getItem(city);
                 // if (value == null)
                 //     return finalResults;
@@ -183,6 +183,8 @@ export async function retrieveAllCachedRoomComments(roomNo){
         }
     } else {
         console.log("Else in retrieve")
+        //TODO: Implement localstorage
+
         // const value = localStorage.getItem(city);
         // let finalResults=[];
         // if (value == null)
@@ -230,19 +232,49 @@ export async function retrieveRoomImageAnnotations(roomNo){
         // return finalResults;
     }
 }
-export async function sendAjaxQuery(url, data) {
-    console.log("beginning ajax query")
-    axios.post(url , data)
-        .then (function (dataR) {
-            console.log("successful ajax query")
-            console.log(dataR.data)
-        })
-        .catch( function (response) {
-            console.log("unsuccessful ajax query")
-        })
+
+/**
+ * Retrieves all articles stored in IDB.
+ * @returns {Promise<*>}
+ */
+export async function retrieveArticles(){
+    console.log("Retrieving articles from idb...")
+    if (!db)
+        await initDatabase();
+    if (db) {
+        try {
+            let tx = await db.transaction(ARTICLES_STORE_NAME, 'readonly');
+            let store = await tx.objectStore(ARTICLES_STORE_NAME);
+            let index = await store.index('article');
+            let readingsList = await index.getAll();
+            console.log(readingsList.length);
+            await tx.complete;
+            if (readingsList && readingsList.length > 0) {
+                console.log("Inside retrieveArticles()")
+                console.log(readingsList)
+                return readingsList;
+            } else {
+                // const value = localStorage.getItem(city);
+                // if (value == null)
+                //     return finalResults;
+                // else finalResults.push(value);
+                // return finalResults;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    } else {
+        console.log("Else in retrieve")
+        // const value = localStorage.getItem(city);
+        // let finalResults=[];
+        // if (value == null)
+        //     return finalResults;
+        // else finalResults.push(value);
+        // return finalResults;
+    }
 }
 
-export async function getArticles(){
+export async function getArticlesMongo(){
     axios.post('http://localhost:3000/getArticles',{}).then(json => {
         //res.send(json.data)
         let dataReturned = json.data
@@ -253,4 +285,16 @@ export async function getArticles(){
         // res.setHeader('Content-Type', 'application/json');
         // res.status(403).json(err)
     })
+}
+
+export async function sendAjaxQuery(url, data) {
+    console.log("beginning ajax query")
+    axios.post(url , data)
+        .then (function (dataR) {
+            console.log("successful ajax query")
+            console.log(dataR.data)
+        })
+        .catch( function (response) {
+            console.log("unsuccessful ajax query")
+        })
 }

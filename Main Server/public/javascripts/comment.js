@@ -32,7 +32,7 @@ class Comment{
  */
 
 function initRoom(roomNumber, username, image) {
-    database.getArticles().then(r => console.log(r)).catch(r => console.log(r));
+    database.getArticlesMongo().then(r => console.log(r)).catch(r => console.log(r));
     //TODO: Remove
     console.log("Initialising Room")
     name = username;

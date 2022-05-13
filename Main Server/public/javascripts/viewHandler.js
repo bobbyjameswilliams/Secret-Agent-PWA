@@ -41,7 +41,6 @@ async function initArticleFeed() {
     //database.getArticles();
     axios.post('http://localhost:3000/getArticles',{}).then(json => {
         let articles = json.data
-        console.log(articles)
         database.cacheRetrievedArticles(articles)
             .then(r => console.log(r))
             .catch(r => console.log(r));
@@ -51,8 +50,8 @@ async function initArticleFeed() {
         // res.status(403).json(err)
     })
 
-
-
-
+    let x;
+    x = await database.retrieveArticles()
+    //console.log(x)
 }
 window.initArticleFeed = initArticleFeed
