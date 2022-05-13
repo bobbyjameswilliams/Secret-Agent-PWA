@@ -3,17 +3,41 @@ const apiKey= 'AIzaSyAG7w627q-djB4gTTahssufwNOImRqdYKM';
 let socket = io();
 
 function widgetInit(){
-    let type= document.getElementById("kg_type").value;
+    let kgTypeInput =  document.getElementById('kg_type');
+    let kgSearch = document.getElementById('kg_search')
+    let kgType = kgTypeInput.value;
     let config = {
         'limit': 10,
         'languages': ['en'],
-        'types': [type],
+        'types': [kgType],
         'maxDescChars': 100,
         'selectHandler': selectItem,
     }
-    KGSearchWidget(apiKey, document.getElementById("kg_search"), config);
-    document.getElementById("kg_type").value = '';
+    kgType.value = '';
+    KGSearchWidget(apiKey, kgSearch,config);
+    changeKGWidgets(0)
+
 }
+
+function changeKGWidgets(option){
+    // Changes the display style from searching KG or updating KG params
+    let val1, val2;
+    if (option == 1){
+        val1 = 'block';
+        val2 = 'none';
+        widgetInit();
+    } else {
+        val1 = 'none';
+        val2 = 'block';
+    }
+    document.getElementById('kg_type_container').style.display= val1;
+    document.getElementById('set_widget_container').style.display = val1;
+
+    document.getElementById('change_widget_container').style.display = val2;
+    document.getElementById('kg_search_container').style.display = val2;
+}
+
+
 
 /**
  * callback called when an element in the widget is selected
@@ -25,13 +49,6 @@ function selectItem(event){
     sendKnowledgeSnippet(row.name, row.rc, c);
 
     document.getElementById("kg_search").value = '';
-    /**
-    document.getElementById('resultId').innerText= 'id: '+row.id;
-    document.getElementById('resultName').innerText= row.name;
-    document.getElementById('resultDescription').innerText= row.rc;
-    document.getElementById("resultUrl").href= row.qc;
-    document.getElementById('resultPanel').style.display= 'block';
-     */
 }
 
 function writeKnowledgeCard(card){

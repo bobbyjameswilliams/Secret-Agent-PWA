@@ -45,22 +45,14 @@ class Canvas{
 export function initCanvas(sckt, image, roomNo, name) {
     room = roomNo;
     userId = name;
-    let socket;
-    socket = sckt;
+    let socket = sckt;
     let flag = false,
         prevX, prevY, currX, currY = 0;
     let canvas = $('#canvas');
-    //Cloning to ensure no event listeners remain
-    let old_cvx = document.getElementById('canvas');
-    let cvx = old_cvx.cloneNode(true);
-    old_cvx.parentNode.replaceChild(cvx, old_cvx);
-
-    //Cloning to ensure no event listeners remain
-    let old_img = document.getElementById('image');
-    let img = old_img.cloneNode(true);
-    old_img.parentNode.replaceChild(img, old_img);
-
+    let cvx = document.getElementById('canvas');
+    let img = document.getElementById('image');
     let ctx = cvx.getContext('2d');
+
     img.src = image;
 
     // event on the canvas when the mouse is on it
@@ -108,7 +100,9 @@ export function initCanvas(sckt, image, roomNo, name) {
         drawImageScaled(img, canvas, ctx);
     })
 
-    let imageLoader = function(){
+    // this is called when the src of the image is loaded
+    // this is an async operation as it may take time
+    img.addEventListener('load', () => {
         // it takes time before the image size is computed and made available
         // here we wait until the height is set, then we resize the canvas based on the size of the image
         let poll = setInterval(async function () {
@@ -134,12 +128,7 @@ export function initCanvas(sckt, image, roomNo, name) {
                 img.style.display = 'none';
             }
         }, 10);
-    }
-
-    // this is called when the src of the image is loaded
-    // this is an async operation as it may take time
-
-    img.addEventListener('load', imageLoader);
+    })
 }
 window.initCanvas = initCanvas;
 

@@ -24,14 +24,17 @@
 
     <div class="col">
         <div class="row" id="knowledge_graph">
-            <div class="col-3">
+            <div class="col-6" style="display: none" id="kg_search_container">
                 <input class="text_input" id="kg_search" type="text" placeholder="KG Search">
             </div>
-            <div class="col-3">
+            <div class="col-6" id="kg_type_container">
                 <input  class="text_input" id="kg_type" type="text" placeholder="KG Type">
             </div>
-            <div class="col-3">
-                <button  class="btn btn-primary" onclick=widgetInit()>Update Widget</button>
+            <div class="col-3" style="display: none" id='change_widget_container'>
+                <button  class="btn btn-primary" onclick=changeKGWidgets(1)>Reset</button>
+            </div>
+            <div class="col-3" id="set_widget_container">
+                <button  class="btn btn-primary" onclick=widgetInit()>Set Widget Type</button>
             </div>
             <div class="col-1">
                 <div class="colourbox" style="background-color:red" onclick=changeColor('red')></div>

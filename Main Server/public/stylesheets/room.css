@@ -5,6 +5,10 @@
     height: 70vh;
 }
 
+#kg_type, #kg_search{
+    height: 100%;
+}
+
 #canvas_buttons{
     margin-left: 10% ;
     margin-right: 10%;
