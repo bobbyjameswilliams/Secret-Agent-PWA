@@ -27,3 +27,8 @@ function getRoomView(){
 function getInsertView(){
     return document.getElementById("insert-container");
 }
+
+function adder(){
+    let x = 2;
+    console.log('In the adder');
+}
