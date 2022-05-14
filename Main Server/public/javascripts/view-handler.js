@@ -37,13 +37,20 @@ function getInsertView(){
 
 async function initArticleFeed() {
     console.log("initArticleFeed called")
+    try{
+        await database.syncArticles()
+        let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
+        allIdbArticles.forEach(article => writeCardToHome(createArticleCard(article)))
+    }
+    catch {
+        let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
+        allIdbArticles.forEach(article => writeCardToHome(createArticleCard(article)))
+    }
+    
 
-    await database.syncArticles();
 
-    let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
-    allIdbArticles.forEach(article => writeCardToHome(createArticleCard(article)))
     //database.insertArticleMongo({ title: "test"}).then(r => console.log(r)).catch(err => console.log(err))
-    await insertQueuedArticlesMongoThenDelete();
+
     //console.log(x)
 }
 window.initArticleFeed = initArticleFeed

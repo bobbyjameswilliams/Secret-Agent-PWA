@@ -102,12 +102,10 @@ window.initDatabase= initDatabase;
 
 
 export async function syncArticles(){
-    let mongoArticles = await getArticlesMongo().catch();
+    console.log("Beginning article sync...")
+    await insertQueuedArticlesMongoThenDelete();
+    let mongoArticles = await getArticlesMongo()
     await storeArticles(mongoArticles)
-    //Retrieve all IDB articles, these could include new ones submitted offline
-    let idbArticles = await retrieveArticles();
-    console.log(mongoArticles);
-    console.log(idbArticles);
 }
 
 /**
@@ -127,7 +125,7 @@ export async function insertQueuedArticlesMongoThenDelete(){
                 let keys = await store.getAllKeys();
                 for (const key of keys) {
                     let article = await retreiveQueuedArticle(key)
-                    insertArticleMongo(article)
+                    await insertArticleMongo(article)
                         .then(() => deleteQueuedArticle(key))
                         .then(() => resolve)
                         .catch(err => reject(err))
@@ -404,7 +402,7 @@ export async function retreiveQueuedArticle(key){
             await tx.complete;
             if (readingsList && readingsList.length > 0) {
                 console.log("Inside retrieveQueuedArticles()")
-                return readingsList;
+                return readingsList[0];
             } else {
                 return null;
             }
@@ -454,16 +452,16 @@ export async function getArticlesMongo(){
 }
 
 export async function insertArticleMongo(article) {
-    console.log(article)
-    axios.post('http://localhost:3000/insertArticle',
-        {
-            "title": article.title,
-            "image": article.image,
-            "description": article.description,
-            "author_name": article.author_name,
-            "date_of_issue": article.date_of_issue
-        })
-        .catch(err => reject(err))
+    let inputData = {
+        "title": article.title,
+        "image": article.image,
+        "description": article.description,
+        "author_name": article.author_name,
+        "date_of_issue": article.date_of_issue
+    }
+    console.log("Inserting: " + JSON.stringify(inputData))
+    axios.post('http://localhost:3000/insertArticle', inputData)
+        .catch(err => console.log(err))
 }
 
 export async function sendAjaxQuery(url, data) {
