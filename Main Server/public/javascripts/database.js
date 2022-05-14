@@ -97,16 +97,13 @@ export async function syncArticles(){
     const onlyInB = onlyInLeft(idbArticles, mongoArticles, isSameArticle);
 
     const result = [...onlyInA, ...onlyInB];
-
     console.log(result);
-
-
     //console.log(difference);
     console.log(mongoArticles);
     console.log(idbArticles);
 }
 
-async function storeArticle(article){
+export async function storeArticle(article){
     console.log("Inside storeArticle")
     console.log('inserting: ' + JSON.stringify(article));
     if (!db)
@@ -292,7 +289,6 @@ export async function retrieveArticles(){
         // return finalResults;
     }
 }
-
 
 export async function getArticlesMongo(){
     let json = await axios.post('http://localhost:3000/getArticles',{})

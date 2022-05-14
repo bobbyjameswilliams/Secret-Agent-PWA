@@ -55,3 +55,14 @@ async function initArticleFeed() {
     //console.log(x)
 }
 window.initArticleFeed = initArticleFeed
+
+async function insertArticle(){
+    let title = document.getElementById('title_input');
+    let image = document.getElementById('image_b64');
+    let description = document.getElementById('description_input');
+    let author_name = document.getElementById('author_name')
+    let date_of_issue = Date.now();
+    let article = new Article(title,image,description,author_name,date_of_issue)
+    await database.storeArticle(article)
+}
+window.insertArticle = insertArticle;

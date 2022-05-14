@@ -13,7 +13,6 @@
     <div class="col-sm">
         <div class="card article-card">
             <img class="card-img" src="/images/placeholder.png" alt="Card image cap">
-            <form action="/" method="post">
             <div class="card-body">
                 <div class="row">
                     <input class="card-title" id="title_input" name="title" placeholder="Title">
@@ -29,14 +28,16 @@
                         <input class="text_input" type="text" name="image_b64" id="image_b64" hidden="hidden">
                     </div>
                     <div class="col-4">
-                        <input class="text_input" type="text" name="author_name" placeholder="Enter Author Name">
+                        <input class="text_input" type="text" name="author_name" id="author_name" placeholder="Enter Author Name">
                     </div>
                     <div class="col-3">
-                        <input type="submit" value="Submit">
+                        <form action="/" method="get">
+                        <input type="submit" value="bobble" onclick="insertArticle()">
+                        </form>
                     </div>
                 </div>
             </div>
-            </form>
+
         </div>
     </div>
 </div>
