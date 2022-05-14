@@ -81,10 +81,10 @@ router.post('/insertArticle', function(req, res) {
     console.log("/insertArticle called")
     axios.post('http://localhost:3001/insertArticle',{
         title: req.body.title,
-        file_path: req.body.file_path,
+        image: req.body.image,
         description: req.body.description,
         author_name: req.body.author_name,
-        date_of_issue: Date.now()
+        date_of_issue: req.date_of_issue
     }).then(json => {
         console.log(JSON.stringify(json.data));
         res.send(json.data)

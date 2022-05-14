@@ -1,5 +1,5 @@
 import * as database from './database.js';
-import {retrieveAllLocallyStoredArticles} from "./database.js";
+import {insertQueuedArticlesMongoThenDelete, retrieveAllLocallyStoredArticles} from "./database.js";
 
 
 function changeInsertView(){
@@ -37,26 +37,13 @@ function getInsertView(){
 
 async function initArticleFeed() {
     console.log("initArticleFeed called")
-    // let articles;
-    // articles = await database.getArticles();
-    //console.log(articles)
-    //database.getArticles();
-    // axios.post('http://localhost:3000/getArticles',{}).then(json => {
-    //     let articles = json.data
-    //     database.storeArticles(articles)
-    //         .then(r => console.log(r))
-    //         .catch(r => console.log(r));
-    // }).catch(err => {
-    //     console.log("Error getting articles")
-    //     // res.setHeader('Content-Type', 'application/json');
-    //     // res.status(403).json(err)
-    // })
 
     await database.syncArticles();
 
     let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
     allIdbArticles.forEach(article => writeCardToHome(createArticleCard(article)))
-
+    //database.insertArticleMongo({ title: "test"}).then(r => console.log(r)).catch(err => console.log(err))
+    await insertQueuedArticlesMongoThenDelete();
     //console.log(x)
 }
 window.initArticleFeed = initArticleFeed

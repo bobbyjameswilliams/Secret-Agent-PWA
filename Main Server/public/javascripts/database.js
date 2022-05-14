@@ -102,27 +102,10 @@ window.initDatabase= initDatabase;
 
 
 export async function syncArticles(){
-    let mongoArticles = await getArticlesMongo();
+    let mongoArticles = await getArticlesMongo().catch();
     await storeArticles(mongoArticles)
     //Retrieve all IDB articles, these could include new ones submitted offline
     let idbArticles = await retrieveArticles();
-    console.log("Begin comparison of the lists")
-    //var difference = idbArticles.filter(x => mongoArticles.indexOf(x._id) === -1);
-    const isSameArticle = (mongoArticles, idbArticles) => mongoArticles._id === idbArticles._id;
-
-// Get items that only occur in the left array,
-// using the compareFunction to determine equality.
-    const onlyInLeft = (left, right, compareFunction) =>
-        left.filter(leftValue =>
-            !right.some(rightValue =>
-                compareFunction(leftValue, rightValue)));
-
-    const onlyInA = onlyInLeft(mongoArticles, idbArticles, isSameArticle);
-    const onlyInB = onlyInLeft(idbArticles, mongoArticles, isSameArticle);
-
-    const result = [...onlyInA, ...onlyInB];
-    console.log(result);
-    //console.log(difference);
     console.log(mongoArticles);
     console.log(idbArticles);
 }
@@ -132,6 +115,31 @@ export async function syncArticles(){
  * @param article
  * @returns {Promise<void>}
  */
+
+export async function insertQueuedArticlesMongoThenDelete(){
+    return new Promise(async function (resolve, reject) {
+        if (!db)
+            await initDatabase();
+        if (db) {
+            try {
+                let tx = await db.transaction(QUEUED_ARTICLES_STORE_NAME, 'readwrite');
+                let store = await tx.objectStore(QUEUED_ARTICLES_STORE_NAME);
+                let keys = await store.getAllKeys();
+                for (const key of keys) {
+                    let article = await retreiveQueuedArticle(key)
+                    insertArticleMongo(article)
+                        .then(() => deleteQueuedArticle(key))
+                        .then(() => resolve)
+                        .catch(err => reject(err))
+                }
+            } catch (error) {
+                reject(error);
+            }
+        }
+    })
+}
+
+
 export async function storeArticle(article){
     console.log("Inside storeArticle")
     console.log('inserting: ' + JSON.stringify(article));
@@ -369,25 +377,62 @@ export async function retreiveQueuedArticles(){
                 return readingsList;
             } else {
                 return null;
-                // const value = localStorage.getItem(city);
-                // if (value == null)
-                //     return finalResults;
-                // else finalResults.push(value);
-                // return finalResults;
             }
         } catch (error) {
             console.log(error);
         }
     } else {
-        console.log("Else in retrieve")
-        // const value = localStorage.getItem(city);
-        // let finalResults=[];
-        // if (value == null)
-        //     return finalResults;
-        // else finalResults.push(value);
-        // return finalResults;
+        console.log("IDB Unavailable.")
     }
+}
 
+/**
+ * Retrieves queued article given a key
+ * @param key
+ * @returns {Promise<null|*>}
+ */
+export async function retreiveQueuedArticle(key){
+    console.log("Retrieving articles from idb...")
+    if (!db)
+        await initDatabase();
+    if (db) {
+        try {
+            let tx = await db.transaction(QUEUED_ARTICLES_STORE_NAME, 'readonly');
+            let store = await tx.objectStore(QUEUED_ARTICLES_STORE_NAME);
+            let index = await store.index('queued_article');
+            let readingsList = await index.getAll(IDBKeyRange.only(key));
+            await tx.complete;
+            if (readingsList && readingsList.length > 0) {
+                console.log("Inside retrieveQueuedArticles()")
+                return readingsList;
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    } else {
+        console.log("IDB Unavailable.")
+    }
+}
+
+export async function deleteQueuedArticle(key){
+    console.log("Deleting queued article with id " + key)
+    if (!db)
+        await initDatabase();
+    if (db) {
+        try {
+            let tx = await db.transaction(QUEUED_ARTICLES_STORE_NAME, 'readwrite');
+            let store = await tx.objectStore(QUEUED_ARTICLES_STORE_NAME).delete(key);
+            // let index = await store.index('queued_article');
+            // await index.delete(IDBKeyRange.only(key))
+            await tx.complete;
+        } catch (error) {
+            console.log(error);
+        }
+    } else {
+        console.log("IDB Unavailable.")
+    }
 }
 
 /**
@@ -406,6 +451,19 @@ export async function getArticlesMongo(){
     await storeArticles(dataReturned);
 
     return dataReturned
+}
+
+export async function insertArticleMongo(article) {
+    console.log(article)
+    axios.post('http://localhost:3000/insertArticle',
+        {
+            "title": article.title,
+            "image": article.image,
+            "description": article.description,
+            "author_name": article.author_name,
+            "date_of_issue": article.date_of_issue
+        })
+        .catch(err => reject(err))
 }
 
 export async function sendAjaxQuery(url, data) {
