@@ -21,6 +21,11 @@ body {
     width: 100%;
 }
 
+.card-img {
+    max-height: 50vmax;
+    width: 100%;
+}
+
 @media (min-width: 1000px){
     .article-card {
         margin: 5% 20%;
