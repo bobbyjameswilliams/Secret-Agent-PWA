@@ -50,7 +50,7 @@ async function initDatabase(){
                 //Creating image annotations store
                 if (!upgradeDb.objectStoreNames.contains(IMAGE_ANNOTATIONS_STORE_NAME)) {
                     let articleDB = upgradeDb.createObjectStore(IMAGE_ANNOTATIONS_STORE_NAME, {
-                        keyPath: 'roomNo',
+                        keyPath: 'id',
                         autoIncrement: true
                     });
                     articleDB.createIndex('canvas', 'roomNo', {unique: false, multiEntry: true});
@@ -58,7 +58,7 @@ async function initDatabase(){
                 //Creating Comments Store
                 if (!upgradeDb.objectStoreNames.contains(CHAT_MESSAGES_STORE_NAME)) {
                     let articleDB = upgradeDb.createObjectStore(CHAT_MESSAGES_STORE_NAME, {
-                        keyPath: 'roomNo',
+                        keyPath: 'id',
                         autoIncrement: true
                     });
                     articleDB.createIndex('chats', 'roomNo', {unique: false, multiEntry: true});
