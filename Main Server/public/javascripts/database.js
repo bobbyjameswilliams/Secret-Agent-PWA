@@ -19,6 +19,20 @@ import * as idb from './idb/index.js';
 *    }
 *}
 */
+class Article{
+    title;
+    image;
+    description;
+    author_name;
+    date_of_issue;
+
+    constructor(title, image, description, author_name, date_of_issue) {
+        this.title = title;
+        this.image = image;
+        this.author_name = author_name;
+        this.date_of_issue = date_of_issue;
+    }
+}
 
 let db
 
@@ -310,13 +324,21 @@ export async function sendAjaxQuery(url, data) {
         })
 }
 
-export function test(){
+export async function test() {
     let title = document.getElementById('title_input').value
     let description = document.getElementById('description_input').value
     let author = document.getElementById('author_name').value
-    console.log(title);
-    console.log(description);
-    console.log(author);
+    let image_b64 = document.getElementById('image_b64').value
+    let date_of_issue = Date.now();
+    console.log(title)
+
+    let articleObject = new Article(title, image_b64, description, author, date_of_issue);
+    console.log(articleObject.title)
+    //Add the article to IDB
+    storeArticle(articleObject)
+        .then(r => console.log("Submitting " + articleObject.title))
+        .catch(r => console.log("Error submitting " + articleObject.title));
+
 }
 window.test = test;
 
