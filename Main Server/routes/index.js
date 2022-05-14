@@ -26,23 +26,24 @@ class Card{
 /* GET home page. */
 router.get('/', function(req, res, next) {
     console.log("/ get called")
-    axios.post('http://localhost:3001/getArticles',{}).then(json => {
-        var cards = [];
-        json.data.forEach(function(article) {
-
-          let card = new Card(article._id, article.title, 0,article.image,
-              article.description, article.author_name, article.date_of_issue);
-
-          cards.push(card);
-        });
-        //Renders homepage
-        res.render('index', { title: 'Card View', cardList: cards });
-    }).catch(err => {
-        res.render('index', { title: 'Card View', cardList: [] });
-        console.log("Error Rendering Index")
-        //res.setHeader('Content-Type', 'application/json');
-        //res.status(403).json(err)
-    })
+    res.render('index', { title: 'Card View', cardList: [] });
+    // axios.post('http://localhost:3001/getArticles',{}).then(json => {
+    //     var cards = [];
+    //     json.data.forEach(function(article) {
+    //
+    //       let card = new Card(article._id, article.title, 0,article.image,
+    //           article.description, article.author_name, article.date_of_issue);
+    //
+    //       cards.push(card);
+    //     });
+    //     //Renders homepage
+    //     res.render('index', { title: 'Card View', cardList: cards });
+    // }).catch(err => {
+    //     res.render('index', { title: 'Card View', cardList: [] });
+    //     console.log("Error Rendering Index")
+    //     //res.setHeader('Content-Type', 'application/json');
+    //     //res.status(403).json(err)
+    // })
 });
 
 router.post('/', function(req, res) {
