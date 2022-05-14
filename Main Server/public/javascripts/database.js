@@ -29,6 +29,7 @@ class Article{
     constructor(title, image, description, author_name, date_of_issue) {
         this.title = title;
         this.image = image;
+        this.description = description;
         this.author_name = author_name;
         this.date_of_issue = date_of_issue;
     }
@@ -40,9 +41,9 @@ let db
 const APP_DB_NAME = 'db_app_1';
 // Stores
 const ARTICLES_STORE_NAME= 'store_articles';
+const QUEUED_ARTICLES_STORE_NAME= 'store_queued_articles'
 const IMAGE_ANNOTATIONS_STORE_NAME= 'store_image_annotations';
 const CHAT_MESSAGES_STORE_NAME= 'store_chat_messages';
-
 
 
 /**
@@ -63,6 +64,13 @@ async function initDatabase(){
                     appIDB1.createIndex('article', '_id', {unique: false, multiEntry: true});
                 }
                 //Creating articles to be synced store
+                if (!upgradeDb.objectStoreNames.contains(QUEUED_ARTICLES_STORE_NAME)) {
+                    let appIDB1 = upgradeDb.createObjectStore(QUEUED_ARTICLES_STORE_NAME, {
+                        keyPath: 'id',
+                        autoIncrement: true
+                    });
+                    appIDB1.createIndex('queued_article', 'id', {unique: true, multiEntry: true});
+                }
                 //Creating image annotations store
                 if (!upgradeDb.objectStoreNames.contains(IMAGE_ANNOTATIONS_STORE_NAME)) {
                     let articleDB = upgradeDb.createObjectStore(IMAGE_ANNOTATIONS_STORE_NAME, {
@@ -141,6 +149,26 @@ export async function storeArticles(articles){
     console.log("Inside storeArticles")
     articles.forEach(element => storeArticle(element))
 }
+
+export async function storeQueuedArticle(article){
+    console.log("Inside storeQueuedArticle")
+    console.log('inserting: ' + JSON.stringify(article));
+    if (!db)
+        await initDatabase();
+    if (db) {
+        try {
+            let tx = await db.transaction(QUEUED_ARTICLES_STORE_NAME, 'readwrite');
+            let store = await tx.objectStore(QUEUED_ARTICLES_STORE_NAME);
+            await store.put(article);
+            await tx.complete;
+            console.log('added item to the store! ' + JSON.stringify(article));
+        } catch (error) {
+            console.log("Error in storeQueuedArticle()")
+        }
+    }
+}
+
+
 
 /**
  * Stores comment object in IDB.
@@ -326,21 +354,20 @@ export async function sendAjaxQuery(url, data) {
         })
 }
 
-export async function test() {
+export async function submitNewArticle() {
     let title = document.getElementById('title_input').value
     let description = document.getElementById('description_input').value
     let author = document.getElementById('author_name').value
     let image_b64 = document.getElementById('image_b64').value
     let date_of_issue = Date.now();
-    console.log(title)
+    console.log(description)
 
     let articleObject = new Article(title, image_b64, description, author, date_of_issue);
-    console.log(articleObject.title)
     //Add the article to IDB
-    storeArticle(articleObject)
+    storeQueuedArticle(articleObject)
         .then(r => console.log("Submitting " + articleObject.title))
         .catch(r => console.log("Error submitting " + articleObject.title));
 
 }
-window.test = test;
+window.submitNewArticle = submitNewArticle;
 
