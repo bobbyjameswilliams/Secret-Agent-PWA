@@ -114,8 +114,8 @@ function createArticleCard(article){
 
     let roomInput =  document.createElement('input');
     roomInput.className = 'text_input';
-    roomInput.id = article.title + "username_input";
-    roomInput.placeholder = "Enter Username"
+    roomInput.id = article.title + "room_input";
+    roomInput.placeholder = "Enter Room"
     roomInput.type = 'text';
 
     let submit = document.createElement('button');

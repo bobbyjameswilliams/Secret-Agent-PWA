@@ -30,7 +30,7 @@ let filesToCache = [
     '/javascripts/comment.js',
     '/javascripts/database.js',
     '/javascripts/knowledge-graph.js',
-    '/javascripts/viewHandler.js',
+    '/javascripts/view-handler.js',
 
     '/images/cathedral.jpg',
     '/images/placeholder.png',
