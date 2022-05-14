@@ -44,6 +44,7 @@ const IMAGE_ANNOTATIONS_STORE_NAME= 'store_image_annotations';
 const CHAT_MESSAGES_STORE_NAME= 'store_chat_messages';
 
 
+
 /**
  * Initialises all database stores.
  * @todo Create other stores in this when needed.
@@ -61,6 +62,7 @@ async function initDatabase(){
                     });
                     appIDB1.createIndex('article', '_id', {unique: false, multiEntry: true});
                 }
+                //Creating articles to be synced store
                 //Creating image annotations store
                 if (!upgradeDb.objectStoreNames.contains(IMAGE_ANNOTATIONS_STORE_NAME)) {
                     let articleDB = upgradeDb.createObjectStore(IMAGE_ANNOTATIONS_STORE_NAME, {
@@ -71,11 +73,11 @@ async function initDatabase(){
                 }
                 //Creating Comments Store
                 if (!upgradeDb.objectStoreNames.contains(CHAT_MESSAGES_STORE_NAME)) {
-                    let articleDB = upgradeDb.createObjectStore(CHAT_MESSAGES_STORE_NAME, {
+                    let commentDB = upgradeDb.createObjectStore(CHAT_MESSAGES_STORE_NAME, {
                         keyPath: 'id',
                         autoIncrement: true
                     });
-                    articleDB.createIndex('chats', 'roomNo', {unique: false, multiEntry: true});
+                    commentDB.createIndex('chats', 'roomNo', {unique: false, multiEntry: true});
                 }
             }
         });
