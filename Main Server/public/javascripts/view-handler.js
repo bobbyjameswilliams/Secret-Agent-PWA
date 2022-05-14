@@ -1,4 +1,5 @@
 import * as database from './database.js';
+import {retrieveAllLocallyStoredArticles} from "./database.js";
 
 
 function changeInsertView(){
@@ -52,8 +53,9 @@ async function initArticleFeed() {
     // })
 
     await database.syncArticles();
-    let idbArticles = await database.retrieveArticles();
-    idbArticles.forEach(article => writeCardToHome(createArticleCard(article)))
+
+    let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
+    allIdbArticles.forEach(article => writeCardToHome(createArticleCard(article)))
 
     //console.log(x)
 }

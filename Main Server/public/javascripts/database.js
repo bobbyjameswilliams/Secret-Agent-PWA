@@ -127,6 +127,11 @@ export async function syncArticles(){
     console.log(idbArticles);
 }
 
+/**
+ * Stores single article in articles idb store.
+ * @param article
+ * @returns {Promise<void>}
+ */
 export async function storeArticle(article){
     console.log("Inside storeArticle")
     console.log('inserting: ' + JSON.stringify(article));
@@ -145,11 +150,21 @@ export async function storeArticle(article){
     }
 }
 
+/**
+ * Stores collection of articles iteratively in articles idb store.
+ * @param articles
+ * @returns {Promise<void>}
+ */
 export async function storeArticles(articles){
     console.log("Inside storeArticles")
     articles.forEach(element => storeArticle(element))
 }
 
+/**
+ * Stores single article in the article sync queue.
+ * @param article
+ * @returns {Promise<void>}
+ */
 export async function storeQueuedArticle(article){
     console.log("Inside storeQueuedArticle")
     console.log('inserting: ' + JSON.stringify(article));
@@ -167,8 +182,6 @@ export async function storeQueuedArticle(article){
         }
     }
 }
-
-
 
 /**
  * Stores comment object in IDB.
@@ -314,6 +327,7 @@ export async function retrieveArticles(){
                 console.log("Inside retrieveArticles()")
                 return readingsList;
             } else {
+                return null;
                 // const value = localStorage.getItem(city);
                 // if (value == null)
                 //     return finalResults;
@@ -332,6 +346,58 @@ export async function retrieveArticles(){
         // else finalResults.push(value);
         // return finalResults;
     }
+}
+
+/**
+ * Retrieves all articles in the sync queue. If no connection can be made to mongo to sync, this will ensure that
+ * all articles, including those which have been added but not yet submitted are shown.
+ * @returns {Promise<void>}
+ */
+export async function retreiveQueuedArticles(){
+    console.log("Retrieving articles from idb...")
+    if (!db)
+        await initDatabase();
+    if (db) {
+        try {
+            let tx = await db.transaction(QUEUED_ARTICLES_STORE_NAME, 'readonly');
+            let store = await tx.objectStore(QUEUED_ARTICLES_STORE_NAME);
+            let index = await store.index('queued_article');
+            let readingsList = await index.getAll();
+            await tx.complete;
+            if (readingsList && readingsList.length > 0) {
+                console.log("Inside retrieveQueuedArticles()")
+                return readingsList;
+            } else {
+                return null;
+                // const value = localStorage.getItem(city);
+                // if (value == null)
+                //     return finalResults;
+                // else finalResults.push(value);
+                // return finalResults;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    } else {
+        console.log("Else in retrieve")
+        // const value = localStorage.getItem(city);
+        // let finalResults=[];
+        // if (value == null)
+        //     return finalResults;
+        // else finalResults.push(value);
+        // return finalResults;
+    }
+
+}
+
+/**
+ * Retrieves articles both stored in the local article store and the sync queue.
+ * @returns {Promise<void>}
+ */
+export async function retrieveAllLocallyStoredArticles(){
+    let idbArticles = await retrieveArticles();
+    let queuedIdbArticles = await retreiveQueuedArticles();
+    return idbArticles.concat(queuedIdbArticles)
 }
 
 export async function getArticlesMongo(){
