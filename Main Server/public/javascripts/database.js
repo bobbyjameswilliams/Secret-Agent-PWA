@@ -309,3 +309,14 @@ export async function sendAjaxQuery(url, data) {
             console.log("unsuccessful ajax query")
         })
 }
+
+export function test(){
+    let title = document.getElementById('title_input').value
+    let description = document.getElementById('description_input').value
+    let author = document.getElementById('author_name').value
+    console.log(title);
+    console.log(description);
+    console.log(author);
+}
+window.test = test;
+
