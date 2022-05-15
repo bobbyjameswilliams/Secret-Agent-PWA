@@ -1,5 +1,5 @@
 import * as database from './database.js';
-import {insertQueuedArticlesMongoThenDelete, retrieveAllLocallyStoredArticles} from "./database.js";
+import {flushQueuedArticles, retrieveAllLocallyStoredArticles} from "./database.js";
 
 
 function changeInsertView(){
@@ -36,15 +36,23 @@ function getInsertView(){
 }
 
 async function initArticleFeed() {
+    let writtenToFeed = false
     console.log("initArticleFeed called")
     try{
         await database.syncArticles()
         let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
+        console.log("Writing to home from within the try")
+        console.log(allIdbArticles);
         allIdbArticles.forEach(article => writeCardToHome(createArticleCard(article)))
+        writtenToFeed = true
     }
-    catch {
-        let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
-        allIdbArticles.forEach(article => writeCardToHome(createArticleCard(article)))
+    catch (e) {
+        if (!writtenToFeed) {
+            console.log("Writing to home from within the catch" + e)
+            let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
+            allIdbArticles.forEach(article => writeCardToHome(createArticleCard(article)))
+            writtenToFeed = true
+        }
     }
 
     //database.insertArticleMongo({ title: "test"}).then(r => console.log(r)).catch(err => console.log(err))

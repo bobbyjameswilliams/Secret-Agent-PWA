@@ -103,7 +103,7 @@ window.initDatabase= initDatabase;
 
 export async function syncArticles(){
     console.log("Beginning article sync...")
-    await insertQueuedArticlesMongoThenDelete();
+    await flushQueuedArticles();
     let mongoArticles = await getArticlesMongo()
     await storeArticles(mongoArticles)
 }
@@ -114,7 +114,7 @@ export async function syncArticles(){
  * @returns {Promise<void>}
  */
 
-export async function insertQueuedArticlesMongoThenDelete(){
+export async function flushQueuedArticles(){
     if(!db){
         await initDatabase();
     } if (db) {
@@ -124,10 +124,12 @@ export async function insertQueuedArticlesMongoThenDelete(){
             let keys = await store.getAllKeys();
             for (const key of keys) {
                 let article = await retreiveQueuedArticle(key)
-                console.log("Inserting queued article to mongo " + key)
-                await insertArticleMongo(article)
-                console.log("Deleting article " + key)
-                await deleteQueuedArticle(key)
+                let insert = await insertArticleMongo(article)
+                if (insert){
+                    await deleteQueuedArticle(key)
+                } else {
+                    throw Error()
+                }
             }
         } catch (e) {
             throw e;
@@ -331,7 +333,7 @@ export async function retrieveArticles(){
                 console.log("Inside retrieveArticles()")
                 return readingsList;
             } else {
-                return null;
+                return [];
                 // const value = localStorage.getItem(city);
                 // if (value == null)
                 //     return finalResults;
@@ -372,7 +374,7 @@ export async function retreiveQueuedArticles(){
                 console.log("Inside retrieveQueuedArticles()")
                 return readingsList;
             } else {
-                return null;
+                return [];
             }
         } catch (error) {
             console.log(error);
@@ -457,14 +459,16 @@ export async function insertArticleMongo(article) {
         "author_name": article.author_name,
         "date_of_issue": article.date_of_issue
     }
-    console.log("Inserting: " + JSON.stringify(inputData))
-    axios.post('http://localhost:3000/insertArticle', inputData)
+    let error = null;
+    await axios.post('http://localhost:3000/insertArticle', inputData)
         .catch(err => {
-            console.log('POST ERROR');
-            throw Error();
-            return err;
+            console.log(err);
+            error = err
         });
-
+    if (error == null){
+        return true;
+    }
+    return false;
 }
 
 export async function sendAjaxQuery(url, data) {
