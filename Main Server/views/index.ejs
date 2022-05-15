@@ -31,7 +31,9 @@
                     <img id=<%=card.id + "img"%> class="card-img" alt="Card image cap" src=<%= card.image %>>
                     <div class="card-body">
                         <h3 class="card-title"><%= card.title %></h3>
-                        <p class="card-text" id="id"><%= card.description %></p>
+                        <p class="card-text" id="card-description"><%= card.description %></p>
+                        <p class="card-text" id="card-name"><%= card.author_name %></p>
+                        <p class="card-text" id="card-date_of_issue"><%= card.date_of_issue %></p>
                         <div class="row">
                             <div class="col-5">
                                 <input class="text_input" id='<%=card.id+"username_input"%>' type="text" placeholder="Enter Username">
