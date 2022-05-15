@@ -156,3 +156,8 @@ function writeCardToHome(card){
     homePage.scrollTop = homePage.scrollHeight;
 }
 
+function reloadPage(){
+    document.location.reload()
+}
+window.reloadPage = reloadPage;
+
