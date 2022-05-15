@@ -127,9 +127,11 @@ function createArticleCard(article){
     submit.innerHTML = 'Connect'
     submit.addEventListener('click',function (){
         let roomNo = document.getElementById(article.title+'room_input').value;
+        let articleID = article._id;
         let username = document.getElementById(article.title+'username_input').value;
         changeRoomView();
-        initRoom(roomNo, username, article.image);
+        let concatRoomId = articleID + roomNo
+        initRoom(concatRoomId, username, article.image);
     })
 
     row.appendChild(col);
