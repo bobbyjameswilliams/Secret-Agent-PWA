@@ -445,10 +445,8 @@ export async function retrieveAllLocallyStoredArticles(){
 
 export async function getArticlesMongo(){
     let json = await axios.post('http://localhost:3000/getArticles',{})
-    let dataReturned = json.data;
-    await storeArticles(dataReturned);
-
-    return dataReturned
+    //await storeArticles(dataReturned);
+    return json.data
 }
 
 export async function insertArticleMongo(article) {
