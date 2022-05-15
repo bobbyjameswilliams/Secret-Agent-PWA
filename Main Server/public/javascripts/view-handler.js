@@ -100,6 +100,14 @@ function createArticleCard(article){
     cardText.className = 'card-text';
     cardText.innerHTML = article.description;
 
+    let cardAuthor = document.createElement('p');
+    cardAuthor.className = 'card-text';
+    cardAuthor.innerHTML = "Author: "+article.author_name;
+
+    let cardDate = document.createElement('p');
+    cardDate.className = 'card-text';
+    cardDate.innerHTML = "Date of issue: "+ new Date((article.date_of_issue));
+
     let secondRow = document.createElement('div')
     secondRow.className = 'row'
     let col5 = document.createElement('div')
@@ -140,6 +148,8 @@ function createArticleCard(article){
     card.appendChild(cardBody);
     cardBody.appendChild(cardTitle);
     cardBody.appendChild(cardText);
+    cardBody.appendChild(cardAuthor);
+    cardBody.appendChild(cardDate);
     cardBody.appendChild(secondRow);
     secondRow.appendChild(col5);
     col5.appendChild(usernameInput);
@@ -213,3 +223,12 @@ function reloadPage(){
 }
 window.reloadPage = reloadPage;
 
+$('#fileUpload').change(function (e) {
+    if (this.files && this.files[0]) {
+        var FR= new FileReader();
+        FR.addEventListener("load", function(e) {
+            document.getElementById("image_b64").value = e.target.result;
+        });
+        FR.readAsDataURL( this.files[0] );
+    }
+})
