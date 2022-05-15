@@ -156,6 +156,7 @@ function writeCardToHome(card){
     homePage.scrollTop = homePage.scrollHeight;
 }
 
+
 async function getInsertSortedArticles(field){
     let writtenToFeed = false
     console.log("initArticleFeed called")
@@ -204,4 +205,9 @@ function clearCard(){
     homePage.innerHTML = "";
     homePage.scrollTop = homePage.scrollHeight;
 }
+
+function reloadPage(){
+    document.location.reload()
+}
+window.reloadPage = reloadPage;
 
