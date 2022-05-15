@@ -16,20 +16,20 @@
             <form action="/" method="post">
             <div class="card-body">
                 <div class="row">
-                    <input class="card-title" id="title_input" name="title" placeholder="Title">
+                    <input class="card-title" id="title_input" name="title" placeholder="Title" required="required">
                 </div>
                 <div class="row">
-                    <input class="card-text" id="description_input" name="description" placeholder="Description">
+                    <input class="card-text" id="description_input" name="description" placeholder="Description" required="required">
                 </div>
                 <div class="row submit_row">
                     <div class="col-5">
-                        <input class="custom-file-input" type="file" name="image" id="fileUpload" placeholder="Choose image"/>
+                        <input class="custom-file-input" type="file" name="image" id="fileUpload" placeholder="Choose image" required="required"/>
                     </div>
                     <div class="col-4">
-                        <input class="text_input" type="text" name="image_b64" id="image_b64" hidden="hidden">
+                        <input class="text_input" type="text" name="image_b64" id="image_b64" hidden="hidden" required="required">
                     </div>
                     <div class="col-4">
-                        <input class="text_input" type="text" name="author_name" placeholder="Enter Author Name">
+                        <input class="text_input" type="text" name="author_name" placeholder="Enter Author Name" required="required">
                     </div>
                     <div class="col-3">
                         <input type="submit" value="Submit">
