@@ -115,26 +115,24 @@ export async function syncArticles(){
  */
 
 export async function insertQueuedArticlesMongoThenDelete(){
-    return new Promise(async function (resolve, reject) {
-        if (!db)
-            await initDatabase();
-        if (db) {
-            try {
-                let tx = await db.transaction(QUEUED_ARTICLES_STORE_NAME, 'readwrite');
-                let store = await tx.objectStore(QUEUED_ARTICLES_STORE_NAME);
-                let keys = await store.getAllKeys();
-                for (const key of keys) {
-                    let article = await retreiveQueuedArticle(key)
-                    await insertArticleMongo(article)
-                        .then(() => deleteQueuedArticle(key))
-                        .then(() => resolve)
-                        .catch(err => reject(err))
-                }
-            } catch (error) {
-                reject(error);
+    if(!db){
+        await initDatabase();
+    } if (db) {
+        try {
+            let tx = await db.transaction(QUEUED_ARTICLES_STORE_NAME, 'readwrite');
+            let store = await tx.objectStore(QUEUED_ARTICLES_STORE_NAME);
+            let keys = await store.getAllKeys();
+            for (const key of keys) {
+                let article = await retreiveQueuedArticle(key)
+                console.log("Inserting queued article to mongo " + key)
+                await insertArticleMongo(article)
+                console.log("Deleting article " + key)
+                await deleteQueuedArticle(key)
             }
+        } catch (e) {
+            throw e;
         }
-    })
+    }
 }
 
 
@@ -461,7 +459,12 @@ export async function insertArticleMongo(article) {
     }
     console.log("Inserting: " + JSON.stringify(inputData))
     axios.post('http://localhost:3000/insertArticle', inputData)
-        .catch(err => console.log(err))
+        .catch(err => {
+            console.log('POST ERROR');
+            throw Error();
+            return err;
+        });
+
 }
 
 export async function sendAjaxQuery(url, data) {

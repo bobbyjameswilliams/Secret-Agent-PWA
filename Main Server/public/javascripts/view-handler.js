@@ -46,8 +46,6 @@ async function initArticleFeed() {
         let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
         allIdbArticles.forEach(article => writeCardToHome(createArticleCard(article)))
     }
-    
-
 
     //database.insertArticleMongo({ title: "test"}).then(r => console.log(r)).catch(err => console.log(err))
 
