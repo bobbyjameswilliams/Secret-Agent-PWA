@@ -156,3 +156,52 @@ function writeCardToHome(card){
     homePage.scrollTop = homePage.scrollHeight;
 }
 
+async function getInsertSortedArticles(field){
+    let writtenToFeed = false
+    console.log("initArticleFeed called")
+    try{
+        await database.syncArticles()
+        let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
+        console.log("Writing to home from within the try")
+        console.log(allIdbArticles);
+        if(field) {
+            allIdbArticles.sort((a, b) => (a.date_of_issue > b.date_of_issue) ? 1 : -1).forEach(article => writeCardToHome(createArticleCard(article)))
+        }else{
+            allIdbArticles.sort((a, b) => (a.author_name > b.author_name) ? 1 : -1).forEach(article => writeCardToHome(createArticleCard(article)))
+        }
+        writtenToFeed = true
+    }
+    catch (e) {
+        if (!writtenToFeed) {
+            console.log("Writing to home from within the catch" + e)
+            let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
+            if(field) {
+                allIdbArticles.sort((a, b) => (a.date_of_issue > b.date_of_issue) ? 1 : -1).forEach(article => writeCardToHome(createArticleCard(article)))
+            }else{
+                allIdbArticles.sort((a, b) => (a.author_name > b.author_name) ? 1 : -1).forEach(article => writeCardToHome(createArticleCard(article)))
+            }
+            writtenToFeed = true
+        }
+    }
+}
+
+function sortByDate(){
+    clearCard();
+    getInsertSortedArticles(true);
+}
+window.sortByDate = sortByDate;
+
+
+function sortByAuthor(){
+    clearCard()
+    getInsertSortedArticles(false);
+}
+window.sortByAuthor = sortByAuthor;
+
+
+function clearCard(){
+    let homePage = document.getElementById('cards-container')
+    homePage.innerHTML = "";
+    homePage.scrollTop = homePage.scrollHeight;
+}
+
