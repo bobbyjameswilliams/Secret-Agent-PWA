@@ -487,7 +487,6 @@ export async function submitNewArticle() {
     let author = document.getElementById('author_name').value
     let image_b64 = document.getElementById('image_b64').value
     let date_of_issue = Date.now();
-    console.log(description)
 
     let articleObject = new Article(title, image_b64, description, author, date_of_issue);
     //Add the article to IDB

@@ -10,6 +10,7 @@
     <script src="/javascripts/database.js" type="module"></script>
     <script src="/javascripts/view-handler.js" type="module"></script>
     <script src="/javascripts/app.js"> type="module"</script>
+
     <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
     <link rel="stylesheet" href="/stylesheets/partials/navbar.css" />
     <link rel="stylesheet" href="/stylesheets/card.css" />
@@ -19,6 +20,8 @@
     <%- include('./partials/nav.html'); %>
 </header>
 
+<input id="sortByAuthor" type="submit" value="Sort By Author" onclick="sortByAuthor()">
+<input id="sortByDate" type="submit" value="Sort By Date" onclick="sortByDate()">
 
 <div class="container" id="cards-container">
     <% cardList.forEach( (card) => { %>
@@ -52,12 +55,5 @@
 <div id="insert-container" style="display: none">
     <%- include('./partials/insert.ejs'); %>
 </div>
-<script>
-    function SetImageSrc(Id, image_b64)
-    {
-        console.log("Setting image src!!!!!!!");
-        document.getElementById(Id).src = image_b64;
-    }
-</script>
 </body>
 </html>

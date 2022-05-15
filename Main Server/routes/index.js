@@ -46,23 +46,23 @@ router.get('/', function(req, res, next) {
     // })
 });
 
-router.post('/', function(req, res) {
-    axios.post('http://localhost:3001/insertArticle',{
-        title: req.body.title,
-        image_b64: req.body.image_b64,
-        description: req.body.description,
-        author_name: req.body.author_name,
-        date_of_issue: Date.now()
-    }).then(json => {
-        //console.log(JSON.stringify(json.data));
-        req.method='get';
-        res.redirect('/')
-    }).catch(err => {
-        console.log("Error")
-        res.setHeader('Content-Type', 'application/json');
-        res.status(403).json(err)
-    })
-})
+// router.post('/', function(req, res) {
+//     axios.post('http://localhost:3001/insertArticle',{
+//         title: req.body.title,
+//         image_b64: req.body.image_b64,
+//         description: req.body.description,
+//         author_name: req.body.author_name,
+//         date_of_issue: Date.now()
+//     }).then(json => {
+//         //console.log(JSON.stringify(json.data));
+//         req.method='get';
+//         res.redirect('/')
+//     }).catch(err => {
+//         console.log("Error")
+//         res.setHeader('Content-Type', 'application/json');
+//         res.status(403).json(err)
+//     })
+// })
 
 //Passes data through to get articles from mongo.
 router.post('/getArticles', function(req, res, next) {
@@ -84,9 +84,9 @@ router.post('/insertArticle', function(req, res) {
         image: req.body.image,
         description: req.body.description,
         author_name: req.body.author_name,
-        date_of_issue: req.date_of_issue
+        date_of_issue: req.body.date_of_issue
     }).then(json => {
-        console.log(JSON.stringify(json.data));
+        //console.log(JSON.stringify(json.data));
         res.send(json.data)
     }).catch(err => {
         console.log("Error")
