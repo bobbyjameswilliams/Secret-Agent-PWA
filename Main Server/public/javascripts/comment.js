@@ -25,6 +25,19 @@ class Comment{
     }
 }
 
+function writeChatToScreen(userId, chatText) {
+    //get time and create a string out of it
+    var time = Date.now();
+    let comment = new Comment(roomNo, userId, time, chatText, false);
+    //Cache comment in IDB
+    database.storeComment(comment)
+        .then(() => console.log("storeComment ran."))
+        .catch(() => console.log("Error storing comment"));
+
+    let preparedChatMessage = prepareChatMessage(userId, chatText)
+    writeOnHistory(preparedChatMessage);
+}
+
 /**
  * Initialises room
  * @param roomNumber
@@ -51,16 +64,9 @@ function initRoom(roomNumber, username, image) {
 
     //Prepare chat socket.
     socket.on('chat', function (room, userId, chatText) {
-        //get time and create a string out of it
-        var time = Date.now();
-        let comment = new Comment(roomNo,userId,time,chatText, false);
-        //Cache comment in IDB
-        database.storeComment(comment)
-            .then(() => console.log("storeComment ran."))
-            .catch(() => console.log("Error storing comment"));
-
-        let preparedChatMessage = prepareChatMessage(userId, chatText)
-        writeOnHistory(preparedChatMessage);
+        if (userId !== name){
+            writeChatToScreen(userId, chatText);
+        }
     });
 
     // called when someone joins the room. If it is someone else it notifies the joining of the room
@@ -94,9 +100,11 @@ window.initRoom = initRoom
  */
 function sendChatText() {
     let chatText = document.getElementById('comment_input').value;
+    writeChatToScreen(name, chatText)
     socket.emit('chat', roomNo, name, chatText);
 }
 window.sendChatText = sendChatText
+
 
 
 /**
