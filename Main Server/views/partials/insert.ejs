@@ -12,7 +12,7 @@
 <div class="container">
     <div class="col-sm">
         <div class="card article-card">
-            <img class="card-img" src="/images/placeholder.png" alt="Card image cap">
+            <img class="card-img" src="/images/placeholder.png" alt="Card image cap" id="imgPreview">
                 <div class="card-body">
                     <div class="row">
                         <input class="card-title" id="title_input" name="title" placeholder="Title">
@@ -31,7 +31,8 @@
                             <input class="text_input" type="text" name="author_name" id="author_name" placeholder="Enter Author Name">
                         </div>
                         <div class="col-3">
-                            <input type="submit" value="Submit" onclick="submitNewArticle(), reloadPage()">
+                            <input type="submit" value="Submit" onclick="submitNewArticle()">
+<!--                            <input type="submit" value="Submit" onclick="submitNewArticle(), reloadPage()">-->
                         </div>
                     </div>
                 </div>

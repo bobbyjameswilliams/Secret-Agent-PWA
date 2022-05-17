@@ -20,9 +20,10 @@
     <%- include('./partials/nav.html'); %>
 </header>
 
-<input id="sortByAuthor" type="submit" value="Sort By Author" onclick="sortByAuthor()">
-<input id="sortByDate" type="submit" value="Sort By Date" onclick="sortByDate()">
-
+<div class="container" id="divSortButtons">
+    <input id="sortByAuthor" type="submit" value="Sort By Author" onclick="sortByAuthor()">
+    <input id="sortByDate" type="submit" value="Sort By Date" onclick="sortByDate()">
+</div>
 <div class="container" id="cards-container">
     <% cardList.forEach( (card) => { %>
         <div class="row">

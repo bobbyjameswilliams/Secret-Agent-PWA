@@ -6,6 +6,7 @@ function changeInsertView(){
     getCardView().style.display = "none";
     getInsertView().style.display = "";
     getRoomView().style.display = "none";
+    getSortDiv().style.display = "none";
 }
 window.changeInsertView = changeInsertView
 
@@ -13,6 +14,7 @@ function changeCardView(){
     getCardView().style.display = "";
     getInsertView().style.display = "none";
     getRoomView().style.display = "none";
+    getSortDiv().style.display = "";
 }
 window.changeCardView = changeCardView
 
@@ -20,6 +22,7 @@ function changeRoomView(){
     getCardView().style.display = "none";
     getInsertView().style.display = "none";
     getRoomView().style.display = "";
+    getSortDiv().style.display = "none";
 }
 window.changeRoomView = changeRoomView;
 
@@ -33,6 +36,10 @@ function getRoomView(){
 
 function getInsertView(){
     return document.getElementById("insert-container");
+}
+
+function getSortDiv(){
+    return document.getElementById("divSortButtons");
 }
 
 async function initArticleFeed() {
@@ -67,6 +74,7 @@ async function insertArticle(){
     let description = document.getElementById('description_input');
     let author_name = document.getElementById('author_name')
     let date_of_issue = Date.now();
+
     let article = new Article(title,image,description,author_name,date_of_issue)
     await database.storeArticle(article)
 }
@@ -228,6 +236,7 @@ $('#fileUpload').change(function (e) {
         var FR= new FileReader();
         FR.addEventListener("load", function(e) {
             document.getElementById("image_b64").value = e.target.result;
+            document.getElementById("imgPreview").src = e.target.result;
         });
         FR.readAsDataURL( this.files[0] );
     }
