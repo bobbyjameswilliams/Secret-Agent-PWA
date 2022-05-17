@@ -239,5 +239,8 @@ $('#fileUpload').change(function (e) {
             document.getElementById("imgPreview").src = e.target.result;
         });
         FR.readAsDataURL( this.files[0] );
+    }else{
+        document.getElementById("image_b64").value = "";
+        document.getElementById("imgPreview").src = "/images/placeholder.png";
     }
 })
