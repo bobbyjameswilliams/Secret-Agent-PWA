@@ -104,13 +104,17 @@ function initRoom(roomNumber, username, image, title, description, author_name, 
 window.initRoom = initRoom
 
 /**
- * Connects to room
- * @param image image to display
+ * Connects to room. Initialises canvas too, sending article data through to be displayed.
+ * @param image
+ * @param title
+ * @param description
+ * @param author_name
+ * @param date_of_issue
  */
-function connectToRoom(image) {
+function connectToRoom(image, title, description, author_name, date_of_issue) {
     if (!name) name = 'Unknown-' + Math.random();
     socket.emit('create or join', roomNo, name);
-    canvas.initCanvas(socket,image, roomNo, name);
+    canvas.initCanvas(socket,image, roomNo, name, title, description, author_name, date_of_issue);
 }
 
 // ######## Chat writing handlers ###########
