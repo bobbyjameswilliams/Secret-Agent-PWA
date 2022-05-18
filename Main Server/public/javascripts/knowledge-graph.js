@@ -37,8 +37,6 @@ function changeKGWidgets(option){
     document.getElementById('kg_search_container').style.display = val2;
 }
 
-
-
 /**
  * callback called when an element in the widget is selected
  * @param event the Google Graph widget event {@link https://developers.google.com/knowledge-graph/how-tos/search-widget}
