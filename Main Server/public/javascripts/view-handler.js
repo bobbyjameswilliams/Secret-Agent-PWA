@@ -191,9 +191,11 @@ async function getInsertSortedArticles(field){
         console.log("Writing to home from within the try")
         console.log(allIdbArticles);
         if(field) {
-            allIdbArticles.sort((a, b) => (a.date_of_issue < b.date_of_issue) ? 1 : -1).forEach(article => writeCardToHome(createArticleCard(article)))
+            allIdbArticles.sort((a, b) => (a.date_of_issue < b.date_of_issue) ? 1 : -1)
+                .forEach(article => writeCardToHome(createArticleCard(article)))
         }else{
-            allIdbArticles.sort((a, b) => (a.author_name > b.author_name) ? 1 : -1).forEach(article => writeCardToHome(createArticleCard(article)))
+            allIdbArticles.sort((a, b) => (a.author_name > b.author_name) ? 1 : -1)
+                .forEach(article => writeCardToHome(createArticleCard(article)))
         }
         writtenToFeed = true
     }
