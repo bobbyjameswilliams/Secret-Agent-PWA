@@ -42,7 +42,7 @@ class Canvas{
  * @param roomNo
  * @param name
  */
-export function initCanvas(sckt, image, roomNo, name) {
+export function initCanvas(sckt, image, roomNo, name, title, description, author_name, date_of_issue) {
     room = roomNo;
     userId = name;
     let socket = sckt;
@@ -51,9 +51,17 @@ export function initCanvas(sckt, image, roomNo, name) {
     let canvas = $('#canvas');
     let cvx = document.getElementById('canvas');
     let img = document.getElementById('image');
+    let cardTitle = document.getElementById('cardTitle');
+    let cardDescription = document.getElementById('description');
+    let cardAuthor = document.getElementById('author');
+    let cardDate = document.getElementById('dateOfIssue');
     let ctx = cvx.getContext('2d');
 
     img.src = image;
+    cardTitle.innerText = title;
+    cardDescription.innerText = description;
+    cardAuthor.innerText = author_name;
+    cardDate.innerText = new Date((date_of_issue));
 
     // event on the canvas when the mouse is on it
     canvas.on('mousemove mousedown mouseup mouseout', function (e) {

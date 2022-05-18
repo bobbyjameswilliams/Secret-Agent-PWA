@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/knowledge/kgsearch/widget/1.0/widget.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/knowledge/kgsearch/widget/1.0/widget.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/javascripts/card-feed.js" type="module"></script>
     <script src="/javascripts/comment.js" type="module"></script>
     <script src="/javascripts/canvas.js" type="module"></script>
     <script src="/javascripts/database.js" type="module"></script>
@@ -16,9 +18,14 @@
 <body>
 <div class="row">
     <div class="col">
+
         <div class="row align-items-center" id="image_canvas_wrapper">
             <canvas id="canvas"></canvas>
             <img id="image" class="card-img" alt="Card image cap">
+            <h3 id="cardTitle"></h3>
+            <p id="description"></p>
+            <p id="author"></p>
+            <p id="dateOfIssue"></p>
         </div>
     </div>
 

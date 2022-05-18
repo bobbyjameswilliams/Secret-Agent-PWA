@@ -47,7 +47,7 @@ exports.insert = function (req, res) {
 
     let article = new Article({
         title: userData.title,
-        image: userData.image_b64,
+        image: userData.image,
         description: userData.description,
         author_name: userData.author_name,
         date_of_issue: userData.date_of_issue,

@@ -5,21 +5,25 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="/javascripts/card-feed.js"></script>
+    <script src="/javascripts/card-feed.js" type="module"></script>
     <script src="/javascripts/canvas.js" type="module"></script>
     <script src="/javascripts/database.js" type="module"></script>
-    <script src="/javascripts/viewHandler.js"></script>
+    <script src="/javascripts/view-handler.js" type="module"></script>
     <script src="/javascripts/app.js"> type="module"</script>
+
     <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
     <link rel="stylesheet" href="/stylesheets/partials/navbar.css" />
     <link rel="stylesheet" href="/stylesheets/card.css" />
 </head>
-<body onload="initDatabase(); initServiceWorker(); adder()">
+<body onload="initDatabase(); initServiceWorker(); initArticleFeed()">
 <header>
     <%- include('./partials/nav.html'); %>
 </header>
 
-
+<div class="container" id="divSortButtons">
+    <input id="sortByAuthor" type="submit" value="Sort alphabetically by author" onclick="sortByAuthor()">
+    <input id="sortByDate" type="submit" value="Most recent" onclick="sortByDate()">
+</div>
 <div class="container" id="cards-container">
     <% cardList.forEach( (card) => { %>
         <div class="row">
@@ -28,7 +32,9 @@
                     <img id=<%=card.id + "img"%> class="card-img" alt="Card image cap" src=<%= card.image %>>
                     <div class="card-body">
                         <h3 class="card-title"><%= card.title %></h3>
-                        <p class="card-text" id="id"><%= card.description %></p>
+                        <p class="card-text" id="card-description"><%= card.description %></p>
+                        <p class="card-text" id="card-name"><%= card.author_name %></p>
+                        <p class="card-text" id="card-date_of_issue"><%= card.date_of_issue %></p>
                         <div class="row">
                             <div class="col-5">
                                 <input class="text_input" id='<%=card.id+"username_input"%>' type="text" placeholder="Enter Username">
@@ -52,12 +58,5 @@
 <div id="insert-container" style="display: none">
     <%- include('./partials/insert.ejs'); %>
 </div>
-<script>
-    function SetImageSrc(Id, image_b64)
-    {
-        console.log("Setting image src!!!!!!!");
-        document.getElementById(Id).src = image_b64;
-    }
-</script>
 </body>
 </html>

@@ -12,45 +12,104 @@
 <div class="container">
     <div class="col-sm">
         <div class="card article-card">
-            <img class="card-img" src="/images/placeholder.png" alt="Card image cap">
-            <form action="/" method="post">
-            <div class="card-body">
-                <div class="row">
-                    <input class="card-title" id="title_input" name="title" placeholder="Title" required="required">
+            <img class="card-img" src="/images/placeholder.png" alt="Card image cap" id="imgPreview">
+                <div class="card-body">
+                    <div class="row">
+                        <input class="card-title" id="title_input" name="title" placeholder="Title">
+                    </div>
+                    <div class="row">
+                        <input class="card-text" id="description_input" name="description" placeholder="Description">
+
+                    </div>
+                    <div class="row submit_row">
+                        <div class="col-5">
+                            <input class="custom-file-input" type="file" name="image" id="fileUpload" placeholder="Choose image"/>
+                        </div>
+                        <div class="col-4">
+                            <input class="text_input" type="text" name="image_b64" id="image_b64" hidden="hidden">
+                        </div>
+                        <div class="col-4">
+                            <input class="text_input" type="text" name="author_name" id="author_name" placeholder="Enter Author Name">
+                        </div>
+                        <div class="col-3">
+                            <input type="submit" value="Submit" onclick="submitNewArticle()">
+<!--                            <input type="submit" value="Submit" onclick="submitNewArticle(), reloadPage()">-->
+                        </div>
+                    </div>
                 </div>
-                <div class="row">
-                    <input class="card-text" id="description_input" name="description" placeholder="Description" required="required">
-                </div>
-                <div class="row submit_row">
-                    <div class="col-5">
-                        <input class="custom-file-input" type="file" name="image" id="fileUpload" placeholder="Choose image" required="required"/>
-                    </div>
-                    <div class="col-4">
-                        <input class="text_input" type="text" name="image_b64" id="image_b64" hidden="hidden" required="required">
-                    </div>
-                    <div class="col-4">
-                        <input class="text_input" type="text" name="author_name" placeholder="Enter Author Name" required="required">
-                    </div>
-                    <div class="col-3">
-                        <input type="submit" value="Submit">
-                    </div>
-                </div>
-            </div>
-            </form>
         </div>
     </div>
 </div>
 
-<script>
-    $('#fileUpload').change(function (e) {
-        if (this.files && this.files[0]) {
-            var FR= new FileReader();
-            FR.addEventListener("load", function(e) {
-                document.getElementById("image_b64").value = e.target.result;
-            });
-            FR.readAsDataURL( this.files[0] );
-        }
-    })
-</script>
+<!--<script>-->
+<!--    $('#fileUpload').change(function (e) {-->
+<!--        if (this.files && this.files[0]) {-->
+<!--            var FR= new FileReader();-->
+<!--            FR.addEventListener("load", function(e) {-->
+<!--                document.getElementById("image_b64").value = e.target.result;-->
+<!--            });-->
+<!--            FR.readAsDataURL( this.files[0] );-->
+<!--        }-->
+<!--    })-->
+<!--</script>-->
 </body>
 </html>
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <script src="/javascripts/card-feed.js"></script>-->
+<!--    <script src="/javascripts/database.js" type="module"></script>-->
+<!--    <script src="/javascripts/app.js"></script>-->
+<!--    <script src="/javascripts/card-feed.js" type="module"></script>-->
+<!--    <link rel="stylesheet" href="/stylesheets/bootstrap.css" />-->
+<!--    <link rel="stylesheet" href="/stylesheets/card.css" />-->
+<!--    <link rel="stylesheet" href="/stylesheets/insert.css" />-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container">-->
+<!--    <div class="col-sm">-->
+<!--        <div class="card article-card">-->
+<!--            <img class="card-img" src="/images/placeholder.png" alt="Card image cap">-->
+<!--            <div class="card-body">-->
+<!--                <div class="row">-->
+<!--                    <input class="card-title" id="title_input" name="title" placeholder="Title">-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                    <input class="card-text" id="description_input" name="description" placeholder="Description">-->
+<!--                </div>-->
+<!--                <div class="row submit_row">-->
+<!--                    <div class="col-5">-->
+<!--                        <input class="custom-file-input" type="file" name="image" id="fileUpload" placeholder="Choose image"/>-->
+<!--                    </div>-->
+<!--                    <div class="col-4">-->
+<!--                        <input class="text_input" type="text" name="image_b64" id="image_b64" hidden="hidden">-->
+<!--                    </div>-->
+<!--                    <div class="col-4">-->
+<!--                        <input class="text_input" type="text" name="author_name" id="author_name" placeholder="Enter Author Name">-->
+<!--                    </div>-->
+<!--                    <div class="col-3">-->
+<!--                        <form action="/" method="get">-->
+<!--                        <input type="submit" value="bobble" onclick="insertArticle()">-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    $('#fileUpload').change(function (e) {-->
+<!--        if (this.files && this.files[0]) {-->
+<!--            var FR= new FileReader();-->
+<!--            FR.addEventListener("load", function(e) {-->
+<!--                document.getElementById("image_b64").value = e.target.result;-->
+<!--            });-->
+<!--            FR.readAsDataURL( this.files[0] );-->
+<!--        }-->
+<!--    })-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
