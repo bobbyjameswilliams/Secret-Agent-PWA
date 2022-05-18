@@ -16,9 +16,11 @@
     transition: color 200ms ease-out;
     color: #999;
 }
+
 .switch__label:hover{
-  color: white;
+  color: black;
 }
+
 .switch__indicator {
     width: 3.7rem;
     height: 3.7rem;

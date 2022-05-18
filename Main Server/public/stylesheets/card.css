@@ -7,10 +7,6 @@ body {
     background-color: rgb(255, 255, 255);
 }
 
-#cards-container{
-    background-color: rgb(245, 244, 244);
-}
-
 .text_input{
     height: 100%;
     width: 100%;
@@ -23,6 +19,10 @@ body {
 
 .btn-primary:hover{
     background-color: lightgreen;
+}
+
+.card {
+    border-radius: 15px;
 }
 
 .card-img {
