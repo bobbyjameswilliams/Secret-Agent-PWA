@@ -145,9 +145,14 @@ function createArticleCard(article){
         let roomNo = document.getElementById(article.title+'room_input').value;
         let articleID = article._id;
         let username = document.getElementById(article.title+'username_input').value;
-        changeRoomView();
-        let concatRoomId = articleID + roomNo
-        initRoom(concatRoomId, username, article.image);
+        if((roomNo != "")&&(username != "")) {
+            changeRoomView();
+            let concatRoomId = articleID + roomNo
+            initRoom(concatRoomId, username, article.image, article.title, article.description, article.author_name, article.date_of_issue);
+        }else{
+            alert("Please enter a room number and username");
+        }
+
     })
 
     row.appendChild(col);
@@ -186,7 +191,7 @@ async function getInsertSortedArticles(field){
         console.log("Writing to home from within the try")
         console.log(allIdbArticles);
         if(field) {
-            allIdbArticles.sort((a, b) => (a.date_of_issue > b.date_of_issue) ? 1 : -1).forEach(article => writeCardToHome(createArticleCard(article)))
+            allIdbArticles.sort((a, b) => (a.date_of_issue < b.date_of_issue) ? 1 : -1).forEach(article => writeCardToHome(createArticleCard(article)))
         }else{
             allIdbArticles.sort((a, b) => (a.author_name > b.author_name) ? 1 : -1).forEach(article => writeCardToHome(createArticleCard(article)))
         }
@@ -197,7 +202,7 @@ async function getInsertSortedArticles(field){
             console.log("Writing to home from within the catch" + e)
             let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
             if(field) {
-                allIdbArticles.sort((a, b) => (a.date_of_issue > b.date_of_issue) ? 1 : -1).forEach(article => writeCardToHome(createArticleCard(article)))
+                allIdbArticles.sort((a, b) => (a.date_of_issue < b.date_of_issue) ? 1 : -1).forEach(article => writeCardToHome(createArticleCard(article)))
             }else{
                 allIdbArticles.sort((a, b) => (a.author_name > b.author_name) ? 1 : -1).forEach(article => writeCardToHome(createArticleCard(article)))
             }

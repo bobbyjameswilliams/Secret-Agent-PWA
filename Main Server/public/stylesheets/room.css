@@ -5,6 +5,11 @@
     height: 70vh;
 }
 
+p {
+    word-break: break-all;
+    white-space: normal;
+}
+
 #kg_type, #kg_search{
     height: 100%;
 }

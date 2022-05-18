@@ -45,7 +45,9 @@ class Comment{
  * @param roomNumber
  * @param username
  */
-function initRoom(roomNumber, username, image) {
+
+
+function initRoom(roomNumber, username, image, title, description, author_name, date_of_issue) {
     //database.getArticlesMongo().then(r => console.log(r)).catch(r => console.log(r));
     console.log("Initialising Room")
     name = username;
@@ -97,7 +99,7 @@ function initRoom(roomNumber, username, image) {
             .catch(r => console.log("Error storing comment " + r));
     });
 
-    connectToRoom(image)
+    connectToRoom(image, title, description, author_name, date_of_issue)
 }
 window.initRoom = initRoom
 
