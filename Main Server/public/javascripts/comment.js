@@ -40,25 +40,11 @@ class Comment{
     }
 }
 
-function writeChatToScreen(userId, chatText) {
-    //get time and create a string out of it
-    var time = Date.now();
-    let comment = new Comment(roomNo, userId, time, chatText, MessageType.Comment);
-    //Cache comment in IDB
-    database.storeComment(comment)
-        .then(() => console.log("storeComment ran."))
-        .catch(() => console.log("Error storing comment"));
-
-    let preparedChatMessage = prepareChatMessage(userId, chatText)
-    writeOnHistory(preparedChatMessage);
-}
-
 /**
  * Initialises room
  * @param roomNumber
  * @param username
  */
-
 function initRoom(roomNumber, username, image) {
     //database.getArticlesMongo().then(r => console.log(r)).catch(r => console.log(r));
     console.log("Initialising Room")
@@ -111,79 +97,35 @@ function initRoom(roomNumber, username, image) {
 window.initRoom = initRoom
 
 /**
- * Sends chat text via socket.
- */
-function sendChatText() {
-    let chatText = document.getElementById('comment_input').value;
-    writeChatToScreen(name, chatText)
-    socket.emit('chat', roomNo, name, chatText);
-}
-window.sendChatText = sendChatText
-
-
-
-/**
  * Connects to room
+ * @param image image to display
  */
 function connectToRoom(image) {
-    //roomNo = document.getElementById('roomNo').value;
-    //name = document.getElementById('name').value;
-    //let imageUrl= document.getElementById('image_url').value;
     if (!name) name = 'Unknown-' + Math.random();
-    //@todo join the room
     socket.emit('create or join', roomNo, name);
-    // TODO: change imageURL
     canvas.initCanvas(socket,image, roomNo, name);
 }
 
-/**
-Prepares chat messages for writeOnHistory
- */
-function prepareChatMessage(userId, chatText){
-    let who = userId
-    if (userId === name) {who = 'Me'}
-    return('<b>' + who + ':</b> ' + chatText)
-}
+// ######## Chat writing handlers ###########
 
 /**
-Prepares joined room notifications for writeOnHistory
+ * Hanndles chat text IDB storing, then passes the message on to be prepared and written on history.
+ * @param userId
+ * @param chatText
  */
-function prepareJoinedRoomNotification(room, userId){
-    if (userId !== name){
-        // notifies that someone has joined the room
-        return ('<b>'+userId+'</b>' + ' joined the room.');
-    }
-}
+function writeChatToScreen(userId, chatText) {
+    //get time and create a string out of it
+    var time = Date.now();
+    let comment = new Comment(roomNo, userId, time, chatText, MessageType.Comment);
 
-function prepareRetrievedJoinedRoomNotification(room,userId){
-    // notifies that someone has joined the room
-    return ('<b>'+userId+'</b>' + ' joined the room.');
-}
+    //Cache comment in IDB
+    database.storeComment(comment)
+        .then(() => console.log("storeComment ran."))
+        .catch(() => console.log("Error storing comment"));
 
-/**
-    Loads cached chat history and calls display method
- */
-async function loadAndDisplayCachedHistory(roomNo){
-    database.retrieveAllCachedRoomComments(roomNo)
-        .then(r => displayCachedHistory(r))
-        .catch(() => console.log("No chat messages loaded"))
-}
-
-/**
-    Takes a list of message objects and writes them to history.
- */
-function displayCachedHistory(cachedData){
-    for (let res of cachedData)
-        if (res.messageType === MessageType.Joined) {
-            console.log("Procesing joinedRoomNotification");
-            console.log(res.userID)
-            let preparedJoinedRoomNotification = prepareRetrievedJoinedRoomNotification(res.roomNo, res.userID)
-            writeOnHistory(preparedJoinedRoomNotification)
-        } else if (res.messageType === MessageType.Comment) {
-            let preparedChatMessage = prepareChatMessage(res.userID, res.chatText)
-            writeOnHistory(preparedChatMessage);
-        }
-
+    //Write to chat history.
+    let preparedChatMessage = prepareChatMessage(userId, chatText)
+    writeOnHistory(preparedChatMessage);
 }
 
 /**
@@ -201,11 +143,102 @@ function writeOnHistory(text) {
     document.getElementById('comment_input').value = '';
 }
 
+// ####### Sending ##########
+
+/**
+ * Sends chat text in the chat box via socket.
+ */
+function sendChatText() {
+    let chatText = document.getElementById('comment_input').value;
+    writeChatToScreen(name, chatText)
+    socket.emit('chat', roomNo, name, chatText);
+}
+window.sendChatText = sendChatText
+
+/**
+ * Sends knowledge snippet out of knowledge snippet socket
+ * @param header
+ * @param body
+ * @param colour
+ */
 function sendKnowledgeSnippet(header, body, colour){
     socket.emit('knowledge snippet',roomNo,name,header,body,colour)
 }
 window.sendKnowledgeSnippet = sendKnowledgeSnippet
 
+//####### Message preparation #########
+
+/**
+ * Prepares chat messages for writeOnHistory
+ * @param userId
+ * @param chatText
+ * @returns {string}
+ */
+function prepareChatMessage(userId, chatText){
+    let who = userId
+    if (userId === name) {who = 'Me'}
+    return('<b>' + who + ':</b> ' + chatText)
+}
+
+/**
+ * Prepare joined room notification for writeOnHistory
+ * @param room
+ * @param userId
+ * @returns {string}
+ */
+function prepareJoinedRoomNotification(room, userId){
+    if (userId !== name){
+        // notifies that someone has joined the room
+        return ('<b>'+userId+'</b>' + ' joined the room.');
+    }
+}
+
+/**
+ * Prepare joined room notification for when message is being retrieved from IDB
+ * @param room
+ * @param userId
+ * @returns {string}
+ */
+function prepareRetrievedJoinedRoomNotification(room,userId){
+    // notifies that someone has joined the room
+    return ('<b>'+userId+'</b>' + ' joined the room.');
+}
+
+// ########## Caching ##########
+
+/**
+ * Loads cached history from idb given a room number
+ * @param roomNo Room number to retrieve comments for.
+ * @returns {Promise<void>}
+ */
+async function loadAndDisplayCachedHistory(roomNo){
+    database.retrieveAllCachedRoomComments(roomNo)
+        .then(r => displayCachedHistory(r))
+        .catch(() => console.log("No chat messages loaded"))
+}
+
+/**
+ * Takes a list of comment objects and writes them to history, handling them differently based on
+ * messageType.
+ * @param cachedData list of comment objects.
+ */
+function displayCachedHistory(cachedData){
+    for (let res of cachedData)
+        if (res.messageType === MessageType.Joined) {
+            console.log("Procesing joinedRoomNotification");
+            console.log(res.userID)
+            let preparedJoinedRoomNotification = prepareRetrievedJoinedRoomNotification(res.roomNo, res.userID)
+            writeOnHistory(preparedJoinedRoomNotification)
+        } else if (res.messageType === MessageType.Comment) {
+            let preparedChatMessage = prepareChatMessage(res.userID, res.chatText)
+            writeOnHistory(preparedChatMessage);
+        }
+
+}
+
+/**
+ * Removes chat socket listeners
+ */
 function removeChatSocketListeners(){
     socket.removeAllListeners();
 }
