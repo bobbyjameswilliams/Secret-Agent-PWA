@@ -23,15 +23,20 @@ class Comment{
     userID;
     date_of_issue;
     chatText;
+    header;
+    colour;
     messageType;
 
-    constructor(roomNo,userID,date_of_issue,chatText, messageType) {
+
+    constructor(roomNo,userID,date_of_issue,chatText, header, colour, messageType) {
         this.roomNo = roomNo;
         this.userID = userID;
         //epoch date
         this.date_of_issue = date_of_issue;
         this.chatText = chatText;
-        this.messageType = messageType
+        this.header = header;
+        this.colour = colour;
+        this.messageType = messageType;
     }
 }
 
