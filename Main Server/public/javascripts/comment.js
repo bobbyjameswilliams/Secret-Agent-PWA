@@ -10,9 +10,9 @@ let name = null;
  * @type {{Chat: string, Joined: string, Knowledge: string}}
  */
 const MessageType = {
-    Chat: 'Chat',
     Joined: 'Joined',
-    Knowledge: 'Knowledge'
+    Knowledge: 'Knowledge',
+    Comment: 'Comment'
 };
 
 /**
@@ -23,22 +23,22 @@ class Comment{
     userID;
     date_of_issue;
     chatText;
-    joinedRoomNotification;
+    messageType;
 
-    constructor(roomNo,userID,date_of_issue,chatText, joinedRoomNotification) {
+    constructor(roomNo,userID,date_of_issue,chatText, messageType) {
         this.roomNo = roomNo;
         this.userID = userID;
         //epoch date
         this.date_of_issue = date_of_issue;
         this.chatText = chatText;
-        this.joinedRoomNotification = joinedRoomNotification
+        this.messageType = messageType
     }
 }
 
 function writeChatToScreen(userId, chatText) {
     //get time and create a string out of it
     var time = Date.now();
-    let comment = new Comment(roomNo, userId, time, chatText, false);
+    let comment = new Comment(roomNo, userId, time, chatText, MessageType.Comment);
     //Cache comment in IDB
     database.storeComment(comment)
         .then(() => console.log("storeComment ran."))
@@ -85,7 +85,7 @@ function initRoom(roomNumber, username, image) {
             // notifies that someone has joined the room
             //get time and create string
             var time = Date.now();
-            let comment = new Comment(roomNo,userId,time,null, true);
+            let comment = new Comment(roomNo,userId,time,null, MessageType.Joined);
             //Cache comment in IDB
             database.storeComment(comment)
                 .then(r => console.log("storeComment ran."))
@@ -169,15 +169,16 @@ async function loadAndDisplayCachedHistory(roomNo){
  */
 function displayCachedHistory(cachedData){
     for (let res of cachedData)
-        if (res.joinedRoomNotification === true) {
+        if (res.messageType === MessageType.Joined) {
             console.log("Procesing joinedRoomNotification");
             console.log(res.userID)
             let preparedJoinedRoomNotification = prepareRetrievedJoinedRoomNotification(res.roomNo, res.userID)
             writeOnHistory(preparedJoinedRoomNotification)
-        } else {
+        } else if (res.messageType === MessageType.Comment) {
             let preparedChatMessage = prepareChatMessage(res.userID, res.chatText)
             writeOnHistory(preparedChatMessage);
         }
+
 }
 
 /**
