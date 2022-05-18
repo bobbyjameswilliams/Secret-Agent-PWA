@@ -95,12 +95,9 @@ async function initDatabase(){
 window.initDatabase= initDatabase;
 
 /**
- * Caches retrieved article in IDB store.
- * @param article
+ * Flushes queue to Mongo, retrieves articles back and stores in articles idb store.
  * @returns {Promise<void>}
  */
-
-
 export async function syncArticles(){
     console.log("Beginning article sync...")
     await flushQueuedArticles();
@@ -113,7 +110,6 @@ export async function syncArticles(){
  * @param article
  * @returns {Promise<void>}
  */
-
 export async function flushQueuedArticles(){
     if(!db){
         await initDatabase();
@@ -137,7 +133,11 @@ export async function flushQueuedArticles(){
     }
 }
 
-
+/**
+ * Stores article in articles IDB store.
+ * @param article Article to store
+ * @returns {Promise<void>}
+ */
 export async function storeArticle(article){
     console.log("Inside storeArticle")
     console.log('inserting: ' + JSON.stringify(article));
@@ -414,6 +414,11 @@ export async function retreiveQueuedArticle(key){
     }
 }
 
+/**
+ * Deletes article from queued_articles given article key.
+ * @param key
+ * @returns {Promise<void>}
+ */
 export async function deleteQueuedArticle(key){
     console.log("Deleting queued article with id " + key)
     if (!db)
@@ -422,8 +427,6 @@ export async function deleteQueuedArticle(key){
         try {
             let tx = await db.transaction(QUEUED_ARTICLES_STORE_NAME, 'readwrite');
             let store = await tx.objectStore(QUEUED_ARTICLES_STORE_NAME).delete(key);
-            // let index = await store.index('queued_article');
-            // await index.delete(IDBKeyRange.only(key))
             await tx.complete;
         } catch (error) {
             console.log(error);
@@ -443,9 +446,12 @@ export async function retrieveAllLocallyStoredArticles(){
     return idbArticles.concat(queuedIdbArticles)
 }
 
+/**
+ * Gets articles from MongoDB
+ * @returns {Promise<*>}
+ */
 export async function getArticlesMongo(){
     let json = await axios.post('http://localhost:3000/getArticles',{})
-    //await storeArticles(dataReturned);
     return json.data
 }
 
