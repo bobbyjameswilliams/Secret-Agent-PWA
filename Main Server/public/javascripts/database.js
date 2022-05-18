@@ -498,6 +498,8 @@ export async function submitNewArticle() {
                 document.location.reload()
             })
             .catch(r => console.log("Error submitting " + articleObject.title));
+    }else{
+        alert("Please complete all fields");
     }
 }
 window.submitNewArticle = submitNewArticle;

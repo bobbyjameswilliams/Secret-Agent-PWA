@@ -44,7 +44,7 @@ function writeChatToScreen(userId, chatText) {
  * @param username
  */
 
-function initRoom(roomNumber, username, image) {
+function initRoom(roomNumber, username, image, title, description, author_name, date_of_issue) {
     //database.getArticlesMongo().then(r => console.log(r)).catch(r => console.log(r));
     console.log("Initialising Room")
     name = username;
@@ -91,7 +91,7 @@ function initRoom(roomNumber, username, image) {
         writeKnowledgeCard(card);
     });
 
-    connectToRoom(image)
+    connectToRoom(image, title, description, author_name, date_of_issue)
 }
 window.initRoom = initRoom
 
@@ -110,7 +110,7 @@ window.sendChatText = sendChatText
 /**
  * Connects to room
  */
-function connectToRoom(image) {
+function connectToRoom(image, title, description, author_name, date_of_issue) {
     //roomNo = document.getElementById('roomNo').value;
     //name = document.getElementById('name').value;
     //let imageUrl= document.getElementById('image_url').value;
@@ -118,7 +118,7 @@ function connectToRoom(image) {
     //@todo join the room
     socket.emit('create or join', roomNo, name);
     // TODO: change imageURL
-    canvas.initCanvas(socket,image, roomNo, name);
+    canvas.initCanvas(socket,image, roomNo, name, title, description, author_name, date_of_issue);
 }
 
 /**

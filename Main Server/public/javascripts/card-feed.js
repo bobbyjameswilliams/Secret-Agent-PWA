@@ -3,13 +3,15 @@ function connectToRoomPage(cardID, image){
     console.log("Inside connectToRoomPage")
     let roomNo = document.getElementById(cardID+'room_input').value;
     let username = document.getElementById(cardID+'username_input').value;
-    if (roomNo !== '' && username !== ''){
-        changeRoomView();
-        initRoom(roomNo, username, image);
-    } else if (username === ''){
-        alertInputValidation(cardID, 'username_input');
-    } else {
-        alertInputValidation(cardID, 'room_input');
+    if((roomNo != "")&&(username != "")) {
+        if (roomNo !== '' && username !== '') {
+            changeRoomView();
+            initRoom(roomNo, username, image);
+        } else if (username === '') {
+            alertInputValidation(cardID, 'username_input');
+        } else {
+            alertInputValidation(cardID, 'room_input');
+        }
     }
 }
 window.connectToRoomPage = connectToRoomPage
