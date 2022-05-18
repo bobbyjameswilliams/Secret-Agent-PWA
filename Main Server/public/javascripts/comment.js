@@ -6,6 +6,16 @@ let roomNo = null;
 let name = null;
 
 /**
+ * Message type enum for denoting how to handle message.
+ * @type {{Chat: string, Joined: string, Knowledge: string}}
+ */
+const MessageType = {
+    Chat: 'Chat',
+    Joined: 'Joined',
+    Knowledge: 'Knowledge'
+};
+
+/**
  * Comment class used when storing a comment in IDB
  */
 class Comment{
