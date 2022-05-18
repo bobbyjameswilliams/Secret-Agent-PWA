@@ -23,18 +23,18 @@ class Comment{
     userID;
     date_of_issue;
     chatText;
-    header;
-    colour;
     messageType;
+    headerText;
+    colour;
 
 
-    constructor(roomNo,userID,date_of_issue,chatText, header, colour, messageType) {
+    constructor(roomNo,userID,date_of_issue,chatText, messageType, headerText, colour) {
         this.roomNo = roomNo;
         this.userID = userID;
         //epoch date
         this.date_of_issue = date_of_issue;
         this.chatText = chatText;
-        this.header = header;
+        this.headerText = headerText;
         this.colour = colour;
         this.messageType = messageType;
     }
@@ -75,12 +75,12 @@ function initRoom(roomNumber, username, image) {
         if (userId !== name){
             // notifies that someone has joined the room
             //get time and create string
-            var time = Date.now();
-            let comment = new Comment(roomNo,userId,time,null, MessageType.Joined);
+            let time = Date.now();
+            let comment = new Comment(roomNo,userId,time,null, MessageType.Joined, null, null);
             //Cache comment in IDB
             database.storeComment(comment)
-                .then(r => console.log("storeComment ran."))
-                .catch(r => console.log("Error storing comment"));
+                .then(() => console.log("storeComment ran."))
+                .catch(() => console.log("Error storing comment"));
 
             let preparedJoinedRoomNotification = prepareJoinedRoomNotification(room, userId)
             writeOnHistory(preparedJoinedRoomNotification);
@@ -88,8 +88,13 @@ function initRoom(roomNumber, username, image) {
     });
 
     socket.on('knowledge snippet', function (room, userId, header, body, colour){
+        let time = Date.now();
+        let comment = new Comment(room, userId, time, body, MessageType.Knowledge, header, colour)
         let card = createCard(header, body, colour);
         writeKnowledgeCard(card);
+        database.storeComment(comment)
+            .then(() => console.log("Storing Knowledge Snippet."))
+            .catch(r => console.log("Error storing comment " + r));
     });
 
     connectToRoom(image)
@@ -116,7 +121,7 @@ function connectToRoom(image) {
 function writeChatToScreen(userId, chatText) {
     //get time and create a string out of it
     var time = Date.now();
-    let comment = new Comment(roomNo, userId, time, chatText, MessageType.Comment);
+    let comment = new Comment(roomNo, userId, time, chatText, MessageType.Comment, null, null);
 
     //Cache comment in IDB
     database.storeComment(comment)
@@ -232,8 +237,10 @@ function displayCachedHistory(cachedData){
         } else if (res.messageType === MessageType.Comment) {
             let preparedChatMessage = prepareChatMessage(res.userID, res.chatText)
             writeOnHistory(preparedChatMessage);
+        } else if (res.messageType === MessageType.Knowledge) {
+            let knowledgeSnippetCard = createCard(res.headerText, res.chatText, res.colour);
+            writeKnowledgeCard(knowledgeSnippetCard);
         }
-
 }
 
 /**
@@ -242,4 +249,4 @@ function displayCachedHistory(cachedData){
 function removeChatSocketListeners(){
     socket.removeAllListeners();
 }
-window.removeChatSocketListeners =removeChatSocketListeners
+window.removeChatSocketListeners = removeChatSocketListeners
