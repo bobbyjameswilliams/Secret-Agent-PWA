@@ -422,8 +422,6 @@ export async function deleteQueuedArticle(key){
         try {
             let tx = await db.transaction(QUEUED_ARTICLES_STORE_NAME, 'readwrite');
             let store = await tx.objectStore(QUEUED_ARTICLES_STORE_NAME).delete(key);
-            // let index = await store.index('queued_article');
-            // await index.delete(IDBKeyRange.only(key))
             await tx.complete;
         } catch (error) {
             console.log(error);
