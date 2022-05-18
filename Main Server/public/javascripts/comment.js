@@ -6,6 +6,16 @@ let roomNo = null;
 let name = null;
 
 /**
+ * Message type enum for denoting how to handle message.
+ * @type {{Chat: string, Joined: string, Knowledge: string}}
+ */
+const MessageType = {
+    Chat: 'Chat',
+    Joined: 'Joined',
+    Knowledge: 'Knowledge'
+};
+
+/**
  * Comment class used when storing a comment in IDB
  */
 class Comment{
@@ -140,6 +150,11 @@ function prepareJoinedRoomNotification(room, userId){
     }
 }
 
+function prepareRetrievedJoinedRoomNotification(room,userId){
+    // notifies that someone has joined the room
+    return ('<b>'+userId+'</b>' + ' joined the room.');
+}
+
 /**
     Loads cached chat history and calls display method
  */
@@ -154,8 +169,10 @@ async function loadAndDisplayCachedHistory(roomNo){
  */
 function displayCachedHistory(cachedData){
     for (let res of cachedData)
-        if (res.joinedRoomNotification) {
-            let preparedJoinedRoomNotification = prepareJoinedRoomNotification(res.roomNo, res.userID)
+        if (res.joinedRoomNotification === true) {
+            console.log("Procesing joinedRoomNotification");
+            console.log(res.userID)
+            let preparedJoinedRoomNotification = prepareRetrievedJoinedRoomNotification(res.roomNo, res.userID)
             writeOnHistory(preparedJoinedRoomNotification)
         } else {
             let preparedChatMessage = prepareChatMessage(res.userID, res.chatText)
