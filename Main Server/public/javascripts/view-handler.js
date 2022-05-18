@@ -6,7 +6,7 @@ function changeInsertView(){
     getCardView().style.display = "none";
     getInsertView().style.display = "";
     getRoomView().style.display = "none";
-    getSortDiv().style.display = "none";
+    getSortToggle().style.display = "none";
 }
 window.changeInsertView = changeInsertView
 
@@ -14,7 +14,7 @@ function changeCardView(){
     getCardView().style.display = "";
     getInsertView().style.display = "none";
     getRoomView().style.display = "none";
-    getSortDiv().style.display = "";
+    getSortToggle().style.display = "";
 }
 window.changeCardView = changeCardView
 
@@ -22,7 +22,7 @@ function changeRoomView(){
     getCardView().style.display = "none";
     getInsertView().style.display = "none";
     getRoomView().style.display = "";
-    getSortDiv().style.display = "none";
+    getSortToggle().style.display = "none";
 }
 window.changeRoomView = changeRoomView;
 
@@ -38,8 +38,8 @@ function getInsertView(){
     return document.getElementById("insert-container");
 }
 
-function getSortDiv(){
-    return document.getElementById("divSortButtons");
+function getSortToggle(){
+    return document.getElementById("sort-toggle");
 }
 
 async function initArticleFeed() {

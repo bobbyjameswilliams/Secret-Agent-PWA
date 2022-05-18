@@ -15,17 +15,13 @@
     <link rel="stylesheet" href="/stylesheets/partials/navbar.css" />
     <link rel="stylesheet" href="/stylesheets/card.css" />
     <link rel="stylesheet" href="/stylesheets/loader.css" />
+    <link rel="stylesheet" href="/stylesheets/radio.css" />
 </head>
 <body onload="initDatabase(); initServiceWorker(); initArticleFeed()">
 <header>
     <%- include('./partials/nav.html'); %>
 </header>
 
-<div class="container" id="divSortButtons">
-    <input id="sortByAuthor" type="submit" value="Sort alphabetically by author" onclick="sortByAuthor()">
-    <input id="sortByDate" type="submit" value="Most recent" onclick="sortByDate()">
-    <div class="loader"></div>
-</div>
 <div class="container" id="cards-container">
     <% cardList.forEach( (card) => { %>
         <div class="row">

@@ -5,13 +5,22 @@
             <li>
                 <button onclick="removeChatSocketListeners(), removeCanvasSocketListeners(), reloadPage()">Home</button>
             </li>
-        </ul>
-        <ul class="nav navbar-nav ms-auto" style="margin-right: 5%">
             <li class="nav-item">
                 <button class="btn-success" onclick="changeInsertView()">
                     Add Article
                 </button>
             </li>
+        </ul>
+        <ul class="nav navbar-nav ms-auto" style="margin-right: 5%">
+            <div class="switch" id="sort-toggle">
+                <input name="switch" id="one" type="radio" checked/>
+                <label for="one" class="switch__label">Default</label>
+                <input name="switch" id="two" type="radio" onclick="sortByAuthor()"/>
+                <label for="two" class="switch__label">Author</label>
+                <input name="switch" id="three" type="radio" />
+                <label for="three" class="switch__label" onclick="sortByDate()">Date</label>
+                <div class="switch__indicator" /></div>
+            </div>
         </ul>
     </nav>
 </div>

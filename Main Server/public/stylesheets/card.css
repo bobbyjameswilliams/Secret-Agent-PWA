@@ -21,6 +21,10 @@ body {
     width: 100%;
 }
 
+.btn-primary:hover{
+    background-color: lightgreen;
+}
+
 .card-img {
     max-height: 50vmax;
     width: 100%;
