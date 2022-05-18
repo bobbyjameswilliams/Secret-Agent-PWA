@@ -503,7 +503,7 @@ export async function submitNewArticle() {
                 console.log("Submitting " + articleObject.title)
                 document.location.reload()
             })
-            .catch(r => console.log("Error submitting " + articleObject.title));
+            .catch(r => console.log("Error submitting " + articleObject.title + r));
     }else{
         alert("Please complete all fields");
     }
