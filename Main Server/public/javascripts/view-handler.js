@@ -50,21 +50,17 @@ async function initArticleFeed() {
         let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
         console.log("Writing to home from within the try")
         console.log(allIdbArticles);
-        allIdbArticles.forEach(article => writeCardToHome(createArticleCard(article)))
+        sortArticles(1,allIdbArticles)
         writtenToFeed = true
     }
     catch (e) {
         if (!writtenToFeed) {
             console.log("Writing to home from within the catch" + e)
             let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
-            allIdbArticles.forEach(article => writeCardToHome(createArticleCard(article)))
+            sortArticles(1,allIdbArticles)
             writtenToFeed = true
         }
     }
-
-    //database.insertArticleMongo({ title: "test"}).then(r => console.log(r)).catch(err => console.log(err))
-
-    //console.log(x)
 }
 window.initArticleFeed = initArticleFeed
 
@@ -181,6 +177,13 @@ function writeCardToHome(card){
     homePage.scrollTop = homePage.scrollHeight;
 }
 
+function sortArticles(field, allIdbArticles) {
+    if (field) {
+        return allIdbArticles.sort((a, b) => (a.date_of_issue < b.date_of_issue) ? 1 : -1).forEach(article => writeCardToHome(createArticleCard(article)))
+    } else {
+        return allIdbArticles.sort((a, b) => (a.author_name > b.author_name) ? 1 : -1).forEach(article => writeCardToHome(createArticleCard(article)))
+    }
+}
 
 async function getInsertSortedArticles(field){
     let writtenToFeed = false
@@ -190,28 +193,19 @@ async function getInsertSortedArticles(field){
         let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
         console.log("Writing to home from within the try")
         console.log(allIdbArticles);
-        if(field) {
-            allIdbArticles.sort((a, b) => (a.date_of_issue < b.date_of_issue) ? 1 : -1)
-                .forEach(article => writeCardToHome(createArticleCard(article)))
-        }else{
-            allIdbArticles.sort((a, b) => (a.author_name > b.author_name) ? 1 : -1)
-                .forEach(article => writeCardToHome(createArticleCard(article)))
-        }
+        sortArticles(field, allIdbArticles)
         writtenToFeed = true
     }
     catch (e) {
         if (!writtenToFeed) {
             console.log("Writing to home from within the catch" + e)
             let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
-            if(field) {
-                allIdbArticles.sort((a, b) => (a.date_of_issue < b.date_of_issue) ? 1 : -1).forEach(article => writeCardToHome(createArticleCard(article)))
-            }else{
-                allIdbArticles.sort((a, b) => (a.author_name > b.author_name) ? 1 : -1).forEach(article => writeCardToHome(createArticleCard(article)))
-            }
+            sortArticles(field, allIdbArticles);
             writtenToFeed = true
         }
     }
 }
+
 
 function sortByDate(){
     clearCard();
