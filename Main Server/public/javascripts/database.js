@@ -446,6 +446,25 @@ export async function retrieveAllLocallyStoredArticles(){
     return idbArticles.concat(queuedIdbArticles)
 }
 
+export async function deleteRoomAnnotations(roomNo){
+    console.log("Deleting queued article with id " + key)
+    if (!db)
+        await initDatabase();
+    if (db) {
+        try {
+            let tx = await db.transaction(IMAGE_ANNOTATIONS_STORE_NAME, 'readwrite');
+            let store = await tx.objectStore(IMAGE_ANNOTATIONS_STORE_NAME);
+            let index = await store.index('canvas')
+            await index.delete()
+            await tx.complete;
+        } catch (error) {
+            console.log(error);
+        }
+    } else {
+        console.log("IDB Unavailable.")
+    }
+}
+
 /**
  * Gets articles from MongoDB
  * @returns {Promise<*>}
