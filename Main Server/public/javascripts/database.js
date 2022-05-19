@@ -228,26 +228,11 @@ export async function retrieveAllCachedRoomComments(roomNo){
             if (readingsList && readingsList.length > 0) {
                 return readingsList;
             } else {
-                //TODO: Implement localstorage
-
-                // const value = localStorage.getItem(city);
-                // if (value == null)
-                //     return finalResults;
-                // else finalResults.push(value);
-                // return finalResults;
             }
         } catch (error) {
             console.log(error);
         }
     } else {
-        //TODO: Implement localstorage
-
-        // const value = localStorage.getItem(city);
-        // let finalResults=[];
-        // if (value == null)
-        //     return finalResults;
-        // else finalResults.push(value);
-        // return finalResults;
     }
 }
 window.retrieveAllCachedRoomComments = retrieveAllCachedRoomComments
@@ -270,22 +255,11 @@ export async function retrieveRoomImageAnnotations(roomNo){
             if (readingsList && readingsList.length > 0) {
                 return readingsList;
             } else {
-                // const value = localStorage.getItem(city);
-                // if (value == null)
-                //     return finalResults;
-                // else finalResults.push(value);
-                // return finalResults;
             }
         } catch (error) {
             console.log(error);
         }
     } else {
-        // const value = localStorage.getItem(city);
-        // let finalResults=[];
-        // if (value == null)
-        //     return finalResults;
-        // else finalResults.push(value);
-        // return finalResults;
     }
 }
 
@@ -307,22 +281,11 @@ export async function retrieveArticles(){
                 return readingsList;
             } else {
                 return [];
-                // const value = localStorage.getItem(city);
-                // if (value == null)
-                //     return finalResults;
-                // else finalResults.push(value);
-                // return finalResults;
             }
         } catch (error) {
             console.log(error);
         }
     } else {
-        // const value = localStorage.getItem(city);
-        // let finalResults=[];
-        // if (value == null)
-        //     return finalResults;
-        // else finalResults.push(value);
-        // return finalResults;
     }
 }
 
