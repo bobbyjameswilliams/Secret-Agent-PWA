@@ -6,11 +6,11 @@ exports.init = function(io) {
        */
       socket.on('create or join', function (room, userId) {
         socket.join(room);
-        io.sockets.to(room).emit('joined', room, userId);
+        socket.broadcast.to(room).emit('joined', room, userId);
       });
 
       socket.on('chat', function (room, userId, chatText) {
-        io.sockets.to(room).emit('chat', room, userId, chatText);
+        socket.broadcast.to(room).emit('chat', userId, chatText);
       });
 
       socket.on('knowledge snippet', function (room, userId, header, body, colour){
@@ -22,7 +22,7 @@ exports.init = function(io) {
       });
 
       socket.on('clear canvas', function (room) {
-        io.sockets.to(room).emit('clear canvas')
+        socket.broadcast.to(room).emit('clear canvas')
       })
 
       socket.on('disconnect', function(){

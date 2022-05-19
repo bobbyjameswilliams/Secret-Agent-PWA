@@ -67,27 +67,23 @@ function initRoom(roomNumber, username, image, title, description, author_name, 
             )
 
     //Prepare chat socket.
-    socket.on('chat', function (room, userId, chatText) {
-        if (userId !== name){
-            writeChatToScreen(userId, chatText);
-        }
+    socket.on('chat', function (userId, chatText) {
+        writeChatToScreen(userId, chatText);
     });
 
     // called when someone joins the room. If it is someone else it notifies the joining of the room
     socket.on('joined', function (room, userId) {
-        if (userId !== name){
-            // notifies that someone has joined the room
-            //get time and create string
-            let time = Date.now();
-            let comment = new Comment(roomNo,userId,time,null, MessageType.Joined, null, null);
-            //Cache comment in IDB
-            database.storeComment(comment)
-                .then(() => console.log("storeComment ran."))
-                .catch(() => console.log("Error storing comment"));
+        // notifies that someone has joined the room
+        //get time and create string
+        let time = Date.now();
+        let comment = new Comment(roomNo,userId,time,null, MessageType.Joined, null, null);
+        //Cache comment in IDB
+        database.storeComment(comment)
+            .then(() => console.log("storeComment ran."))
+            .catch(() => console.log("Error storing comment"));
 
-            let preparedJoinedRoomNotification = prepareJoinedRoomNotification(room, userId)
-            writeOnHistory(preparedJoinedRoomNotification);
-        }
+        let preparedJoinedRoomNotification = prepareJoinedRoomNotification(room, userId)
+        writeOnHistory(preparedJoinedRoomNotification);
     });
 
     socket.on('knowledge snippet', function (room, userId, header, body, colour){

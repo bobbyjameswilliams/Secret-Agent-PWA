@@ -237,6 +237,7 @@ async function getInsertSortedArticles(field){
     }
     catch (e) {
         if (!writtenToFeed) {
+            console.log("Writing to home from within the catch" + e)
             let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
             if(field) {
                 allIdbArticles.sort((a, b) => (a.date_of_issue < b.date_of_issue) ? 1 : -1).forEach(article => writeCardToHome(createArticleCard(article)))

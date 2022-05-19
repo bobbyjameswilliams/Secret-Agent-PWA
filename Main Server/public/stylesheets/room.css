@@ -47,7 +47,7 @@ p {
 }
 
 #canvas:hover {
-    cursor: url('public/images/pencil.png'), crosshair;
+    cursor:  crosshair;
 }
 
 #image_canvas_wrapper{
