@@ -117,6 +117,15 @@ export async function flushQueuedArticles(){
 }
 
 /**
+ * Stores collection of articles iteratively in articles idb store.
+ * @param articles
+ * @returns {Promise<void>}
+ */
+export async function storeArticles(articles){
+    articles.forEach(element => storeArticle(element))
+}
+
+/**
  * Stores article in articles IDB store.
  * @param article Article to store
  * @returns {Promise<void>}
@@ -135,15 +144,6 @@ export async function storeArticle(article){
             console.log("Error in storeArticle()")
         }
     }
-}
-
-/**
- * Stores collection of articles iteratively in articles idb store.
- * @param articles
- * @returns {Promise<void>}
- */
-export async function storeArticles(articles){
-    articles.forEach(element => storeArticle(element))
 }
 
 /**
@@ -209,48 +209,6 @@ export async function storeAnnotation(canvasObject) {
     }
 }
 
-/**
- * Given roomNo, retrieves all comments for given roomNo
- * @param roomNo Room Number.
- * @returns {Promise<*>}
- */
-export async function retrieveAllCachedRoomComments(roomNo){
-    //TODO: handle when 0 items
-    if (!db)
-        await initDatabase();
-    if (db) {
-        try {
-            let tx = await db.transaction(CHAT_MESSAGES_STORE_NAME, 'readonly');
-            let store = await tx.objectStore(CHAT_MESSAGES_STORE_NAME);
-            let index = await store.index('chats');
-            let readingsList = await index.getAll(IDBKeyRange.only(roomNo));
-            await tx.complete;
-            if (readingsList && readingsList.length > 0) {
-                return readingsList;
-            } else {
-                //TODO: Implement localstorage
-
-                // const value = localStorage.getItem(city);
-                // if (value == null)
-                //     return finalResults;
-                // else finalResults.push(value);
-                // return finalResults;
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    } else {
-        //TODO: Implement localstorage
-
-        // const value = localStorage.getItem(city);
-        // let finalResults=[];
-        // if (value == null)
-        //     return finalResults;
-        // else finalResults.push(value);
-        // return finalResults;
-    }
-}
-window.retrieveAllCachedRoomComments = retrieveAllCachedRoomComments
 
 /**
  * Retrieves all image annotations for given roomNo.
@@ -290,40 +248,21 @@ export async function retrieveRoomImageAnnotations(roomNo){
 }
 
 /**
+ * Given roomNo, retrieves all comments for given roomNo
+ * @param roomNo Room Number.
+ * @returns {Promise<*>}
+ */
+export async function retrieveAllCachedRoomComments(roomNo){
+    return retrieveAllObjectsIDB(CHAT_MESSAGES_STORE_NAME, 'chats')
+}
+window.retrieveAllCachedRoomComments = retrieveAllCachedRoomComments
+
+/**
  * Retrieves all articles stored in IDB.
  * @returns {Promise<*>}
  */
 export async function retrieveArticles(){
-    if (!db)
-        await initDatabase();
-    if (db) {
-        try {
-            let tx = await db.transaction(ARTICLES_STORE_NAME, 'readonly');
-            let store = await tx.objectStore(ARTICLES_STORE_NAME);
-            let index = await store.index('article');
-            let readingsList = await index.getAll();
-            await tx.complete;
-            if (readingsList && readingsList.length > 0) {
-                return readingsList;
-            } else {
-                return [];
-                // const value = localStorage.getItem(city);
-                // if (value == null)
-                //     return finalResults;
-                // else finalResults.push(value);
-                // return finalResults;
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    } else {
-        // const value = localStorage.getItem(city);
-        // let finalResults=[];
-        // if (value == null)
-        //     return finalResults;
-        // else finalResults.push(value);
-        // return finalResults;
-    }
+    return retrieveAllObjectsIDB(ARTICLES_STORE_NAME, 'article')
 }
 
 /**
@@ -332,13 +271,23 @@ export async function retrieveArticles(){
  * @returns {Promise<void>}
  */
 export async function retreiveQueuedArticles(){
+    return retrieveAllObjectsIDB(QUEUED_ARTICLES_STORE_NAME, 'queued_article')
+}
+
+/**
+ * General purpose method that takes a store name, key path and returns all the data from said store.
+ * @param storeName Store name identifier
+ * @param keyPath Key path identifier, used for index.
+ * @returns {Promise<*[]|*>}
+ */
+async function retrieveAllObjectsIDB(storeName, keyPath){
     if (!db)
         await initDatabase();
     if (db) {
         try {
-            let tx = await db.transaction(QUEUED_ARTICLES_STORE_NAME, 'readonly');
-            let store = await tx.objectStore(QUEUED_ARTICLES_STORE_NAME);
-            let index = await store.index('queued_article');
+            let tx = await db.transaction(storeName, 'readonly');
+            let store = await tx.objectStore(storeName);
+            let index = await store.index(keyPath);
             let readingsList = await index.getAll();
             await tx.complete;
             if (readingsList && readingsList.length > 0) {
@@ -349,10 +298,19 @@ export async function retreiveQueuedArticles(){
         } catch (error) {
             console.log(error);
         }
-    } else {
-        console.log("IDB Unavailable.")
     }
 }
+
+/**
+ * Retrieves articles both stored in the local article store and the sync queue.
+ * @returns {Promise<void>}
+ */
+export async function retrieveAllLocallyStoredArticles(){
+    let idbArticles = await retrieveArticles();
+    let queuedIdbArticles = await retreiveQueuedArticles();
+    return idbArticles.concat(queuedIdbArticles)
+}
+
 
 /**
  * Retrieves queued article given a key
@@ -401,16 +359,6 @@ export async function deleteQueuedArticle(key){
     } else {
         console.log("IDB Unavailable.")
     }
-}
-
-/**
- * Retrieves articles both stored in the local article store and the sync queue.
- * @returns {Promise<void>}
- */
-export async function retrieveAllLocallyStoredArticles(){
-    let idbArticles = await retrieveArticles();
-    let queuedIdbArticles = await retreiveQueuedArticles();
-    return idbArticles.concat(queuedIdbArticles)
 }
 
 /**
