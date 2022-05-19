@@ -59,6 +59,7 @@ function writeKnowledgeCard(card){
 function createCard(header, body, colour) {
     let card = document.createElement('div');
     card.className = 'card';
+    card.style.position = 'unset'; // Doesn't overlap KG
 
     //let img = document.createElement('img');
     //img.className = 'card-img-top';

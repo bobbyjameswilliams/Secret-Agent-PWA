@@ -38,6 +38,10 @@ p {
     margin: 2%;
 }
 
+#history.chat_card {
+    position: unset;
+}
+
 #canvas{
     max-height: 70vh;
 }
