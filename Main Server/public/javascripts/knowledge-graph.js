@@ -1,9 +1,10 @@
-import * as database from "./database";
-
 const service_url = 'https://kgsearch.googleapis.com/v1/entities:search';
 const apiKey= 'AIzaSyAG7w627q-djB4gTTahssufwNOImRqdYKM';
 let socket = io();
 
+/**
+ * Init knowledge graph widget
+ */
 function widgetInit(){
     let kgTypeInput =  document.getElementById('kg_type');
     let kgSearch = document.getElementById('kg_search');
@@ -20,6 +21,10 @@ function widgetInit(){
     changeKGWidgets(0);
 }
 
+/**
+ * Changes knowledge graph widgets depending on option chosen
+ * @param option
+ */
 function changeKGWidgets(option){
     // Changes the display style from searching KG or updating KG params
     let val1, val2;
@@ -52,12 +57,23 @@ function selectItem(event){
     document.getElementById("kg_search").value = '';
 }
 
+/**
+ * Write knowledge graph card to view
+ * @param card
+ */
 function writeKnowledgeCard(card){
     let history = document.getElementById('history');
     history.appendChild(card);
     history.scrollTop = history.scrollHeight;
 }
 
+/**
+ * Creates knowledge graph card
+ * @param header
+ * @param body
+ * @param colour
+ * @returns {HTMLDivElement}
+ */
 function createCard(header, body, colour) {
     let card = document.createElement('div');
     card.className = 'card';
@@ -87,6 +103,10 @@ function createCard(header, body, colour) {
 }
 
 // Add class to the btn so css animation takes effect
+/**
+ * handles input animation
+ * @param inputID
+ */
 function inputAnimation(inputID){
     let input = document.getElementById(inputID);
     input.classList.add('inputAnimation');

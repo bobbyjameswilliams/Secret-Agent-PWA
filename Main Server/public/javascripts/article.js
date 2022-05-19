@@ -1,5 +1,5 @@
 /**
- * article class used when storing a article in IDB
+ * article class used when storing an article in IDB
  */
 class Article{
     title;

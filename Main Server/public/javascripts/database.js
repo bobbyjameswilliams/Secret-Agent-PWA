@@ -88,9 +88,9 @@ export async function syncArticles(){
     await storeArticles(mongoArticles)
 }
 
+
 /**
  * Stores single article in articles idb store.
- * @param article
  * @returns {Promise<void>}
  */
 export async function flushQueuedArticles(){
@@ -143,7 +143,6 @@ export async function storeArticle(article){
  * @returns {Promise<void>}
  */
 export async function storeArticles(articles){
-    console.log("Inside storeArticles")
     articles.forEach(element => storeArticle(element))
 }
 
@@ -153,8 +152,6 @@ export async function storeArticles(articles){
  * @returns {Promise<void>}
  */
 export async function storeQueuedArticle(article){
-    console.log("Inside storeQueuedArticle")
-    console.log('inserting: ' + JSON.stringify(article));
     if (!db)
         await initDatabase();
     if (db) {
@@ -223,7 +220,6 @@ export async function retrieveAllCachedRoomComments(roomNo){
         await initDatabase();
     if (db) {
         try {
-            console.log('fetching all cached room comments for : ' + roomNo);
             let tx = await db.transaction(CHAT_MESSAGES_STORE_NAME, 'readonly');
             let store = await tx.objectStore(CHAT_MESSAGES_STORE_NAME);
             let index = await store.index('chats');
@@ -232,27 +228,11 @@ export async function retrieveAllCachedRoomComments(roomNo){
             if (readingsList && readingsList.length > 0) {
                 return readingsList;
             } else {
-                //TODO: Implement localstorage
-
-                // const value = localStorage.getItem(city);
-                // if (value == null)
-                //     return finalResults;
-                // else finalResults.push(value);
-                // return finalResults;
             }
         } catch (error) {
             console.log(error);
         }
     } else {
-        console.log("Else in retrieve")
-        //TODO: Implement localstorage
-
-        // const value = localStorage.getItem(city);
-        // let finalResults=[];
-        // if (value == null)
-        //     return finalResults;
-        // else finalResults.push(value);
-        // return finalResults;
     }
 }
 window.retrieveAllCachedRoomComments = retrieveAllCachedRoomComments
@@ -275,23 +255,11 @@ export async function retrieveRoomImageAnnotations(roomNo){
             if (readingsList && readingsList.length > 0) {
                 return readingsList;
             } else {
-                // const value = localStorage.getItem(city);
-                // if (value == null)
-                //     return finalResults;
-                // else finalResults.push(value);
-                // return finalResults;
             }
         } catch (error) {
             console.log(error);
         }
     } else {
-        console.log("Else in retrieve")
-        // const value = localStorage.getItem(city);
-        // let finalResults=[];
-        // if (value == null)
-        //     return finalResults;
-        // else finalResults.push(value);
-        // return finalResults;
     }
 }
 
@@ -300,7 +268,6 @@ export async function retrieveRoomImageAnnotations(roomNo){
  * @returns {Promise<*>}
  */
 export async function retrieveArticles(){
-    console.log("Retrieving articles from idb...")
     if (!db)
         await initDatabase();
     if (db) {
@@ -311,27 +278,14 @@ export async function retrieveArticles(){
             let readingsList = await index.getAll();
             await tx.complete;
             if (readingsList && readingsList.length > 0) {
-                console.log("Inside retrieveArticles()")
                 return readingsList;
             } else {
                 return [];
-                // const value = localStorage.getItem(city);
-                // if (value == null)
-                //     return finalResults;
-                // else finalResults.push(value);
-                // return finalResults;
             }
         } catch (error) {
             console.log(error);
         }
     } else {
-        console.log("Else in retrieve")
-        // const value = localStorage.getItem(city);
-        // let finalResults=[];
-        // if (value == null)
-        //     return finalResults;
-        // else finalResults.push(value);
-        // return finalResults;
     }
 }
 
@@ -341,7 +295,6 @@ export async function retrieveArticles(){
  * @returns {Promise<void>}
  */
 export async function retreiveQueuedArticles(){
-    console.log("Retrieving articles from idb...")
     if (!db)
         await initDatabase();
     if (db) {
@@ -352,7 +305,6 @@ export async function retreiveQueuedArticles(){
             let readingsList = await index.getAll();
             await tx.complete;
             if (readingsList && readingsList.length > 0) {
-                console.log("Inside retrieveQueuedArticles()")
                 return readingsList;
             } else {
                 return [];
@@ -371,7 +323,6 @@ export async function retreiveQueuedArticles(){
  * @returns {Promise<null|*>}
  */
 export async function retreiveQueuedArticle(key){
-    console.log("Retrieving articles from idb...")
     if (!db)
         await initDatabase();
     if (db) {
@@ -382,7 +333,6 @@ export async function retreiveQueuedArticle(key){
             let readingsList = await index.getAll(IDBKeyRange.only(key));
             await tx.complete;
             if (readingsList && readingsList.length > 0) {
-                console.log("Inside retrieveQueuedArticles()")
                 return readingsList[0];
             } else {
                 return null;
@@ -401,7 +351,6 @@ export async function retreiveQueuedArticle(key){
  * @returns {Promise<void>}
  */
 export async function deleteQueuedArticle(key){
-    console.log("Deleting queued article with id " + key)
     if (!db)
         await initDatabase();
     if (db) {
@@ -433,7 +382,6 @@ export async function retrieveAllLocallyStoredArticles(){
  * @returns {Promise<void>}
  */
 export async function deleteRoomAnnotations(roomNo){
-    console.log("Deleting canvas annotations for room  " + roomNo)
     if (!db)
         await initDatabase();
     if (db) {
@@ -463,6 +411,11 @@ export async function getArticlesMongo(){
     return json.data
 }
 
+/**
+ * Inserts article to mongo
+ * @param article
+ * @returns {Promise<boolean>}
+ */
 export async function insertArticleMongo(article) {
     let inputData = {
         "title": article.title,
@@ -483,26 +436,35 @@ export async function insertArticleMongo(article) {
     return false;
 }
 
+/**
+ * Stores data from form in an object and validates before sending to IDB queue
+ * @returns {Promise<void>}
+ */
 export async function submitNewArticle() {
     let title = document.getElementById('title_input').value
     let description = document.getElementById('description_input').value
     let author = document.getElementById('author_name').value
     let image_b64 = document.getElementById('image_b64').value
+    let file_name = document.getElementById("fileUpload").value
 
     if((title != "")&&(description != "")&&(author != "")&&(image_b64 != "")) {
-        let date_of_issue = Date.now();
-        let articleObject = new Article(title, image_b64, description, author, date_of_issue);
+        if(file_name.toLowerCase().endsWith(".jpg") || file_name.toLowerCase().endsWith(".png")) {
+            let date_of_issue = Date.now();
+            let articleObject = new Article(title, image_b64, description, author, date_of_issue);
 
-        //Add the article to IDB
-        storeQueuedArticle(articleObject)
-            .then(r => {
-                console.log("Submitting " + articleObject.title)
-                document.location.reload()
-            })
-            .catch(r => console.log("Error submitting " + articleObject.title + r));
+            //Add the article to IDB
+            storeQueuedArticle(articleObject)
+                .then(r => {
+                    console.log("Submitting " + articleObject.title)
+                    document.location.reload()
+                })
+                .catch(r => console.log("Error submitting " + articleObject.title + r));
+        }
+        else{
+            alert("Invalid File Type. JPEG, JPG or PNG Only");
+        }
     }else{
         alert("Please complete all fields");
     }
 }
 window.submitNewArticle = submitNewArticle;
-

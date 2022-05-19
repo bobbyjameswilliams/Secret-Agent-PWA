@@ -1,9 +1,7 @@
 /**
  * called by the HTML onload
- * declaring the service worker
+ * registering the service worker
  */
-
-
 function initServiceWorker() {
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker

@@ -31,7 +31,7 @@
     border-radius: 50%;
     transition: transform 600ms cubic-bezier(.02,.94,.09,.97),
     background 300ms cubic-bezier(.17,.67,.14,1.03);
-    transform: translate3d(1rem,0,0);
+    transform: translate3d(1.3rem,0,0);
 }
 
 input#one:checked ~ .switch__indicator {
@@ -40,11 +40,7 @@ input#one:checked ~ .switch__indicator {
 }
 input#two:checked ~ .switch__indicator {
   background: MediumTurquoise;
-  transform: translate3d(5.8rem,0,0);
-}
-input#three:checked ~ .switch__indicator {
-  background: PaleVioletRed;
-  transform: translate3d(10.6rem,0,0);
+  transform: translate3d(6.0rem,0,0);
 }
 
 input[type="radio"]:checked, input[type="radio"]:not(:checked) {

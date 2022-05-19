@@ -8,18 +8,4 @@ exports.init= function() {
     // Article.remove({}, function(err) {
     //    console.log('collection removed')
     // });
-
-    // let article = new Article({
-    //     title: "Test article",
-    // });
-    // // console.log('dob: '+character.dob);
-    //
-    //
-    // article.save()
-    //     .then ((results) => {
-    //         console.log("article created in init: "+ JSON.stringify(results));
-    //     })
-    //     .catch ((error) => {
-    //         console.log(JSON.stringify(error));
-    //     });
 }

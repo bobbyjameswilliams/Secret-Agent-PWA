@@ -34,13 +34,18 @@ class Canvas{
         this.thickness = thickness;
     }
 }
+
 /**
  * it inits the image canvas to draw on. It sets up the events to respond to (click, mouse on, etc.)
  * it is also the place where the data should be sent  via socket.io
- * @param sckt the open socket to register events on
- * @param imageUrl teh image url to download
+ * @param sckt
+ * @param image
  * @param roomNo
  * @param name
+ * @param title
+ * @param description
+ * @param author_name
+ * @param date_of_issue
  */
 export function initCanvas(sckt, image, roomNo, name, title, description, author_name, date_of_issue) {
     room = roomNo;
@@ -113,7 +118,6 @@ export function initCanvas(sckt, image, roomNo, name, title, description, author
         // here we wait until the height is set, then we resize the canvas based on the size of the image
         let poll = setInterval(async function () {
             if (img.naturalHeight) {
-                console.log("image listener");
                 clearInterval(poll);
                 // resize the canvas
                 let ratioX = 1;
@@ -146,8 +150,6 @@ window.initCanvas = initCanvas;
  * @param ctx
  */
 function drawImageScaled(img, canvas, ctx) {
-    //TODO: Remove
-    console.log("Drawing scaled image...")
     // get the scale
     let scale = Math.min(canvas.width / img.width, canvas.height / img.height);
     // get the top left position of the image
@@ -158,6 +160,19 @@ function drawImageScaled(img, canvas, ctx) {
     ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
 }
 
+/**
+ * Saves the canvas object to IDB. Passing through the object information, it will create a Canvas
+ * object and save that to IDB.
+ * @param roomNo Room which the canvas annotation was made in.
+ * @param canvasWidth
+ * @param canvasHeight
+ * @param prevX
+ * @param prevY
+ * @param currX
+ * @param currY
+ * @param color
+ * @param thickness
+ */
 function saveToIDB(roomNo, canvasWidth, canvasHeight, prevX, prevY,currX, currY, color, thickness) {
     let canvasObject = new Canvas(roomNo, canvasWidth, canvasHeight, prevX, prevY, currX, currY,color, thickness)
     database.storeAnnotation(canvasObject)
@@ -198,16 +213,19 @@ function drawOnCanvas(ctx, canvasWidth, canvasHeight, prevX, prevY, currX, currY
 }
 
 /**
- * Restores the canvas image from previous session
+ * Retrieves canvas objects for a given room ID
+ * @param roomNo
  */
-
 function retrieveCanvas(roomNo){
-    console.log('retrieve canvas');
     database.retrieveRoomImageAnnotations(roomNo)
         .then(r => r.forEach(restoreCanvas))
         .catch(r => console.log(r))
 }
 
+/**
+ * Takes canavs data and restores the canvas
+ * @param canvasData
+ */
 function restoreCanvas(canvasData){
     //Defining all the parameters
     let cvx = document.getElementById('canvas');
@@ -233,6 +251,9 @@ function changeColor(colour){
 }
 window.changeColor = changeColor
 
+/**
+ * Removes all socket listeners
+ */
 function removeCanvasSocketListeners(){
     socket.removeAllListeners();
 }

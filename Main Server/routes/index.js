@@ -3,6 +3,9 @@ const axios = require("axios");
 var router = express.Router();
 var fs = require('fs');
 
+/**
+ * Card class
+ */
 class Card{
     id;
     title;
@@ -24,6 +27,9 @@ class Card{
 }
 
 /* GET home page. */
+/**
+ * index get route
+ */
 router.get('/', function(req, res, next) {
     console.log("/ get called")
     res.render('index', { title: 'Card View', cardList: [] });
@@ -64,7 +70,9 @@ router.get('/', function(req, res, next) {
 //     })
 // })
 
-//Passes data through to get articles from mongo.
+/**
+ * Passes data through to get articles from mongo.
+ */
 router.post('/getArticles', function(req, res, next) {
     console.log("/getAllArticles get called")
     axios.post('http://localhost:3001/getArticles',{}).then(json => {
@@ -76,7 +84,9 @@ router.post('/getArticles', function(req, res, next) {
     })
 });
 
-//Passes data through to insert article into mongo.
+/**
+ * Passes data through to insert article into mongo.
+ */
 router.post('/insertArticle', function(req, res) {
     console.log("/insertArticle called")
     axios.post('http://localhost:3001/insertArticle',{

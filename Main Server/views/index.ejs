@@ -23,32 +23,7 @@
 </header>
 
 <div class="container" id="cards-container">
-    <% cardList.forEach( (card) => { %>
-        <div class="row">
-            <div class="col-sm">
-                <div class="card article-card" id=<%=card.id%>>
-                    <img id=<%=card.id + "img"%> class="card-img" alt="Card image cap" src=<%= card.image %>>
-                    <div class="card-body">
-                        <h3 class="card-title"><%= card.title %></h3>
-                        <p class="card-text" id="card-description"><%= card.description %></p>
-                        <p class="card-text" id="card-name"><%= card.author_name %></p>
-                        <p class="card-text" id="card-date_of_issue"><%= card.date_of_issue %></p>
-                        <div class="row">
-                            <div class="col-5">
-                                <input class="text_input" id='<%=card.id+"username_input"%>' type="text" placeholder="Enter Username">
-                            </div>
-                            <div class="col-4">
-                                <input class="text_input" id='<%=card.id+"room_input"%>' type="text" placeholder="Enter Room Number">
-                            </div>
-                            <div class="col-3">
-                                <button class="btn btn-primary" id="connect" onclick="connectToRoomPage('<%= card.id %>','<%= card.image %>')">Connect</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <% }); %>
+
 </div>
 <div id="room-container" style="display: none">
     <%- include('./partials/room.ejs'); %>

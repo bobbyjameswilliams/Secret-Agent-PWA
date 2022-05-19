@@ -1,7 +1,9 @@
 import * as database from './database.js';
 import {flushQueuedArticles, retrieveAllLocallyStoredArticles} from "./database.js";
 
-
+/**
+ * Changes view to insert article
+ */
 function changeInsertView(){
     getCardView().style.display = "none";
     getInsertView().style.display = "";
@@ -10,6 +12,9 @@ function changeInsertView(){
 }
 window.changeInsertView = changeInsertView
 
+/**
+ * Change view to card listing
+ */
 function changeCardView(){
     getCardView().style.display = "";
     getInsertView().style.display = "none";
@@ -18,6 +23,9 @@ function changeCardView(){
 }
 window.changeCardView = changeCardView
 
+/**
+ * Change view to room
+ */
 function changeRoomView(){
     getCardView().style.display = "none";
     getInsertView().style.display = "none";
@@ -26,36 +34,52 @@ function changeRoomView(){
 }
 window.changeRoomView = changeRoomView;
 
+/**
+ * get card view container
+ * @returns {HTMLElement}
+ */
 function getCardView(){
     return document.getElementById("cards-container");
 }
 
+/**
+ * get room view container
+ * @returns {HTMLElement}
+ */
 function getRoomView(){
     return document.getElementById("room-container");
 }
 
+/**
+ * get insert card view container
+ * @returns {HTMLElement}
+ */
 function getInsertView(){
     return document.getElementById("insert-container");
 }
 
+/**
+ * get sort toggle element
+ * @returns {HTMLElement}
+ */
 function getSortToggle(){
     return document.getElementById("sort-toggle");
 }
 
+/**
+ * Gets articles from IDB and writes them to the view
+ * @returns {Promise<void>}
+ */
 async function initArticleFeed() {
     let writtenToFeed = false
-    console.log("initArticleFeed called")
     try{
         await database.syncArticles()
         let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
-        console.log("Writing to home from within the try")
-        console.log(allIdbArticles);
         allIdbArticles.forEach(article => writeCardToHome(createArticleCard(article)))
         writtenToFeed = true
     }
     catch (e) {
         if (!writtenToFeed) {
-            console.log("Writing to home from within the catch" + e)
             let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
             allIdbArticles.forEach(article => writeCardToHome(createArticleCard(article)))
             writtenToFeed = true
@@ -63,11 +87,13 @@ async function initArticleFeed() {
     }
 
     //database.insertArticleMongo({ title: "test"}).then(r => console.log(r)).catch(err => console.log(err))
-
-    //console.log(x)
 }
 window.initArticleFeed = initArticleFeed
 
+/**
+ * Store article in IDB
+ * @returns {Promise<void>}
+ */
 async function insertArticle(){
     let title = document.getElementById('title_input');
     let image = document.getElementById('image_b64');
@@ -83,6 +109,11 @@ window.insertArticle = insertArticle;
 //TODO: below
 //################ TO BE MOVED BACK TO card-feed.js ########################
 
+/**
+ * Creates article card
+ * @param article
+ * @returns {HTMLDivElement}
+ */
 function createArticleCard(article){
     let row = document.createElement('div');
     row.className = 'row'
@@ -175,21 +206,26 @@ function createArticleCard(article){
 }
 window.createArticleCard = createArticleCard;
 
+/**
+ * Writes card to view
+ * @param card
+ */
 function writeCardToHome(card){
     let homePage = document.getElementById('cards-container')
     homePage.appendChild(card);
     homePage.scrollTop = homePage.scrollHeight;
 }
 
-
+/**
+ * Gets sorted articles from IDB and writes them to the view
+ * @param field
+ * @returns {Promise<void>}
+ */
 async function getInsertSortedArticles(field){
     let writtenToFeed = false
-    console.log("initArticleFeed called")
     try{
         await database.syncArticles()
         let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
-        console.log("Writing to home from within the try")
-        console.log(allIdbArticles);
         if(field) {
             allIdbArticles.sort((a, b) => (a.date_of_issue < b.date_of_issue) ? 1 : -1)
                 .forEach(article => writeCardToHome(createArticleCard(article)))
@@ -213,39 +249,58 @@ async function getInsertSortedArticles(field){
     }
 }
 
+/**
+ * clear then rewrite sorted cards by date to view
+ */
 function sortByDate(){
     clearCard();
     getInsertSortedArticles(true);
 }
 window.sortByDate = sortByDate;
 
-
+/**
+ * clear then rewrite sorted cards by author to view
+ */
 function sortByAuthor(){
     clearCard()
     getInsertSortedArticles(false);
 }
 window.sortByAuthor = sortByAuthor;
 
-
+/**
+ * Clear card
+ */
 function clearCard(){
     let homePage = document.getElementById('cards-container')
     homePage.innerHTML = "";
     homePage.scrollTop = homePage.scrollHeight;
 }
 
+/**
+ * reload page
+ */
 function reloadPage(){
     document.location.reload()
 }
 window.reloadPage = reloadPage;
 
+/**
+ * Event to upload images as base 64
+ */
 $('#fileUpload').change(function (e) {
     if (this.files && this.files[0]) {
-        var FR= new FileReader();
-        FR.addEventListener("load", function(e) {
+        let file_name = (document.getElementById("fileUpload").value).toLowerCase()
+        //Validation for file extensions
+        if(file_name.endsWith(".jpg") || file_name.endsWith(".png") || file_name.endsWith(".jpeg")) {
+            var FR = new FileReader();
+            FR.addEventListener("load", function (e) {
+                document.getElementById("image_b64").value = e.target.result;
+                document.getElementById("imgPreview").src = e.target.result;
+            });
+            FR.readAsDataURL(this.files[0]);
+        }else{
             document.getElementById("image_b64").value = e.target.result;
-            document.getElementById("imgPreview").src = e.target.result;
-        });
-        FR.readAsDataURL( this.files[0] );
+        }
     }else{
         document.getElementById("image_b64").value = "";
         document.getElementById("imgPreview").src = "/images/placeholder.png";
