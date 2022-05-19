@@ -17,49 +17,223 @@
     }
   ],
   "paths": {
-    "/getArticle": {
+    "/":{
+      "get": {
+        "tags": [
+          "Index"
+        ],
+        "description": "MongoDB Homepage.",
+        "operationId": "index",
+        "responses": {
+          "200": {
+            "description": "Homepage Retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Index"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Potentially misspelled route."
+          },
+          "403": {
+            "description": "Parameter error"
+          }
+        }
+      }
+    },
+
+    "/insertArticle": {
       "post": {
         "tags": [
-          "Getting article"
+          "Insertion"
         ],
-        "description": "getting article of given ID",
-        "operationId": "weather data",
+        "description": "Inserts article to MongoDB.",
+        "operationId": "index retrieval",
         "requestBody": {
           "content": {
             "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArticleObject"
+              }
             }
           },
           "required": true
         },
         "responses": {
           "200": {
-            "description": "Correct input of Child structure",
+            "description": "Article Inserted Successfully.",
             "content": {
               "application/json": {
                 "schema": {
+                  "$ref": "#/components/schemas/InsertArticleMongoResponse"
                 }
               }
             }
           },
-          "401": {
-            "description": "Missing parameters",
+          "400": {
+            "description": "Potentially misspelled route."
+          },
+          "403": {
+            "description": "Parameter error"
+          }
+        }
+      }
+    },
+
+    "/getArticles":{
+      "post": {
+        "tags": [
+          "Retrieval"
+        ],
+        "description": "Retrieves all articles stored in MongoDB.",
+        "operationId": "get articles MongoDB",
+        "responses": {
+          "200": {
+            "description": "Articles retrieved successfully.",
             "content": {
               "application/json": {
                 "schema": {
-                },
-                "example": {
-                  "message": "no location provided",
-                  "internal_code": "missing_parameters"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InsertArticleMongoResponse"
+                  }
                 }
               }
             }
+          },
+          "400": {
+            "description": "Potentially misspelled route."
+          },
+          "403": {
+            "description": "Error Retrieving"
+          }
+        }
+      }
+
+}
+  },
+  "components": {
+    "schemas": {
+      "title": {
+        "type": "string",
+        "description": "The articles title.",
+        "example": "Secret agent spotted in Rotherham"
+      },
+      "image": {
+        "type": "string",
+        "description": "Base 64 encoding of an image.",
+        "example": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..."
+      },
+      "description": {
+        "type": "string",
+        "description": "Article body.",
+        "example": "A secret agent has been spotted in Rotherham. They travelled from Flavours to Rotherham on sunday."
+      },
+      "author_name": {
+        "type": "string",
+        "description": "Name of the author of the post.",
+        "example": "Bobby Williams"
+      },
+      "date_of_issue": {
+        "type": "integer",
+        "description": "Number of milliseconds elapsed since January 1, 1970.",
+        "example": 1652709231627
+      },
+      "_id": {
+        "type": "string",
+        "description": "Mongo assigned ID for an article.",
+        "example": "62861e10cdd3e14b45ffb190"
+      },
+      "__v": {
+        "type": "integer",
+        "description": "Mongoose assigned entry revision.",
+        "example": 0
+      },
+      "InsertArticleMongoResponse": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "$ref": "#/components/schemas/title"
+          },
+          "image": {
+            "$ref": "#/components/schemas/image"
+          },
+          "description": {
+            "$ref": "#/components/schemas/description"
+          },
+          "author_name": {
+            "$ref": "#/components/schemas/author_name"
+          },
+          "date_of_issue":{
+            "$ref": "#/components/schemas/date_of_issue"
+          },
+          "_id":{
+            "$ref": "#/components/schemas/_id"
+          },
+          "__v": {
+            "$ref": "#/components/schemas/__v"
+          }
+        }
+      },
+      "GetArticleMongoResponse": {
+        "type": "object",
+        "properties": {
+          "_id":{
+            "$ref": "#/components/schemas/_id"
+          },
+          "title": {
+            "$ref": "#/components/schemas/title"
+          },
+          "image": {
+            "$ref": "#/components/schemas/image"
+          },
+          "description": {
+            "$ref": "#/components/schemas/description"
+          },
+          "author_name": {
+            "$ref": "#/components/schemas/author_name"
+          },
+          "date_of_issue":{
+            "$ref": "#/components/schemas/date_of_issue"
+          },
+          "__v": {
+            "$ref": "#/components/schemas/__v"
+          }
+        }
+      },
+      "ArticleObject": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "$ref": "#/components/schemas/title"
+          },
+          "image": {
+            "$ref": "#/components/schemas/image"
+          },
+          "description": {
+            "$ref": "#/components/schemas/description"
+          },
+          "author_name": {
+            "$ref": "#/components/schemas/author_name"
+          },
+          "date_of_issue": {
+            "$ref": "#/components/schemas/date_of_issue"
+          }
+        }
+      },
+      "Index": {
+        "type": "object",
+        "properties": {
+          "body": {
+            "type": "string",
+            "description": "Indicator text on home page.",
+            "example": "MongoDB Server"
           }
         }
       }
     }
-  },
-  "components": {
-      "schemas": {
-      }
-    }
+  }
 }

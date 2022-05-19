@@ -12,23 +12,70 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3002/",
-      "description": "the only Local server"
+      "url": "http://localhost:3000/",
+      "description": "Main Server"
     }
   ],
   "paths": {
-    "/weather_data": {
+    "/": {
+      "get": {
+        "tags": [
+          "Getting index page"
+        ],
+        "description": "Retrieves the home page.",
+        "operationId": "weather data",
+        "responses": {
+          "200": {
+            "description": "Retrieved Homepage HTML"
+          },
+          "400": {
+            "description": "Potentially misspelled route."
+          }
+        }
+      }
+    },
+    "/getArticles": {
       "post": {
         "tags": [
-          "getting weather data"
+          "Interfacing with MongoDB Via Main Server"
         ],
-        "description": "getting weather data - currently it is generating random data",
-        "operationId": "weather data",
+        "description": "Retrieves all articles stored in MongoDB.",
+        "operationId": "get articles MongoDB",
+        "responses": {
+          "200": {
+            "description": "Articles retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InsertArticleMongoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Potentially misspelled route."
+          },
+          "403": {
+            "description": "Error Retrieving"
+          }
+        }
+      }
+    },
+    "/insertArticle": {
+      "post": {
+        "tags": [
+          "Interfacing with MongoDB Via Main Server"
+        ],
+        "description": "Inserts article to MongoDB via Main server.",
+        "operationId": "index retrieval",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CityAndDate"
+                "$ref": "#/components/schemas/ArticleObject"
               }
             }
           },
@@ -36,28 +83,20 @@
         },
         "responses": {
           "200": {
-            "description": "Correct input of Child structure",
+            "description": "Article Inserted Successfully.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/WeatherForecast"
+                  "$ref": "#/components/schemas/InsertArticleMongoResponse"
                 }
               }
             }
           },
-          "401": {
-            "description": "Missing parameters",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                },
-                "example": {
-                  "message": "no location provided",
-                  "internal_code": "missing_parameters"
-                }
-              }
-            }
+          "400": {
+            "description": "Potentially misspelled route."
+          },
+          "403": {
+            "description": "Parameter error"
           }
         }
       }
@@ -65,75 +104,110 @@
   },
   "components": {
       "schemas": {
-        "date": {
-          "type": "integer",
-          "description": "a date in milliseconds since epoch",
-          "example": 1203344005
-        },
-        "location": {
+        "title": {
           "type": "string",
-          "example": "Sheffield"
+          "description": "The articles title.",
+          "example": "Secret agent spotted in Rotherham"
         },
-        "forecast": {
-                          "type": "integer",
-                          "description": "a number 0-4 .. here we should put the values of r 0, 1, 2, 3, 4....",
-                          "example": 4
-                        },
-        "temperature": {
-                          "type": "integer",
-                          "description": "temperature in Celsiu degrees",
-                          "example": 14
-                        },
-        "wind": {
-                          "type": "integer",
-                          "description": "the wind force in nodes",
-                          "example": 15
-                        },
-        "precipitations": {
-                          "type": "integer",
-                          "description": "the precipitation probability",
-                          "example": 4
-                        },
-        "CityAndDate": {
+        "image": {
+          "type": "string",
+          "description": "Base 64 encoding of an image.",
+          "example": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..."
+        },
+        "description": {
+          "type": "string",
+          "description": "Article body.",
+          "example": "A secret agent has been spotted in Rotherham. They travelled from Flavours to Rotherham on sunday."
+        },
+        "author_name": {
+          "type": "string",
+          "description": "Name of the author of the post.",
+          "example": "Bobby Williams"
+        },
+        "date_of_issue": {
+          "type": "integer",
+          "description": "Number of milliseconds elapsed since January 1, 1970.",
+          "example": 1652709231627
+        },
+        "_id": {
+          "type": "string",
+          "description": "Mongo assigned ID for an article.",
+          "example": "62861e10cdd3e14b45ffb190"
+        },
+        "__v": {
+          "type": "integer",
+          "description": "Mongoose assigned entry revision.",
+          "example": 0
+        },
+        "InsertArticleMongoResponse": {
           "type": "object",
           "properties": {
-            "location": {
-              "$ref": "#/components/schemas/location"
+            "title": {
+              "$ref": "#/components/schemas/title"
             },
-            "date": {
-              "$ref": "#/components/schemas/date"
+            "image": {
+              "$ref": "#/components/schemas/image"
+            },
+            "description": {
+              "$ref": "#/components/schemas/description"
+            },
+            "author_name": {
+              "$ref": "#/components/schemas/author_name"
+            },
+            "date_of_issue":{
+              "$ref": "#/components/schemas/date_of_issue"
+            },
+            "_id":{
+              "$ref": "#/components/schemas/_id"
+            },
+            "__v": {
+              "$ref": "#/components/schemas/__v"
             }
           }
         },
-        "WeatherForecast": {
+        "GetArticleMongoResponse": {
           "type": "object",
           "properties": {
-            "location": {
-              "$ref": "#/components/schemas/location"
+            "_id":{
+              "$ref": "#/components/schemas/_id"
             },
-            "forecast": {
-              "$ref": "#/components/schemas/forecast"
+            "title": {
+              "$ref": "#/components/schemas/title"
             },
-            "temperature": {
-              "$ref": "#/components/schemas/temperature"
+            "image": {
+              "$ref": "#/components/schemas/image"
             },
-            "wind": {
-                          "$ref": "#/components/schemas/wind"
-                        },
-            "precipitations": {
-                          "$ref": "#/components/schemas/precipitations"
-                        }
-          },
-          "example": "{location: London, date: 1616018089668,  forecast: 3,  temperature: -7,  wind: 4,  precipitations: 39}"
+            "description": {
+              "$ref": "#/components/schemas/description"
+            },
+            "author_name": {
+              "$ref": "#/components/schemas/author_name"
+            },
+            "date_of_issue":{
+              "$ref": "#/components/schemas/date_of_issue"
+            },
+            "__v": {
+              "$ref": "#/components/schemas/__v"
+            }
+          }
         },
-        "Error": {
+        "ArticleObject": {
           "type": "object",
           "properties": {
-            "message": {
-              "type": "string"
+            "title": {
+              "$ref": "#/components/schemas/title"
             },
-            "internal_code": {
-              "type": "string"
+            "image": {
+              "$ref": "#/components/schemas/image"
+            },
+            "description": {
+              "$ref": "#/components/schemas/description"
+            },
+            "author_name": {
+              "$ref": "#/components/schemas/author_name"
+            },
+            "date_of_issue": {
+              "$ref": "#/components/schemas/date_of_issue"
             }
           }
         }
