@@ -17,12 +17,40 @@
     }
   ],
   "paths": {
+    "/":{
+      "get": {
+        "tags": [
+          "Index"
+        ],
+        "description": "MongoDB Homepage.",
+        "operationId": "index",
+        "responses": {
+          "200": {
+            "description": "Homepage Retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Index"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Potentially misspelled route."
+          },
+          "403": {
+            "description": "Parameter error"
+          }
+        }
+      }
+    },
+
     "/insertArticle": {
       "post": {
         "tags": [
-          "Interfacing with MongoDB Via Main Server"
+          "Insertion"
         ],
-        "description": "Inserts article to MongoDB via Main server.",
+        "description": "Inserts article to MongoDB.",
         "operationId": "index retrieval",
         "requestBody": {
           "content": {
@@ -53,7 +81,39 @@
           }
         }
       }
-    }
+    },
+
+    "/getArticles":{
+      "post": {
+        "tags": [
+          "Retrieval"
+        ],
+        "description": "Retrieves all articles stored in MongoDB.",
+        "operationId": "get articles MongoDB",
+        "responses": {
+          "200": {
+            "description": "Articles retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InsertArticleMongoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Potentially misspelled route."
+          },
+          "403": {
+            "description": "Error Retrieving"
+          }
+        }
+      }
+
+}
   },
   "components": {
     "schemas": {
@@ -161,6 +221,16 @@
           },
           "date_of_issue": {
             "$ref": "#/components/schemas/date_of_issue"
+          }
+        }
+      },
+      "Index": {
+        "type": "object",
+        "properties": {
+          "body": {
+            "type": "string",
+            "description": "Indicator text on home page.",
+            "example": "MongoDB Server"
           }
         }
       }
