@@ -6,6 +6,10 @@ const mongoDB = 'mongodb://127.0.0.1/articles';
 
 mongoose.Promise = global.Promise;
 
+/**
+ * Connecting to mongoDB
+ * @type {*|Promise<any>}
+ */
 connection = mongoose.connect(mongoDB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,

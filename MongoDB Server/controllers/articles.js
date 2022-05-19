@@ -1,6 +1,10 @@
 let Article = require('../models/articles');
 
-
+/**
+ * Retrieves all articles from DB
+ * @param req
+ * @param res
+ */
 exports.getAllArticles = function (req, res) {
     let userData = req.body;
     if (userData == null) {
@@ -20,6 +24,11 @@ exports.getAllArticles = function (req, res) {
         });
 }
 
+/**
+ * Retrieves an article
+ * @param req
+ * @param res
+ */
 exports.getArticle = function (req, res) {
     let userData = req.body;
     if (userData == null) {
@@ -39,6 +48,11 @@ exports.getArticle = function (req, res) {
         });
 }
 
+/**
+ * Inserts article to DB
+ * @param req
+ * @param res
+ */
 exports.insert = function (req, res) {
     let userData = req.body;
     if (userData == null) {

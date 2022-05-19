@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
+/**
+ * Article schema for mongoDB
+ * @type {module:mongoose.Schema<any, Model<any, any, any, any>, any, any>}
+ */
 const Article = new Schema(
     {
         title: {type: String, required: true, max: 100},

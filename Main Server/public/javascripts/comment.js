@@ -44,9 +44,12 @@ class Comment{
  * Initialises room
  * @param roomNumber
  * @param username
+ * @param image
+ * @param title
+ * @param description
+ * @param author_name
+ * @param date_of_issue
  */
-
-
 function initRoom(roomNumber, username, image, title, description, author_name, date_of_issue) {
     //database.getArticlesMongo().then(r => console.log(r)).catch(r => console.log(r));
     name = username;

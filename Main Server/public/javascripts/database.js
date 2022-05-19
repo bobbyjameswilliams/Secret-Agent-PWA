@@ -88,9 +88,9 @@ export async function syncArticles(){
     await storeArticles(mongoArticles)
 }
 
+
 /**
  * Stores single article in articles idb store.
- * @param article
  * @returns {Promise<void>}
  */
 export async function flushQueuedArticles(){
@@ -448,6 +448,11 @@ export async function getArticlesMongo(){
     return json.data
 }
 
+/**
+ * Inserts article to mongo
+ * @param article
+ * @returns {Promise<boolean>}
+ */
 export async function insertArticleMongo(article) {
     let inputData = {
         "title": article.title,
@@ -468,6 +473,10 @@ export async function insertArticleMongo(article) {
     return false;
 }
 
+/**
+ * Stores data from form in an object and validates before sending to IDB queue
+ * @returns {Promise<void>}
+ */
 export async function submitNewArticle() {
     let title = document.getElementById('title_input').value
     let description = document.getElementById('description_input').value
@@ -490,4 +499,3 @@ export async function submitNewArticle() {
     }
 }
 window.submitNewArticle = submitNewArticle;
-

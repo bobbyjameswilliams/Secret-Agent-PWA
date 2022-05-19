@@ -36,6 +36,10 @@ let filesToCache = [
 
 ];
 
+/**
+ * Writes all files to cache
+ * @returns {Promise<void>}
+ */
 async function preCache(){
     const cache = await caches.open(cacheName);
     return cache.addAll(filesToCache);
@@ -68,7 +72,9 @@ self.addEventListener('activate', function (e) {
     return self.clients.claim();
 });
 
-
+/**
+ * Caching strategy and logic goes here
+ */
 self.addEventListener('fetch', function (e) {
     //console.log('[Service Worker] Fetch', e.request.url); // too much noise
     //e.respondWith(fetchAssets(e));

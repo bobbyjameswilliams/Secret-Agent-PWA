@@ -1,7 +1,9 @@
 import * as database from './database.js';
 import {flushQueuedArticles, retrieveAllLocallyStoredArticles} from "./database.js";
 
-
+/**
+ * Changes view to insert article
+ */
 function changeInsertView(){
     getCardView().style.display = "none";
     getInsertView().style.display = "";
@@ -10,6 +12,9 @@ function changeInsertView(){
 }
 window.changeInsertView = changeInsertView
 
+/**
+ * Change view to card listing
+ */
 function changeCardView(){
     getCardView().style.display = "";
     getInsertView().style.display = "none";
@@ -18,6 +23,9 @@ function changeCardView(){
 }
 window.changeCardView = changeCardView
 
+/**
+ * Change view to room
+ */
 function changeRoomView(){
     getCardView().style.display = "none";
     getInsertView().style.display = "none";
@@ -26,22 +34,42 @@ function changeRoomView(){
 }
 window.changeRoomView = changeRoomView;
 
+/**
+ * get card view container
+ * @returns {HTMLElement}
+ */
 function getCardView(){
     return document.getElementById("cards-container");
 }
 
+/**
+ * get room view container
+ * @returns {HTMLElement}
+ */
 function getRoomView(){
     return document.getElementById("room-container");
 }
 
+/**
+ * get insert card view container
+ * @returns {HTMLElement}
+ */
 function getInsertView(){
     return document.getElementById("insert-container");
 }
 
+/**
+ * get sort toggle element
+ * @returns {HTMLElement}
+ */
 function getSortToggle(){
     return document.getElementById("sort-toggle");
 }
 
+/**
+ * Gets articles from IDB and writes them to the view
+ * @returns {Promise<void>}
+ */
 async function initArticleFeed() {
     let writtenToFeed = false
     try{
@@ -62,6 +90,10 @@ async function initArticleFeed() {
 }
 window.initArticleFeed = initArticleFeed
 
+/**
+ * Store article in IDB
+ * @returns {Promise<void>}
+ */
 async function insertArticle(){
     let title = document.getElementById('title_input');
     let image = document.getElementById('image_b64');
@@ -77,6 +109,11 @@ window.insertArticle = insertArticle;
 //TODO: below
 //################ TO BE MOVED BACK TO card-feed.js ########################
 
+/**
+ * Creates article card
+ * @param article
+ * @returns {HTMLDivElement}
+ */
 function createArticleCard(article){
     let row = document.createElement('div');
     row.className = 'row'
@@ -169,13 +206,21 @@ function createArticleCard(article){
 }
 window.createArticleCard = createArticleCard;
 
+/**
+ * Writes card to view
+ * @param card
+ */
 function writeCardToHome(card){
     let homePage = document.getElementById('cards-container')
     homePage.appendChild(card);
     homePage.scrollTop = homePage.scrollHeight;
 }
 
-
+/**
+ * Gets sorted articles from IDB and writes them to the view
+ * @param field
+ * @returns {Promise<void>}
+ */
 async function getInsertSortedArticles(field){
     let writtenToFeed = false
     try{
@@ -203,31 +248,44 @@ async function getInsertSortedArticles(field){
     }
 }
 
+/**
+ * clear then rewrite sorted cards by date to view
+ */
 function sortByDate(){
     clearCard();
     getInsertSortedArticles(true);
 }
 window.sortByDate = sortByDate;
 
-
+/**
+ * clear then rewrite sorted cards by author to view
+ */
 function sortByAuthor(){
     clearCard()
     getInsertSortedArticles(false);
 }
 window.sortByAuthor = sortByAuthor;
 
-
+/**
+ * Clear card
+ */
 function clearCard(){
     let homePage = document.getElementById('cards-container')
     homePage.innerHTML = "";
     homePage.scrollTop = homePage.scrollHeight;
 }
 
+/**
+ * reload page
+ */
 function reloadPage(){
     document.location.reload()
 }
 window.reloadPage = reloadPage;
 
+/**
+ * Event to upload images as base 64
+ */
 $('#fileUpload').change(function (e) {
     if (this.files && this.files[0]) {
         var FR= new FileReader();
