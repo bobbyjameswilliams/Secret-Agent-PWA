@@ -482,18 +482,24 @@ export async function submitNewArticle() {
     let description = document.getElementById('description_input').value
     let author = document.getElementById('author_name').value
     let image_b64 = document.getElementById('image_b64').value
+    let file_name = document.getElementById("fileUpload").value
 
     if((title != "")&&(description != "")&&(author != "")&&(image_b64 != "")) {
-        let date_of_issue = Date.now();
-        let articleObject = new Article(title, image_b64, description, author, date_of_issue);
+        if(file_name.toLowerCase().endsWith(".jpg") || file_name.toLowerCase().endsWith(".png")) {
+            let date_of_issue = Date.now();
+            let articleObject = new Article(title, image_b64, description, author, date_of_issue);
 
-        //Add the article to IDB
-        storeQueuedArticle(articleObject)
-            .then(r => {
-                console.log("Submitting " + articleObject.title)
-                document.location.reload()
-            })
-            .catch(r => console.log("Error submitting " + articleObject.title + r));
+            //Add the article to IDB
+            storeQueuedArticle(articleObject)
+                .then(r => {
+                    console.log("Submitting " + articleObject.title)
+                    document.location.reload()
+                })
+                .catch(r => console.log("Error submitting " + articleObject.title + r));
+        }
+        else{
+            alert("Please upload JPEG or PNG files only");
+        }
     }else{
         alert("Please complete all fields");
     }
