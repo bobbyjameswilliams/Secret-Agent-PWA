@@ -4,21 +4,6 @@ import * as idb from './idb/index.js';
 
 //var idb = require('../idb/index.js');
 
-/**
-*class Comment{
-*    roomNo;
-*    userID;
-*    date_of_issue;
-*    chatText;
-*
-*    constructor(id, roomNo,userID,date_of_issue,chatText) {
-*        this.roomNo = roomNo;
-*        this.userID = userID;
-*        this.date_of_issue = date_of_issue;
-*        this.chatText = chatText;
-*    }
-*}
-*/
 class Article{
     title;
     image;
