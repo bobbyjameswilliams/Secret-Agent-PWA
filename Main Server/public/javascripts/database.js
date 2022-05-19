@@ -4,21 +4,6 @@ import * as idb from './idb/index.js';
 
 //var idb = require('../idb/index.js');
 
-/**
-*class Comment{
-*    roomNo;
-*    userID;
-*    date_of_issue;
-*    chatText;
-*
-*    constructor(id, roomNo,userID,date_of_issue,chatText) {
-*        this.roomNo = roomNo;
-*        this.userID = userID;
-*        this.date_of_issue = date_of_issue;
-*        this.chatText = chatText;
-*    }
-*}
-*/
 class Article{
     title;
     image;
@@ -89,7 +74,6 @@ async function initDatabase(){
                 }
             }
         });
-        console.log('db created');
     }
 }
 window.initDatabase= initDatabase;
@@ -99,7 +83,6 @@ window.initDatabase= initDatabase;
  * @returns {Promise<void>}
  */
 export async function syncArticles(){
-    console.log("Beginning article sync...")
     await flushQueuedArticles();
     let mongoArticles = await getArticlesMongo()
     await storeArticles(mongoArticles)
@@ -139,8 +122,6 @@ export async function flushQueuedArticles(){
  * @returns {Promise<void>}
  */
 export async function storeArticle(article){
-    console.log("Inside storeArticle")
-    console.log('inserting: ' + JSON.stringify(article));
     if (!db)
         await initDatabase();
     if (db) {
@@ -500,18 +481,6 @@ export async function insertArticleMongo(article) {
         return true;
     }
     return false;
-}
-
-export async function sendAjaxQuery(url, data) {
-    console.log("beginning ajax query")
-    axios.post(url , data)
-        .then (function (dataR) {
-            console.log("successful ajax query")
-            console.log(dataR.data)
-        })
-        .catch( function (response) {
-            console.log("unsuccessful ajax query")
-        })
 }
 
 export async function submitNewArticle() {
