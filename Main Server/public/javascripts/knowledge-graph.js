@@ -4,7 +4,7 @@ let socket = io();
 
 function widgetInit(){
     let kgTypeInput =  document.getElementById('kg_type');
-    let kgSearch = document.getElementById('kg_search')
+    let kgSearch = document.getElementById('kg_search');
     let kgType = kgTypeInput.value;
     let config = {
         'limit': 10,
@@ -13,10 +13,9 @@ function widgetInit(){
         'maxDescChars': 100,
         'selectHandler': selectItem,
     }
-    kgType.value = '';
+    document.getElementById('kg_type').value = '';
     KGSearchWidget(apiKey, kgSearch,config);
-    changeKGWidgets(0)
-
+    changeKGWidgets(0);
 }
 
 function changeKGWidgets(option){
@@ -25,10 +24,12 @@ function changeKGWidgets(option){
     if (option == 1){
         val1 = 'block';
         val2 = 'none';
+        inputAnimation('kg_type');
         widgetInit();
     } else {
         val1 = 'none';
         val2 = 'block';
+        inputAnimation('kg_search');
     }
     document.getElementById('kg_type_container').style.display= val1;
     document.getElementById('set_widget_container').style.display = val1;
@@ -80,4 +81,14 @@ function createCard(header, body, colour) {
     card.appendChild(cardBody);
 
     return card
+}
+
+// Add class to the btn so css animation takes effect
+function inputAnimation(inputID){
+    let input = document.getElementById(inputID);
+    input.classList.add('inputAnimation');
+
+    setTimeout(function (){
+        input.classList.remove('inputAnimation')
+    }, 5000)
 }
