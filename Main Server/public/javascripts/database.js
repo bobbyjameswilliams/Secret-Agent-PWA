@@ -2,7 +2,6 @@
 // the database receives from the server the following structure
 import * as idb from './idb/index.js';
 
-//var idb = require('../idb/index.js');
 
 class Article{
     title;
@@ -78,6 +77,7 @@ async function initDatabase(){
 }
 window.initDatabase= initDatabase;
 
+
 /**
  * Flushes queue to Mongo, retrieves articles back and stores in articles idb store.
  * @returns {Promise<void>}
@@ -90,7 +90,7 @@ export async function syncArticles(){
 
 
 /**
- * Stores single article in articles idb store.
+ *
  * @returns {Promise<void>}
  */
 export async function flushQueuedArticles(){
@@ -116,6 +116,7 @@ export async function flushQueuedArticles(){
     }
 }
 
+
 /**
  * Stores collection of articles iteratively in articles idb store.
  * @param articles
@@ -125,26 +126,18 @@ export async function storeArticles(articles){
     articles.forEach(element => storeArticle(element))
 }
 
+
+// ########## Store Methods ##########
+
 /**
  * Stores article in articles IDB store.
  * @param article Article to store
  * @returns {Promise<void>}
  */
 export async function storeArticle(article){
-    if (!db)
-        await initDatabase();
-    if (db) {
-        try {
-            let tx = await db.transaction(ARTICLES_STORE_NAME, 'readwrite');
-            let store = await tx.objectStore(ARTICLES_STORE_NAME);
-            await store.put(article);
-            await tx.complete;
-            console.log('added item to the store! ' + JSON.stringify(article));
-        } catch (error) {
-            console.log("Error in storeArticle()")
-        }
-    }
+    await storeObjectIDB(ARTICLES_STORE_NAME, article)
 }
+
 
 /**
  * Stores single article in the article sync queue.
@@ -152,20 +145,9 @@ export async function storeArticle(article){
  * @returns {Promise<void>}
  */
 export async function storeQueuedArticle(article){
-    if (!db)
-        await initDatabase();
-    if (db) {
-        try {
-            let tx = await db.transaction(QUEUED_ARTICLES_STORE_NAME, 'readwrite');
-            let store = await tx.objectStore(QUEUED_ARTICLES_STORE_NAME);
-            await store.put(article);
-            await tx.complete;
-            console.log('added item to the store! ' + JSON.stringify(article));
-        } catch (error) {
-            console.log("Error in storeQueuedArticle()")
-        }
-    }
+    await storeObjectIDB(QUEUED_ARTICLES_STORE_NAME, article)
 }
+
 
 /**
  * Stores comment object in IDB.
@@ -173,20 +155,9 @@ export async function storeQueuedArticle(article){
  * @returns {Promise<void>}
  */
 export async function storeComment(commentObject) {
-    if (!db)
-        await initDatabase();
-    if (db) {
-        try {
-            let tx = await db.transaction(CHAT_MESSAGES_STORE_NAME, 'readwrite');
-            let store = await tx.objectStore(CHAT_MESSAGES_STORE_NAME);
-            await store.put(commentObject);
-            await tx.complete;
-            console.log('added item to the store! ' + JSON.stringify(commentObject));
-        } catch (error) {
-            console.log("Error in storeComment()")
-        }
-    }
+    await storeObjectIDB(CHAT_MESSAGES_STORE_NAME, commentObject)
 }
+
 
 /**
  * Stores annotation object in IDB.
@@ -194,18 +165,60 @@ export async function storeComment(commentObject) {
  * @returns {Promise<void>}
  */
 export async function storeAnnotation(canvasObject) {
+    await storeObjectIDB(IMAGE_ANNOTATIONS_STORE_NAME, canvasObject)
+}
+
+
+/**
+ * General purpose IDB method which given a store name and object, will store that object in the given store.
+ * @param storeName Name of store to store in.
+ * @param dataObject Data to store.
+ * @returns {Promise<void>}
+ */
+async function storeObjectIDB(storeName, dataObject) {
     if (!db)
         await initDatabase();
     if (db) {
         try {
-            let tx = await db.transaction(IMAGE_ANNOTATIONS_STORE_NAME, 'readwrite');
-            let store = await tx.objectStore(IMAGE_ANNOTATIONS_STORE_NAME);
-            await store.put(canvasObject);
+            let tx = await db.transaction(storeName, 'readwrite');
+            let store = await tx.objectStore(storeName);
+            await store.put(dataObject);
             await tx.complete;
-            console.log('added item to the store! ' + JSON.stringify(canvasObject));
+            console.log('added item to the store! ' + JSON.stringify(dataObject));
         } catch (error) {
             console.log("Error in storeAnnotation()")
         }
+    }
+}
+
+
+// ########## Retrieve Given Methods ##########
+
+/**
+ * Retrieves queued article given a key
+ * @param key
+ * @returns {Promise<null|*>}
+ */
+export async function retreiveQueuedArticle(key){
+    if (!db)
+        await initDatabase();
+    if (db) {
+        try {
+            let tx = await db.transaction(QUEUED_ARTICLES_STORE_NAME, 'readonly');
+            let store = await tx.objectStore(QUEUED_ARTICLES_STORE_NAME);
+            let index = await store.index('queued_article');
+            let readingsList = await index.getAll(IDBKeyRange.only(key));
+            await tx.complete;
+            if (readingsList && readingsList.length > 0) {
+                return readingsList[0];
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    } else {
+        console.log("IDB Unavailable.")
     }
 }
 
@@ -216,35 +229,7 @@ export async function storeAnnotation(canvasObject) {
  * @returns {Promise<*>}
  */
 export async function retrieveRoomImageAnnotations(roomNo){
-    if (!db)
-        await initDatabase();
-    if (db) {
-        try {
-            let tx = await db.transaction(IMAGE_ANNOTATIONS_STORE_NAME, 'readonly');
-            let store = await tx.objectStore(IMAGE_ANNOTATIONS_STORE_NAME);
-            let index = await store.index('canvas');
-            let readingsList = await index.getAll(IDBKeyRange.only(roomNo));
-            await tx.complete;
-            if (readingsList && readingsList.length > 0) {
-                return readingsList;
-            } else {
-                // const value = localStorage.getItem(city);
-                // if (value == null)
-                //     return finalResults;
-                // else finalResults.push(value);
-                // return finalResults;
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    } else {
-        // const value = localStorage.getItem(city);
-        // let finalResults=[];
-        // if (value == null)
-        //     return finalResults;
-        // else finalResults.push(value);
-        // return finalResults;
-    }
+    return await retrieveGivenIDB(IMAGE_ANNOTATIONS_STORE_NAME, 'canvas', roomNo)
 }
 
 /**
@@ -253,9 +238,39 @@ export async function retrieveRoomImageAnnotations(roomNo){
  * @returns {Promise<*>}
  */
 export async function retrieveAllCachedRoomComments(roomNo){
-    return retrieveAllObjectsIDB(CHAT_MESSAGES_STORE_NAME, 'chats')
+    return await retrieveGivenIDB(CHAT_MESSAGES_STORE_NAME, 'chats', roomNo)
 }
 window.retrieveAllCachedRoomComments = retrieveAllCachedRoomComments
+
+/**
+ * General purpose retrieval method. Given store and index, returns all in keyrange.
+ * @param storeName
+ * @param keyPath
+ * @param key
+ * @returns {Promise<*>}
+ */
+export async function retrieveGivenIDB(storeName, keyPath, key){
+    if (!db)
+        await initDatabase();
+    if (db) {
+        try {
+            let tx = await db.transaction(storeName, 'readonly');
+            let store = await tx.objectStore(storeName);
+            let index = await store.index(keyPath);
+            let readingsList = await index.getAll(IDBKeyRange.only(key));
+            await tx.complete;
+            if (readingsList && readingsList.length > 0) {
+                return readingsList;
+            } else {
+                return []
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+// ########## Retrieve all methods ##########
 
 /**
  * Retrieves all articles stored in IDB.
@@ -301,6 +316,8 @@ async function retrieveAllObjectsIDB(storeName, keyPath){
     }
 }
 
+//#####################################################
+
 /**
  * Retrieves articles both stored in the local article store and the sync queue.
  * @returns {Promise<void>}
@@ -312,33 +329,7 @@ export async function retrieveAllLocallyStoredArticles(){
 }
 
 
-/**
- * Retrieves queued article given a key
- * @param key
- * @returns {Promise<null|*>}
- */
-export async function retreiveQueuedArticle(key){
-    if (!db)
-        await initDatabase();
-    if (db) {
-        try {
-            let tx = await db.transaction(QUEUED_ARTICLES_STORE_NAME, 'readonly');
-            let store = await tx.objectStore(QUEUED_ARTICLES_STORE_NAME);
-            let index = await store.index('queued_article');
-            let readingsList = await index.getAll(IDBKeyRange.only(key));
-            await tx.complete;
-            if (readingsList && readingsList.length > 0) {
-                return readingsList[0];
-            } else {
-                return null;
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    } else {
-        console.log("IDB Unavailable.")
-    }
-}
+// ########## Delete Methods ##########
 
 /**
  * Deletes article from queued_articles given article key.
@@ -387,6 +378,8 @@ export async function deleteRoomAnnotations(roomNo){
     }
 }
 
+// ########## Mongo Calls ##########
+
 /**
  * Gets articles from MongoDB
  * @returns {Promise<*>}
@@ -402,6 +395,7 @@ export async function getArticlesMongo(){
  * @returns {Promise<boolean>}
  */
 export async function insertArticleMongo(article) {
+    console.log(article)
     let inputData = {
         "title": article.title,
         "image": article.image,
@@ -420,6 +414,8 @@ export async function insertArticleMongo(article) {
     }
     return false;
 }
+
+// ########## Handlers ##########
 
 /**
  * Stores data from form in an object and validates before sending to IDB queue
