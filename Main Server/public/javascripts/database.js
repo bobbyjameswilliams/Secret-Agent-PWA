@@ -32,7 +32,6 @@ const CHAT_MESSAGES_STORE_NAME= 'store_chat_messages';
 
 /**
  * Initialises all database stores.
- * @todo Create other stores in this when needed.
  * @returns {Promise<void>}
  */
 async function initDatabase(){
@@ -90,7 +89,7 @@ export async function syncArticles(){
 
 
 /**
- *
+ * Flushes queued/cached articles to mongo.
  * @returns {Promise<void>}
  */
 export async function flushQueuedArticles(){
