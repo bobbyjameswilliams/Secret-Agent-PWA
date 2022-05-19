@@ -88,6 +88,11 @@ export function initCanvas(sckt, image, roomNo, name, title, description, author
     });
 
     $('.canvas-clear').on('click', () => {
+        ctx.clearRect(0,0, canvas.width, canvas.height);
+        database.deleteRoomAnnotations(roomNo)
+            .then(() => console.log("Annotation data removed for " + roomNo))
+            .catch(r => console.log("Error removing Annotation data " + r))
+        drawImageScaled(img, canvas, ctx);
         socket.emit('clear canvas', room)
         socket.emit('chat',room, userId, "Cleared the canvas.")
     });
@@ -131,9 +136,6 @@ export function initCanvas(sckt, image, roomNo, name, title, description, author
     })
 }
 window.initCanvas = initCanvas;
-
-
-
 
 /**
  * called when it is required to draw the image on the canvas. We have resized the canvas to the same image size
