@@ -184,7 +184,8 @@ async function storeObjectIDB(storeName, dataObject) {
             let store = await tx.objectStore(storeName);
             await store.put(dataObject);
             await tx.complete;
-            console.log('added item to the store! ' + JSON.stringify(dataObject));
+            console.log('added item to the store! ');
+            console.log(dataObject)
         } catch (error) {
             console.log("Error in storeAnnotation()")
         }
