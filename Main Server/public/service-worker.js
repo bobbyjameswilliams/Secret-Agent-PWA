@@ -22,7 +22,6 @@ let filesToCache = [
     '/stylesheets/card.css',
     '/stylesheets/insert.css',
     '/stylesheets/room.css',
-    '/stylesheets/style.css',
 
     '/javascripts/app.js',
     '/javascripts/canvas.js',

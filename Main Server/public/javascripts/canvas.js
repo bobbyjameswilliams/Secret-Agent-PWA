@@ -87,17 +87,12 @@ export function initCanvas(sckt, image, roomNo, name, title, description, author
         drawOnCanvas(ctx, canvasWidth,canvasHeight,prevX,prevY,currX,currY,color,thickness)
     });
 
-    // this is code left in case you need to  provide a button clearing the canvas (it is suggested that you implement it)
     $('.canvas-clear').on('click', () => {
-        // Store the current transformation matrix
-        //img.dispatchEvent(new Event('load'));
-        // @todo if you clear the canvas, you want to let everyone know via socket.io (socket.emit...)
         socket.emit('clear canvas', room)
         socket.emit('chat',room, userId, "Cleared the canvas.")
     });
 
     socket.on('clear canvas', () => {
-        console.log('clear canvas');
         ctx.clearRect(0,0, canvas.width, canvas.height);
         database.deleteRoomAnnotations(roomNo)
             .then(() => console.log("Annotation data removed for " + roomNo))
