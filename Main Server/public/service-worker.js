@@ -35,7 +35,6 @@ let filesToCache = [
     '/images/cathedral.jpg',
     '/images/placeholder.png',
 
-
 ];
 
 async function preCache(){
