@@ -447,6 +447,33 @@ export async function retrieveAllLocallyStoredArticles(){
 }
 
 /**
+ * Deletes all room annotations for a given roomNo
+ * @param roomNo
+ * @returns {Promise<void>}
+ */
+export async function deleteRoomAnnotations(roomNo){
+    console.log("Deleting canvas annotations for room  " + roomNo)
+    if (!db)
+        await initDatabase();
+    if (db) {
+        try {
+            let tx = await db.transaction(IMAGE_ANNOTATIONS_STORE_NAME, 'readwrite');
+            let store = await tx.objectStore(IMAGE_ANNOTATIONS_STORE_NAME);
+            let index = await store.index('canvas');
+            let keys = await index.getAllKeys(IDBKeyRange.only(roomNo));
+            for (const key of keys) {
+                store.delete(key);
+            }
+            await tx.complete;
+        } catch (error) {
+            console.log(error);
+        }
+    } else {
+        console.log("IDB Unavailable.")
+    }
+}
+
+/**
  * Gets articles from MongoDB
  * @returns {Promise<*>}
  */

@@ -99,6 +99,9 @@ export function initCanvas(sckt, image, roomNo, name, title, description, author
     socket.on('clear canvas', () => {
         console.log('clear canvas');
         ctx.clearRect(0,0, canvas.width, canvas.height);
+        database.deleteRoomAnnotations(roomNo)
+            .then(() => console.log("Annotation data removed for " + roomNo))
+            .catch(r => console.log("Error removing Annotation data " + r))
         drawImageScaled(img, canvas, ctx);
     })
 
