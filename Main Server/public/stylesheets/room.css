@@ -38,8 +38,16 @@ p {
     margin: 2%;
 }
 
-.card-img{
-    max-height: 80vh;
+#canvas{
+    max-height: 70vh;
+}
+
+#canvas:hover {
+    cursor: url('public/images/pencil.png'), crosshair;
+}
+
+#image_canvas_wrapper{
+    height: 70vh;
 }
 
 .colourbox{
