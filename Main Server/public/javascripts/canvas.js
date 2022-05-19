@@ -98,6 +98,7 @@ export function initCanvas(sckt, image, roomNo, name, title, description, author
             .then(() => console.log("Annotation data removed for " + roomNo))
             .catch(r => console.log("Error removing Annotation data " + r))
         drawImageScaled(img, canvas, ctx);
+        
     })
 
     // this is called when the src of the image is loaded
