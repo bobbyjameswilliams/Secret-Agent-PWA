@@ -49,7 +49,6 @@ class Comment{
 
 function initRoom(roomNumber, username, image, title, description, author_name, date_of_issue) {
     //database.getArticlesMongo().then(r => console.log(r)).catch(r => console.log(r));
-    console.log("Initialising Room")
     name = username;
     roomNo = roomNumber;
 
@@ -58,7 +57,6 @@ function initRoom(roomNumber, username, image, title, description, author_name, 
     history.innerHTML = '';
     //Load in and display previous chat history
 
-    console.log("Begin loading cached history...")
     loadAndDisplayCachedHistory(roomNo)
         .then(() => console.log("Successfully displayed chat history"))
         .catch(() =>
@@ -236,8 +234,6 @@ async function loadAndDisplayCachedHistory(roomNo){
 function displayCachedHistory(cachedData){
     for (let res of cachedData)
         if (res.messageType === MessageType.Joined) {
-            console.log("Procesing joinedRoomNotification");
-            console.log(res.userID)
             let preparedJoinedRoomNotification = prepareRetrievedJoinedRoomNotification(res.roomNo, res.userID)
             writeOnHistory(preparedJoinedRoomNotification)
         } else if (res.messageType === MessageType.Comment) {

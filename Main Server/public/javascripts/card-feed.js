@@ -1,6 +1,4 @@
 function connectToRoomPage(cardID, image){
-    //TODO: remove
-    console.log("Inside connectToRoomPage")
     let roomNo = document.getElementById(cardID+'room_input').value;
     let username = document.getElementById(cardID+'username_input').value;
     if((roomNo != "")&&(username != "")) {

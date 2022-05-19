@@ -108,7 +108,6 @@ export function initCanvas(sckt, image, roomNo, name, title, description, author
         // here we wait until the height is set, then we resize the canvas based on the size of the image
         let poll = setInterval(async function () {
             if (img.naturalHeight) {
-                console.log("image listener");
                 clearInterval(poll);
                 // resize the canvas
                 let ratioX = 1;
@@ -144,8 +143,6 @@ window.initCanvas = initCanvas;
  * @param ctx
  */
 function drawImageScaled(img, canvas, ctx) {
-    //TODO: Remove
-    console.log("Drawing scaled image...")
     // get the scale
     let scale = Math.min(canvas.width / img.width, canvas.height / img.height);
     // get the top left position of the image
@@ -200,7 +197,6 @@ function drawOnCanvas(ctx, canvasWidth, canvasHeight, prevX, prevY, currX, currY
  */
 
 function retrieveCanvas(roomNo){
-    console.log('retrieve canvas');
     database.retrieveRoomImageAnnotations(roomNo)
         .then(r => r.forEach(restoreCanvas))
         .catch(r => console.log(r))

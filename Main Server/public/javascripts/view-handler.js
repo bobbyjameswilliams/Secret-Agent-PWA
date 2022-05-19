@@ -44,18 +44,14 @@ function getSortToggle(){
 
 async function initArticleFeed() {
     let writtenToFeed = false
-    console.log("initArticleFeed called")
     try{
         await database.syncArticles()
         let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
-        console.log("Writing to home from within the try")
-        console.log(allIdbArticles);
         allIdbArticles.forEach(article => writeCardToHome(createArticleCard(article)))
         writtenToFeed = true
     }
     catch (e) {
         if (!writtenToFeed) {
-            console.log("Writing to home from within the catch" + e)
             let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
             allIdbArticles.forEach(article => writeCardToHome(createArticleCard(article)))
             writtenToFeed = true
@@ -63,8 +59,6 @@ async function initArticleFeed() {
     }
 
     //database.insertArticleMongo({ title: "test"}).then(r => console.log(r)).catch(err => console.log(err))
-
-    //console.log(x)
 }
 window.initArticleFeed = initArticleFeed
 
@@ -184,12 +178,9 @@ function writeCardToHome(card){
 
 async function getInsertSortedArticles(field){
     let writtenToFeed = false
-    console.log("initArticleFeed called")
     try{
         await database.syncArticles()
         let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
-        console.log("Writing to home from within the try")
-        console.log(allIdbArticles);
         if(field) {
             allIdbArticles.sort((a, b) => (a.date_of_issue < b.date_of_issue) ? 1 : -1)
                 .forEach(article => writeCardToHome(createArticleCard(article)))
@@ -201,7 +192,6 @@ async function getInsertSortedArticles(field){
     }
     catch (e) {
         if (!writtenToFeed) {
-            console.log("Writing to home from within the catch" + e)
             let allIdbArticles = await database.retrieveAllLocallyStoredArticles();
             if(field) {
                 allIdbArticles.sort((a, b) => (a.date_of_issue < b.date_of_issue) ? 1 : -1).forEach(article => writeCardToHome(createArticleCard(article)))

@@ -143,7 +143,6 @@ export async function storeArticle(article){
  * @returns {Promise<void>}
  */
 export async function storeArticles(articles){
-    console.log("Inside storeArticles")
     articles.forEach(element => storeArticle(element))
 }
 
@@ -153,8 +152,6 @@ export async function storeArticles(articles){
  * @returns {Promise<void>}
  */
 export async function storeQueuedArticle(article){
-    console.log("Inside storeQueuedArticle")
-    console.log('inserting: ' + JSON.stringify(article));
     if (!db)
         await initDatabase();
     if (db) {
@@ -223,7 +220,6 @@ export async function retrieveAllCachedRoomComments(roomNo){
         await initDatabase();
     if (db) {
         try {
-            console.log('fetching all cached room comments for : ' + roomNo);
             let tx = await db.transaction(CHAT_MESSAGES_STORE_NAME, 'readonly');
             let store = await tx.objectStore(CHAT_MESSAGES_STORE_NAME);
             let index = await store.index('chats');
@@ -244,7 +240,6 @@ export async function retrieveAllCachedRoomComments(roomNo){
             console.log(error);
         }
     } else {
-        console.log("Else in retrieve")
         //TODO: Implement localstorage
 
         // const value = localStorage.getItem(city);
@@ -285,7 +280,6 @@ export async function retrieveRoomImageAnnotations(roomNo){
             console.log(error);
         }
     } else {
-        console.log("Else in retrieve")
         // const value = localStorage.getItem(city);
         // let finalResults=[];
         // if (value == null)
@@ -300,7 +294,6 @@ export async function retrieveRoomImageAnnotations(roomNo){
  * @returns {Promise<*>}
  */
 export async function retrieveArticles(){
-    console.log("Retrieving articles from idb...")
     if (!db)
         await initDatabase();
     if (db) {
@@ -311,7 +304,6 @@ export async function retrieveArticles(){
             let readingsList = await index.getAll();
             await tx.complete;
             if (readingsList && readingsList.length > 0) {
-                console.log("Inside retrieveArticles()")
                 return readingsList;
             } else {
                 return [];
@@ -325,7 +317,6 @@ export async function retrieveArticles(){
             console.log(error);
         }
     } else {
-        console.log("Else in retrieve")
         // const value = localStorage.getItem(city);
         // let finalResults=[];
         // if (value == null)
@@ -341,7 +332,6 @@ export async function retrieveArticles(){
  * @returns {Promise<void>}
  */
 export async function retreiveQueuedArticles(){
-    console.log("Retrieving articles from idb...")
     if (!db)
         await initDatabase();
     if (db) {
@@ -352,7 +342,6 @@ export async function retreiveQueuedArticles(){
             let readingsList = await index.getAll();
             await tx.complete;
             if (readingsList && readingsList.length > 0) {
-                console.log("Inside retrieveQueuedArticles()")
                 return readingsList;
             } else {
                 return [];
@@ -371,7 +360,6 @@ export async function retreiveQueuedArticles(){
  * @returns {Promise<null|*>}
  */
 export async function retreiveQueuedArticle(key){
-    console.log("Retrieving articles from idb...")
     if (!db)
         await initDatabase();
     if (db) {
@@ -382,7 +370,6 @@ export async function retreiveQueuedArticle(key){
             let readingsList = await index.getAll(IDBKeyRange.only(key));
             await tx.complete;
             if (readingsList && readingsList.length > 0) {
-                console.log("Inside retrieveQueuedArticles()")
                 return readingsList[0];
             } else {
                 return null;
@@ -401,7 +388,6 @@ export async function retreiveQueuedArticle(key){
  * @returns {Promise<void>}
  */
 export async function deleteQueuedArticle(key){
-    console.log("Deleting queued article with id " + key)
     if (!db)
         await initDatabase();
     if (db) {
@@ -433,7 +419,6 @@ export async function retrieveAllLocallyStoredArticles(){
  * @returns {Promise<void>}
  */
 export async function deleteRoomAnnotations(roomNo){
-    console.log("Deleting canvas annotations for room  " + roomNo)
     if (!db)
         await initDatabase();
     if (db) {
