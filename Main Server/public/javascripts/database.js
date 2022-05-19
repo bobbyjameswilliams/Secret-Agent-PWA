@@ -498,7 +498,7 @@ export async function submitNewArticle() {
                 .catch(r => console.log("Error submitting " + articleObject.title + r));
         }
         else{
-            alert("Please upload JPEG or PNG files only");
+            alert("Invalid File Type. JPEG, JPG or PNG Only");
         }
     }else{
         alert("Please complete all fields");

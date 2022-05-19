@@ -289,9 +289,9 @@ window.reloadPage = reloadPage;
  */
 $('#fileUpload').change(function (e) {
     if (this.files && this.files[0]) {
-        let file_name = document.getElementById("fileUpload").value
-
-        if(file_name.toLowerCase().endsWith(".jpg") || file_name.toLowerCase().endsWith(".png")) {
+        let file_name = (document.getElementById("fileUpload").value).toLowerCase()
+        //Validation for file extensions
+        if(file_name.endsWith(".jpg") || file_name.endsWith(".png") || file_name.endsWith(".jpeg")) {
             var FR = new FileReader();
             FR.addEventListener("load", function (e) {
                 document.getElementById("image_b64").value = e.target.result;
