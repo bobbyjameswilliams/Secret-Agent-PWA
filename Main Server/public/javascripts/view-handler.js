@@ -104,9 +104,6 @@ async function insertArticle(){
 }
 window.insertArticle = insertArticle;
 
-//TODO: below
-//################ TO BE MOVED BACK TO card-feed.js ########################
-
 /**
  * Creates article card
  * @param article

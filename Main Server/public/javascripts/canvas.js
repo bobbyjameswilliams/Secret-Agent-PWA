@@ -79,10 +79,7 @@ export function initCanvas(sckt, image, roomNo, name, title, description, author
             if (flag) {
                 saveToIDB(room, canvas.width, canvas.height, prevX, prevY, currX, currY, color, thickness)
                 drawOnCanvas(ctx, canvas.width, canvas.height, prevX, prevY, currX, currY, color, thickness);
-                // @todo if you draw on the canvas, you may want to let everyone know via socket.io (socket.emit...)  by sending them
-                // room, userId, canvas.width, canvas.height, prevX, prevY, currX, currY, color, thickness
                 socket.emit('draw',roomNo, userId, canvas.width, canvas.height, prevX, prevY,currX, currY,color, thickness)
-                //Store IDB
             }
         }
     });
