@@ -28,5 +28,3 @@ function alertInputValidation(cardID, inputDomID){
     document.getElementById(cardID+inputDomID).style.backgroundColor = 'red';
     document.getElementById(cardID+inputDomID).style.opacity= '0.6';
 }
-
-//@todo: Add stray methods here. This may require a fix as this file isnt being imported properly.
