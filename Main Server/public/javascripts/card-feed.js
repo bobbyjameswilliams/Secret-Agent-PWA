@@ -6,25 +6,7 @@
 function connectToRoomPage(cardID, image){
     let roomNo = document.getElementById(cardID+'room_input').value;
     let username = document.getElementById(cardID+'username_input').value;
-    if((roomNo != "")&&(username != "")) {
-        if (roomNo !== '' && username !== '') {
-            changeRoomView();
-            initRoom(roomNo, username, image);
-        } else if (username === '') {
-            alertInputValidation(cardID, 'username_input');
-        } else {
-            alertInputValidation(cardID, 'room_input');
-        }
-    }
+    changeRoomView();
+    initRoom(roomNo, username, image);
 }
 window.connectToRoomPage = connectToRoomPage
-
-/**
- * /TODO: callum, can you fill this in please
- * @param cardID
- * @param inputDomID
- */
-function alertInputValidation(cardID, inputDomID){
-    document.getElementById(cardID+inputDomID).style.backgroundColor = 'red';
-    document.getElementById(cardID+inputDomID).style.opacity= '0.6';
-}
