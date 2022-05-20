@@ -181,8 +181,10 @@ async function storeObjectIDB(storeName, dataObject) {
         try {
             let tx = await db.transaction(storeName, 'readwrite');
             let store = await tx.objectStore(storeName);
-            await store.put(dataObject);
-            await tx.complete;
+            await Promise.all([
+                store.put(dataObject),
+                tx.done,
+            ]);
             console.log('added item to the store! ');
             console.log(dataObject)
         } catch (error) {
