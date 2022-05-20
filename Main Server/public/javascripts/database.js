@@ -429,7 +429,11 @@ export async function submitNewArticle() {
     let file_name = document.getElementById("fileUpload").value
 
     if((title != "")&&(description != "")&&(author != "")&&(image_b64 != "")) {
-        if(file_name.toLowerCase().endsWith(".jpg") || file_name.toLowerCase().endsWith(".png")) {
+        if(
+            file_name.toLowerCase().endsWith(".jpg")
+            || file_name.toLowerCase().endsWith(".png")
+            || file_name.toLowerCase().endsWith(".jpeg"))
+        {
             let date_of_issue = Date.now();
             let articleObject = new Article(title, image_b64, description, author, date_of_issue);
 
