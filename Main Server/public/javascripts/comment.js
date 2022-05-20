@@ -27,7 +27,16 @@ class Comment{
     headerText;
     colour;
 
-
+    /**
+     *
+     * @param roomNo Co
+     * @param userID
+     * @param date_of_issue
+     * @param chatText
+     * @param messageType
+     * @param headerText
+     * @param colour
+     */
     constructor(roomNo,userID,date_of_issue,chatText, messageType, headerText, colour) {
         this.roomNo = roomNo;
         this.userID = userID;
