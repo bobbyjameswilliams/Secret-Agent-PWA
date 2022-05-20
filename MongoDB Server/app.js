@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //API Docs
 const swaggerUi = require('swagger-ui-express');
-const openApiDocumentation = require('./swagger/swaggerDocumentation.json');
+const openApiDocumentation = require('./Documentation/swaggerDocumentation.json');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocumentation));
 
 app.use('/', indexRouter);
